@@ -1,0 +1,154 @@
+{
+  "faqs": [
+    {
+      "mainTopic": "Getting Started",
+      "description": "This section covers the basics of getting started with our Minecraft server.",
+      "subTopics": [
+        {
+          "title": "How do I join the server?",
+          "content": "<p>To join the server on Minecraft: Java Edition, follow these steps:</p><ol class=\"ml-5 text-white\"><li>1. Open Minecraft Launcher</li><li>2. Log in with your Mojang or Microsoft account.</li><li>3. Select <span class=\"font-bold\">\"Minecraft: Java Edition\"</span></li><li>4. Make sure it’s updated to version <span class=\"font-bold\">1.21.5 release</span>.</li><li>5. Click <span class=\"font-bold\">\"Multiplayer\"</span>. If a warning appears, click <span class=\"font-bold\">\"Proceed\"</span>.</li><li>6. Click <span class=\"font-bold\">\"Add Server\"</span></li><li>7. Enter the server name (any name you like).</li><li>8. Enter <code class=\"bg-gray-800 text-yellow-400 px-1 rounded\">cs1a.minecra.fr</code> as the Server Address.</li><li>9. Click <span class=\"font-bold\">\"Done\"</span></li><li>10. The server will appear in your list.</li><li>11. Select the server and click <span class=\"font-bold\">\"Join Server\"</span></li><li>12. Wait for it to connect.</li></ol><div class=\"px-4 my-5\" style=\"border-left: 4px solid #ECC94B;\"><p class=\"text-white mb-2\"><span class=\"text-white font-bold\">See: </span> <span class=\"text-blue-400 hover:underline\">Common Issues and Troubleshooting</span></p></div>"
+        },
+        {
+          "title": "How do I join the server on Bedrock Edition?",
+          "content": "<p>To join the server on Minecraft: Bedrock Edition, follow these steps:</p><ol class=\"ml-5 text-white\"><li>1. Open Minecraft on your device (Windows, mobile, console, etc.).</li><li>2. On the main menu, select <span class=\"font-bold\">\"Play\"</span>.</li><li>3. At the top of the screen, you’ll see several tabs. Click on the <span class=\"font-bold\">\"Servers\"</span> tab.</li><li>4. Click <span class=\"font-bold\">\"Add Server\"</span>.</li><li>5. Enter the server details:</li><ul class=\"ml-5 text-white\"><li>Server Name: Enter any name you prefer.</li><li>Server Address (IP): <code class=\"bg-gray-800 text-yellow-400 px-1 rounded\">cs1a.minecra.fr</code></li></ul><li>6. Click <span class=\"font-bold\">\"Save\"</span> to add the server to your list.</li><li>7. Now select the server and click <span class=\"font-bold\">\"Join Server\"</span>.</li></ol><p>Once connected, you’ll be in the server’s world and can start playing.</p>"
+        },        
+        {
+          "title": "How can I get Minecraft?",
+            "content": "<p>To get Minecraft: Java Edition:</p><ol class=\"ml-5 text-white\"><li>1. Go to the official website: <a href='https://minecraft.net' class='text-blue-400 hover:underline'>minecraft.net</a></li><li>2. Click <span class=\"font-bold\">\"Get Minecraft\"</span>. Choose <span class=\"font-bold\">\"Computer\"</span> > <span class=\"font-bold\">\"Java Edition\"</span>.</li><li>3. Sign up or log in. You need a Microsoft account to buy/download it.</li><li>4. Buy Minecraft.</li><li>5. Download the Minecraft Launcher.</li><li>6. Install it after buying.</li><li>7. Log in and play!</li></ol><p><strong>Note:</strong> If you already have Xbox Game Pass for PC, Minecraft Java is included for free.</p><p>To get Minecraft: Bedrock Edition:</p><p><strong>On PC (Windows 10/11):</strong></p><ol class=\"ml-5 text-white\"><li>1. Open <a href='https://www.microsoft.com/store/apps/9NBLGGH2JHXJ' class='text-blue-400 hover:underline'>Microsoft Store</a>.</li><li>2. Search for <span class=\"font-bold\">\"Minecraft\"</span>.</li><li>3. Buy <span class=\"font-bold\">\"Minecraft for Windows\"</span> (this is Bedrock).</li><li>4. Download and install it.</li></ol><p><strong>On Mobile (Android/iOS):</strong></p><ol class=\"ml-5 text-white\"><li>1. Open Google Play Store or Apple App Store.</li><li>2. Search <span class=\"font-bold\">\"Minecraft\"</span>.</li><li>3. Buy it and download.</li></ol><p><strong>On Consoles (Switch, PlayStation, Xbox):</strong></p><ol class=\"ml-5 text-white\"><li>1. Go to the console’s store (eShop, PS Store, Xbox Store).</li><li>2. Search <span class=\"font-bold\">\"Minecraft\"</span>.</li><li>3. Buy and install.</li></ol><div class=\"px-4 my-5\" style=\"border-left: 4px solid #ECC94B;\"><p class=\"text-white mb-2\"><span class=\"text-white font-bold\">Note:</span> Buying the Minecraft Java & Bedrock Bundle on PC gives you both editions!</p></div>"
+        },
+        {
+          "title": "What version of Minecraft do I need?",
+            "content": "<p>You need to have the correct version of Minecraft to join the server:</p><ul class=\"list-disc ml-5 text-white\"><li><strong>Java Edition:</strong> Version <span class=\"font-bold\">1.21.5 release</span> is required. Make sure your launcher is updated.</li><li><strong>Bedrock Edition:</strong> Ensure your game is updated to the latest version available for your platform.</li></ul></p>"
+        }
+      ],
+      "relatedArticles": [
+        {"title": "How to Set Up a Minecraft Server", "link": "article1.php"}
+      ]
+    },
+    {
+      "mainTopic": "Common Connection Issues",
+      "description": "This section addresses common issues players may encounter when trying to connect to the Minecraft server and provides troubleshooting steps.",
+      "subTopics": [
+        {
+          "title": "No Griefing",
+          "content": "<p>Destroying or modifying other players' builds without permission is prohibited.</p>"
+        },
+        {
+          "title": "Respect Players",
+          "content": "<p>Harassment, bullying, or any form of hate speech will not be tolerated.</p>"
+        }
+      ],
+      "relatedArticles": [
+        {"title": "Reporting Players", "link": "report.php"},
+        {"title": "Appealing Bans", "link": "faq.php?topic=fairplay#what-are-the-rules%3F"}
+      ]
+    },
+    {
+      "mainTopic": "Fairplay",
+      "description": "This section outlines the rules and guidelines to ensure a fair and enjoyable experience for all players on the server.",
+      "subTopics": [
+        {
+          "title": "What are the rules?",
+          "content": "<p>To ensure everyone has a fun and fair gameplay experience, we made a set of rules or the “Server Constitution” as we call them in place. Please take a moment to familiarize them.</p><p>For the full list of the server rules, you can go <a href=\"rules.php\" class=\"text-blue-400 hover:underline\">here</a>.</p>"
+        },
+        {
+          "title": "I've been banned/muted — what now?",
+          "content": "<p><strong>Ban:</strong> If you are banned, you will not be able to join the server. Bans are typically issued for severe violations of the server rules, such as cheating, harassment, or griefing.<p><strong>Muted:</strong> If you have been muted by the moderators, you should wait until the allotted mute time passes. If the mute is unreasonable, you can contact help and support for further assistance.</p><div class=\"px-4 my-5\" style=\"border-left: 4px solid #ECC94B;\"><p class=\"text-white\"><span class=\"text-white font-bold\">See: </span> <a href=\"rules.php\" class=\"text-blue-400 hover:underline\">Rules</a></p></div>"
+        },
+        {
+          "title": "Ban Appeals",
+          "content": "<p>If you believe the ban was issued in error or would like to appeal, you can open a <a href=\"contact.php\" class=\"text-blue-400 hover:underline\">support ticket</a> and provide the necessary details, including your username and the reason for the appeal. Appeals are reviewed on a case-by-case basis, and decisions are final.</p>"
+        },
+        {
+          "title": "Someone griefed my base!",
+          "content": "<p>If someone griefed your base, you can send a <a href=\"contact.php\" class=\"text-blue-400 hover:underline\">support ticket</a> so an admin help you return your property before it was griefed, and the admins and moderators shall look for the person who griefed your base, rest assured your items and builds shall be safe in our hands.</p>"
+        }
+      ],
+      "relatedArticles": [
+        {"title": "Reporting Players", "link": "report.php"},
+        {"title": "Appealing Bans", "link": "appeal.php"}
+      ]
+    },
+    {
+      "mainTopic": "Shattered Wilds",
+      "description": "This section Introduces the \"Shattered Wilds\", a huge biome that has more stronger enemies, with exclusive loot that is usable in the overworld.",
+      "subTopics": [
+        {
+          "title": "What is the Shattered Wilds?",
+          "content": "<p>The Shattered Wilds is a more difficult world than the original worlds, which are the “Overworld”, “Nether”, and the “End”.</p>"
+        },
+        {
+          "title": "What is in the Shattered Wilds?",
+          "content": "<p>The shattered wilds have item enchantments only found in the shattered wilds area and can also be used in the overworld.</p>"
+        },
+        {
+          "title": "Can you use totems in the Shattered Wilds?",
+          "content": "<p>You could not use totems back then in the Shattered Wilds last season because of a coding bug; now, in the next season, you can use totems to not die easily in the Shattered Wilds.</p>"
+        },
+        {
+          "title": "Can you use /tpa in the Shattered Wilds?",
+          "content": "<p>No, you cannot teleport in the Shattered Wilds, as we would want the players to explore the world on their own two feet and to truly feel the “Wilds” experience.</p>"
+        }
+      ],
+      "relatedArticles": [
+        {"title": "Shattered Wilds Overview", "link": "shatteredwilds.php"}
+      ]
+    },
+    {
+      "mainTopic": "Commands",
+      "description": "This section focuses on the Spark Pings and their respective uses.",
+      "subTopics": [
+        {
+          "title": "Spark Health",
+          "content": "<p>The health subcommand generates a health report for the server, including TPS, CPU, Memory, and Disk Usage.</p>"
+        },
+        {
+          "title": "Spark Ping",
+          "content": "<p>The ping subcommand prints information about average (or specific) player ping round-trip times.</p>"
+        }
+        
+      ],
+      "relatedArticles": [
+        {"title": "Spark Overview", "link": "spark.php"}
+      ]
+    },
+    {
+      "mainTopic": "MyDog",
+      "description": "This section Primarily targets the Dog Lovers out there.",
+      "subTopics": [
+        {
+          "title": "/MyDog Commands",
+          "content": "<p>This plugin helps the player and their dog companions teleport even outside the rendered chunks. Help My Dog commands are used to teleport dogs, rename them, etc.  <a href=\"https://github.com/HeroGamers/MyDog?tab=readme-ov-file\" class=\"text-blue-400 hover:underline\">Here is a list of commands that are used within the server.</a>.</p>"
+        }
+      ],"relatedArticles": [
+        {"title": "My Dog Commands", "link": "mydog.php"}
+      ]
+    },{
+      "mainTopic": "How to install a simple voice chat?",
+      "description": "Here's a simple guide to installing Simple Voice Chat (client):.",
+      "subTopics": [
+        {
+          "title": "Installing a Voice Chat",
+          "content": "<p>1.Download and install Fabric or Forge for your Minecraft version.\n2. For Fabric: Also install Fabric API (drop it into the mods folder).\n3. Get the correct version from Modrinth or CurseForge.\n4. Put the downloaded file into your mods folder (.minecraft/mods).\n5. Open Minecraft with Fabric or Forge selected in your launcher.\n6. Press V in-game to open the voice chat settings\n7. Press Done.</p>"
+        }
+      ],"relatedArticles": [
+        {"title": "Voice Chat", "link": "voicechat.php"}
+      ]
+    },
+    {
+      "mainTopic": "Feedback",
+      "description": "",
+      "subTopics": [
+        {
+          "title": "How do I report bugs or feedback?",
+          "content": "<p>If there are any bugs or feedback regarding the gameplay within the server, you can contact Help and Support to help you, Your feedback is very much appreciated.</p>"
+        }
+        
+      ],
+      "relatedArticles": [
+        {"title": "Feedback", "link": "feedback.php"}
+      ]
+    }
+    
+  ]
+}

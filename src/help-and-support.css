@@ -1,0 +1,7 @@
+.has-card {
+    @apply flex flex-col md:flex-row items-start bg-[#1A212B] p-5 rounded-md shadow-lg text-white;
+}
+.has-card img {
+    @apply w-10 mb-5 md:mx-5;
+    filter: invert(100%);
+}

@@ -1,0 +1,30 @@
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+    @import "tailwindcss";
+    @import "./help-and-support.css";
+    @import "./markdown.css";
+
+    body {
+        font-family: 'Outfit';
+    }
+    .nav-tab {
+        @apply text-white hover:text-yellow-500;
+    }
+    @keyframes slide {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-slide {
+        animation: slide 0.3s ease-out forwards;
+    }
+    .social-icons img {
+        filter: invert(100%);
+    }
+    .glob-btn {
+        @apply px-4 py-2 rounded-lg hover:cursor-pointer text-white;
+    }
+    .glob-input {
+        @apply w-full px-3 py-2 text-white bg-gray-800 border-2 border-gray-600 rounded-lg focus:outline-none focus:border-blue-500 ;
+    }
+    .glob-link {
+        @apply text-blue-500 hover:underline;
+    }

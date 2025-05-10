@@ -1,0 +1,30 @@
+{
+  "name": "block1a",
+  "version": "1.0.0",
+  "description": "<!-- PROGRAMMING LANGUAGE ICONS\r HTML: https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png\r JAVA: https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/1200px-Java_programming_language_logo.svg.png\r Python: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png\r PHP : https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1067px-PHP-logo.svg.png?20180502235434\r mySQL: https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png",
+  "homepage": "https://github.com/jrwnnnn/block1a#readme",
+  "bugs": {
+    "url": "https://github.com/jrwnnnn/block1a/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jrwnnnn/block1a.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "tailwind.config.js",
+  "scripts": {
+    "build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --minify",
+    "tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch",
+    "retailwind": "npm install tailwindcss @tailwindcss/cli"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.5",
+    "tailwindcss": "^4.1.5"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}
