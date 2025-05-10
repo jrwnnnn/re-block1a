@@ -1,0 +1,175 @@
+{
+    "home": {
+        "title": "RULES",
+        "sections": [
+          {
+            "heading": "",
+            "paragraphs": [
+              "Welcome to the CS1A Minecraft Server! This document contains the official rules and constitution that govern all gameplay and conduct on the server.  Welcome to the CS1A Minecraft Server! This document contains the official rules and constitution that govern all gameplay and conduct on the server.  ",
+              "This page is not a complete list of every rule or situation. The Council reserves the right to evaluate each case individually and apply appropriate actions based on context and server guidelines.",
+              "You can access this document in-game anytime by typing /rules. Violations may lead to punishments, with serious or repeated offenses handled strictly by the Council. Extreme cases, especially those involving chat abuse, may be reported to Mojang and/or Xbox Live Player Safety."
+            ]
+          }
+        ]
+      },
+    "preamble": {
+      "title": "PREAMBLE",
+      "sections": [
+        {
+          "heading": "",
+          "paragraphs": [
+            "We, the members of the CS1A Minecraft Server, in pursuit of an organized, fair, and structured multiplayer environment, do hereby establish this Constitution as the supreme governing document of our server. This Constitution shall serve as the highest legal framework within which all rules, regulations, and policies shall be derived and enforced. It is founded upon principles of order, fairness, transparency, and community governance to ensure an enjoyable and structured experience for all players.",
+            "Let it be recognized that participation in this server constitutes an agreement to abide by the rules, principles, and governance structures enshrined herein."
+          ]
+        }
+      ]
+    },
+    "declaration_of_principles": {
+      "title": "DECLARATION OF PRINCIPLES",
+      "sections": [
+        {
+          "heading": "Section 1. Supremacy of the Constitution",
+          "paragraphs": [
+            "1.1. This Constitution shall be recognized as the highest governing authority of the CS1A Minecraft Server. All server rules, policies, and decisions must be in alignment with its provisions, and any conflict shall be resolved in favor of this document.",
+            "1.2. No rule, policy, or regulation shall supersede, contravene, or otherwise diminish the authority of this Constitution unless formally amended in accordance with the procedures outlined herein.",
+            "1.3. The Council, as the designated governing body, shall bear the responsibility of ensuring strict adherence to this Constitution and the enforcement of its provisions."
+          ]
+        }
+      ]
+    },
+    "rights_and_responsibilities": {
+      "title": "RIGHTS AND RESPONSIBILITIES OF PLAYERS",
+      "sections": [
+        {
+          "heading": "Section 1. Rights of Players",
+          "paragraphs": [
+            "2.1. All players shall have the right to access and utilize public server resources, provided that such access does not infringe upon the rights of other players or violate any provisions of this Constitution.",
+            "2.2. Players shall have the right to request official investigations regarding suspected violations of server laws, including but not limited to griefing, theft, and unauthorized modifications, through CoreProtect lookup requests submitted to the Council.",
+            "2.3. Players shall have the right to establish, develop, and protect territories within the server.",
+            "2.4. Players shall have the right to fair dispute resolution through the governance structure outlined herein, with the assurance that all grievances shall be addressed in a transparent, timely, and just manner.",
+            "2.5. Players shall have the right to propose amendments to this Constitution and participate in discussions regarding changes to server laws and governance policies."
+          ]
+        },
+        {
+          "heading": "Section 2. Responsibilities of the Player",
+          "paragraphs": [
+            "2.6. Players shall refrain from engaging in any form of cheating, exploitation, or use of unauthorized modifications that provide unfair advantages, compromise server integrity, or diminish the gameplay experience of others.",
+            "2.7. Players shall respect the decisions of the Council and the Overseer, provided such decisions adhere to the principles and provisions of this Constitution.",
+            "2.8. Players shall report rule violations in good faith, refraining from filing false or misleading reports against others.",
+            "2.9. Players shall exercise caution and responsibility when modifying public spaces, ensuring that their actions do not disrupt the server environment or negatively impact fellow players."
+          ]
+        }
+      ]
+    },
+    "governance_structure": {
+      "title": "GOVERNANCE STRUCTURE",
+      "sections": [
+        {
+          "heading": "Section 1. The Council",
+          "paragraphs": [
+            "3.1. The Council shall serve as the primary governing body of the server, responsible for enforcing rules, resolving disputes, and overseeing player rights as outlined in this Constitution.",
+            "3.2. The Council shall possess the authority to:",
+            "• Conduct CoreProtect inspections upon request;",
+            "• Manage disputes concerning territorial claims, griefing, and rule violations;",
+            "• Oversee and facilitate the amendment process for constitutional modifications;",
+            "• Implement and enforce disciplinary actions as prescribed in Article VI."
+          ],
+          "paragraphs_after_bullets": [
+            "3.3. The Council shall operate with transparency and impartiality, ensuring that all decisions are made in accordance with server laws and principles of fairness."
+          ]
+        },
+        {
+          "heading": "Section 2. The Overseer",
+          "paragraphs": [
+            "3.4. The Overseer shall hold the highest executive authority within the server, possessing the ultimate power to approve or veto major server decisions, rollbacks, and constitutional amendments.",
+            "3.5. The Overseer shall function as the final arbiter in high-stakes disputes, ensuring that critical decisions are made with full consideration of server-wide impact."
+          ]
+        }
+      ]
+    },
+    "rules_of_conduct": {
+      "title": "RULES OF CONDUCT",
+      "sections": [
+        {
+          "heading": "Section 1. General Laws",
+          "paragraphs": [
+            "4.1. Griefing and Theft - The unauthorized destruction, alteration, or theft of another player's property is strictly prohibited and shall be subject to disciplinary action.",
+            "4.2. Exploiting and Hacking - The use of cheats, hacks, or exploits to gain unfair advantages is forbidden.",
+            "4.3. False Reporting - Knowingly submitting false accusations or misleading reports is considered a violation of server integrity.",
+            "4.4. Impersonation – Claiming to be a Council member, Overseer, or another player with the intent to deceive is strictly prohibited."
+          ]
+        }
+      ]
+    },
+    "dynmap_teritorial_laws": {
+      "title": "DYNMAP TERRITORIAL LAWS",
+      "sections": [
+        {
+          "heading": "Section 1. Land Ownership and Marking",
+          "paragraphs": [
+            "5.1. Players must register their land ownership on Dynmap to have their claim officially recognized.",
+            "5.2. Unmarked land shall be considered public domain and is available for general use by all players unless otherwise designated by the Council.",
+            "5.3. Modification of another player’s marked land without their consent is prohibited."
+          ]
+        },
+        {
+          "heading": "Section 2. Abandoned Claims",
+          "paragraphs": [
+            "5.4. If a claimed area remains inactive for 30 days, the Council may reclaim the land for public or administrative purposes.",
+            "5.5. Players who anticipate long-term inactivity may formally notify the Council to prevent their claims from being revoked."
+          ]
+        }
+      ]
+    },
+    "coreprotect_regulations": {
+      "title": "COREPROTECT REGULATIONS",
+      "sections": [
+        {
+          "heading": "Section 1. CoreProtect Lookup Rights",
+          "paragraphs": [
+            "6.1. Players may submit a request for CoreProtect log inspections in cases of suspected rule violations.",
+            "6.2. The Council shall be obligated to review and act upon lookup requests within 48 hours."
+          ]
+        },
+        {
+          "heading": "Section 2. CoreProtect Rollback Policy",
+          "paragraphs": [
+            "6.3. Rollbacks shall be strictly regulated and require direct approval from the Overseer.",
+            "6.4. Rollbacks shall be granted only in cases of severe griefing, large-scale destruction, or hacking-related incidents, following a formal review process.",
+            "6.5. Before approving a rollback, the Council must:",
+            "   • Verify the extent and severity of the damage;",
+            "   • Ensure that a rollback would not negatively affect other players;",
+            "   • Present all findings to the Overseer for final determination"
+          ]
+        }
+      ]
+    },
+    "enforcement": {
+      "title": "ENFORCEMENT",
+      "sections": [
+        {
+          "heading": "",
+          "paragraphs": [
+            "7.1. Punitive measures shall be applied in accordance with the severity of the offense, ranging from mutes, jails, and kicks to bans in extreme cases.",
+            "7.2. Bans shall be considered the highest form of punishment, reserved for severe or repeated violations of server law.",
+            "7.3. The Council shall exercise full discretion in determining and enforcing appropriate disciplinary actions, with oversight from the Overseer."
+          ]
+        }
+      ]
+    },
+    "final_provisions": {
+      "title": "FINAL PROVISIONS",
+      "sections": [
+        {
+          "heading": "",
+          "paragraphs": [
+            "8.1. This Constitution shall take effect immediately upon ratification by the Council and Overseer.",
+            "8.2. By participating in the CS1A Minecraft Server, all members acknowledge and agree to adhere to the rules and governance structures set forth herein."
+          ]
+        }
+      ],
+      "next_label": "Go to FAQ",
+      "next_target": "faq.php"
+    }
+  }
+  

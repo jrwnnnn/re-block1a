@@ -1,0 +1,88 @@
+.markdown h1 {
+    @apply text-4xl font-bold mt-8 mb-4;
+}
+
+.markdown h2 {
+    @apply text-3xl font-bold mt-6 mb-4;
+}
+
+.markdown h3 {
+    @apply text-2xl font-bold mt-4 mb-4;
+}
+
+.markdown h4 {
+    @apply text-xl font-bold mt-2 mb-3;
+}
+
+.markdown h5 {
+    @apply text-lg font-bold mt-2 mb-3;
+}
+
+.markdown ul {
+    @apply list-disc pl-6 mb-4 space-y-2;
+}
+
+.markdown ol {
+    @apply list-decimal pl-6 mb-4 space-y-2;
+}
+
+.markdown li {
+    @apply mt-2;
+}
+
+.markdown ul li {
+    @apply pl-4;
+}
+
+.markdown blockquote {
+    @apply border-l-4 pl-4 italic mt-6 mb-6;
+}
+
+.markdown p {
+    @apply mb-4;
+}
+
+.markdown a {
+    @apply text-blue-500 hover:underline;
+}
+
+.markdown p img {
+    @apply max-w-full h-auto mb-4;
+}
+
+.markdown pre {
+    @apply bg-gray-800 text-white p-4 rounded-md overflow-x-auto;
+}
+
+.markdown code {
+    @apply bg-gray-800 text-white p-1 rounded-sm;
+}
+
+.markdown table {
+    @apply w-full table-auto border-collapse mt-6 mb-6;
+}
+
+.markdown th,
+.markdown td {
+    @apply border border-[#DEE2E6] px-4 py-2 text-left;
+}
+
+.markdown th {
+    @apply font-semibold;
+}
+
+.markdown footnote {
+    @apply text-sm text-gray-600 mt-2;
+}
+
+.markdown footnote a {
+    @apply text-blue-500 hover:underline;
+}
+
+.markdown div {
+    @apply mb-4;
+}
+
+.markdown hr {
+    @apply border-[#DEE2E6] mb-4;
+}

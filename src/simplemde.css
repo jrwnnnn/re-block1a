@@ -1,0 +1,174 @@
+  .CodeMirror, .editor-toolbar, .editor-preview, .editor-statusbar {
+    background: #1e2939 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: .5rem !important;
+  }
+  .editor-toolbar {
+    opacity: 100 !important;
+  }
+  .editor-toolbar a {
+    color: #ffffff !important;
+  }
+  .editor-toolbar a:hover {
+    color: #1e2939 !important;
+  }
+  .editor-toolbar a.active {
+    color: #1e2939 !important;
+    background: #ffffff !important;
+  }
+  .editor-toolbar.disabled-for-preview a:not(.no-disable) {
+    background: #1e2939 !important;
+    color: #878787 !important;
+  }
+  .CodeMirror div.CodeMirror-cursor {
+    border-left: 2px solid #ffffff !important;
+    margin-left: 1px !important;
+  }
+  .CodeMirror .CodeMirror-selected {
+    background: #0055aa !important;
+    color: #fff !important;
+  }
+
+  
+  .editor-preview-active h1 {
+    font-size: 2.25rem !important;
+    font-weight: bold !important;
+    margin-top: 2rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active h2 {
+    font-size: 1.875rem !important;
+    font-weight: bold !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active h3 {
+    font-size: 1.5rem !important;
+    font-weight: bold !important;
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active h4 {
+    font-size: 1.25rem !important;
+    font-weight: bold !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .editor-preview-active h5 {
+    font-size: 1.125rem !important;
+    font-weight: bold !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .editor-preview-active ul {
+    list-style-type: disc !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .editor-preview-active ol {
+    list-style-type: decimal !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 1rem !important;
+    gap: 0.5rem !important;
+  }
+
+  .editor-preview-active li {
+    margin-top: 0.5rem !important;
+  }
+
+  .editor-preview-active ul li {
+    padding-left: 1rem !important;
+  }
+
+  .editor-preview-active blockquote {
+    border-left: 4px solid !important;
+    padding-left: 1rem !important;
+    font-style: italic !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .editor-preview-active p {
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active a {
+    color: #3b82f6 !important;
+    text-decoration: none !important;
+  }
+
+  .editor-preview-active a:hover {
+    text-decoration: underline !important;
+  }
+
+  .editor-preview-active p img {
+    max-width: 100% !important;
+    height: auto !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active pre {
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+    padding: 1rem !important;
+    border-radius: 0.375rem !important;
+    overflow-x: auto !important;
+  }
+
+  .editor-preview-active code {
+    background-color: #1f2937 !important;
+    color: #ffffff !important;
+    padding: 0.25rem !important;
+    border-radius: 0.125rem !important;
+  }
+
+  .editor-preview-active table {
+    width: 100% !important;
+    table-layout: auto !important;
+    border-collapse: collapse !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .editor-preview-active th,
+  .editor-preview-active td {
+    border: 1px solid #dee2e6 !important;
+    padding: 0.5rem 1rem !important;
+    text-align: left !important;
+  }
+
+  .editor-preview-active th {
+    font-weight: 600 !important;
+  }
+
+  .editor-preview-active footnote {
+    font-size: 0.875rem !important;
+    color: #6b7280 !important;
+    margin-top: 0.5rem !important;
+  }
+
+  .editor-preview-active footnote a {
+    color: #3b82f6 !important;
+    text-decoration: none !important;
+  }
+
+  .editor-preview-active footnote a:hover {
+    text-decoration: underline !important;
+  }
+
+  .editor-preview-active div {
+    margin-bottom: 1rem !important;
+  }
+
+  .editor-preview-active hr {
+    border-color: #dee2e6 !important;
+    margin-bottom: 1rem !important;
+  }
