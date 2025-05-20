@@ -4,20 +4,27 @@
     border: none !important;
     border-radius: .5rem !important;
   }
+  .CodeMirror {
+    padding: 2rem 2rem !important;
+  }
+  .editor-preview-active {
+    padding: 2rem 2rem  !important;
+  }
   .editor-toolbar {
     opacity: 100 !important;
+    margin-bottom: 1rem !important;
   }
-  .editor-toolbar a {
+  .editor-toolbar button {
     color: #ffffff !important;
   }
-  .editor-toolbar a:hover {
+  .editor-toolbar button:hover {
     color: #1e2939 !important;
   }
-  .editor-toolbar a.active {
+  .editor-toolbar button.active {
     color: #1e2939 !important;
     background: #ffffff !important;
   }
-  .editor-toolbar.disabled-for-preview a:not(.no-disable) {
+  .editor-toolbar.disabled-for-preview button:not(.no-disable) {
     background: #1e2939 !important;
     color: #878787 !important;
   }
