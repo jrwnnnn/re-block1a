@@ -1,4 +1,4 @@
-const simplemde = new SimpleMDE({
+const easyMDE = new EasyMDE({
   element: document.getElementById("editor"),
   spellChecker: true,
   toolbar: [
@@ -9,7 +9,7 @@ const simplemde = new SimpleMDE({
     "preview"
   ],
   status: false,
-  previewRender: function(plainText) {
-    return SimpleMDE.prototype.markdown(plainText);
+  previewRender: function(plainText, preview) {
+    return easyMDE.markdown(plainText);
   }
 });
