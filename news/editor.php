@@ -35,9 +35,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link href="../src/output.css" rel="stylesheet">
-    <link href="../src/simplemde.css" rel="stylesheet">
+    <link href="../src/easymde.css" rel="stylesheet">
     <title>Block1A - Editor</title>
 </head>
 <body class="min-h-screen">
@@ -82,8 +82,8 @@
         </form>
     </section>
     <?php require 'includes/footer.php'; ?>
-    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-    <script src="../script/simplemde.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <script src="../script/easymde.js"></script>
     <script src="../script/editor.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
