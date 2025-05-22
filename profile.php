@@ -21,7 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Profile - Block1A">
-    <meta property="og:image" content="assets/season2-banner.PNG">
+    <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
     <meta property="og:url" content="https://block1a.onrender.com/profile.php">
     <meta property="og:site_name" content="Block1A">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
