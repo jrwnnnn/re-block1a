@@ -41,6 +41,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="<?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?>">
+        <meta property="og:description" content="<?= htmlspecialchars($post['subtitle'], ENT_QUOTES, 'UTF-8') ?>">
+        <meta property="og:image" content="<?= $post['cover']?>">
+        <meta property="og:url" content="https://block1a.onrender.com/news/article?id=<?= $post['id']?>">
+        <meta property="og:site_name" content="Block1A">
         <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
         <link href="../src/output.css" rel="stylesheet">
         <title>Block1A - <?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?></title>
