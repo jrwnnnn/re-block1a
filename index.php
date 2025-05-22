@@ -26,7 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Block1A">
-    <meta property="og:description" content="The Official Minecraft Server of BSCS-1A! Available for both Minecraft Java and Bedrock Platform.">
+    <meta property="og:description" content="The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.">
     <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
     <meta property="og:url" content="https://block1a.onrender.com">
     <meta property="og:site_name" content="Block1A">
@@ -39,7 +39,7 @@
         <?php require 'includes/navigation.php'; ?>
         <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
             <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
-            <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for both Minecraft Java and Bedrock Platform.</p>
+            <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.</p>
             <button id="copy-button" onclick="copyToClipboard()" class="bg-yellow-500 text-black md:text-lg font-bold py-2 px-5 rounded-md mt-5 hover:bg-[#2D3748] hover:text-white hover:cursor-pointer transition duration-300 ease-in-out">Copy IP : cs1a.minecra.fr</button>
         </div>        
     </section>
