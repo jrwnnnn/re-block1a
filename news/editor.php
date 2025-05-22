@@ -36,7 +36,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Editor - Block1A">
-    <meta property="og:image" content="../assets/meta-default.PNG">
+    <meta property="og:image" content="https://block1a.onrender.com/assets/meta-default.PNG">
     <meta property="og:url" content="https://block1a.onrender.com/news/editor.php">
     <meta property="og:site_name" content="Block1A">
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">

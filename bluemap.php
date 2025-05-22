@@ -11,7 +11,7 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bluemap - Block1A">
   <meta property="og:description" content="Explore our Minecraft world in 3D!">
-  <meta property="og:image" content="assets/meta-bluemap.PNG">
+  <meta property="og:image" content="https://block1a.onrender.com/assets/meta-bluemap.PNG">
   <meta property="og:url" content="https://block1a.onrender.com/bluemap.php">
   <meta property="og:site_name" content="Block1A">
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">

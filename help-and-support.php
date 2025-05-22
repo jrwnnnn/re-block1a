@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Help & Support - Block1A">
     <meta property="og:description" content="Need a hand? You're at the right place!">
-    <meta property="og:image" content="assets/season2-banner.PNG">
+    <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
     <meta property="og:url" content="https://block1a.onrender.com/help-and-support.php">
     <meta property="og:site_name" content="Block1A">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
