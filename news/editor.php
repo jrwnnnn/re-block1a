@@ -34,6 +34,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Editor - Block1A">
+    <meta property="og:image" content="../assets/meta-default.PNG">
+    <meta property="og:url" content="https://block1a.onrender.com/news/editor.php">
+    <meta property="og:site_name" content="Block1A">
     <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link href="../src/output.css" rel="stylesheet">
@@ -71,7 +76,7 @@
             </div>
             <textarea name="content" id="editor"><?= $article ? htmlspecialchars($article['content'], ENT_QUOTES, 'UTF-8') : '' ?></textarea>
             <div class="flex items-start justify-between gap-3">
-                <button type="submit" class="bg-blue-500  glob-btn md:text-lg hover:bg-blue-600" onclick="loadingLong()">
+                <button type="submit" class="bg-blue-500 glob-btn md:text-lg hover:bg-blue-600" onclick="loadingLong()">
                     <?= $action == 'edit' ? 'Update Article' : 'Post Article' ?>
                 </button>
 
