@@ -16,6 +16,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="News - Block1A">
+        <meta property="og:description" content="Stay updated with the latest news, updates, and events happening in our community.">
+        <meta property="og:image" content="assets/season2-banner.PNG">
+        <meta property="og:url" content="https://block1a.onrender.com/news.php">
+        <meta property="og:site_name" content="Block1A">
         <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
         <link href="src/output.css" rel="stylesheet">
         <title>Block1A - News</title>
