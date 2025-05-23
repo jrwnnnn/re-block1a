@@ -8,7 +8,7 @@
     }
 
     $userId = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT * FROM user_data WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM players WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -21,36 +21,19 @@
     $error = [];
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $username = !empty($_POST['username']) ? htmlspecialchars(trim($_POST['username'])) : $user['username'];
         $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : $user['email'];
         $currentPassword = $_POST['current_password'] ?? '';
         $newPassword = $_POST['password'] ?? '';
         $confirmPassword = $_POST['confirm_password'] ?? '';
 
-        if ($username === $user['username'] && $email === $user['email'] && empty($newPassword)) {
+        if ($email === $user['email'] && empty($newPassword)) {
             $_SESSION['success_profile'] = "No changes were made. ദ്ദി •⩊• )";
             echo "<script>window.location.href = 'profile.php';</script>";
             exit();
         }
 
-        if ($username !== $user['username']) {
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $username) || !preg_match('/[a-zA-Z0-9]/', $username)) {
-                $error['username'] = "Username must only contain letters, numbers, or underscores, and must have at least one letter or number.";
-            } elseif (strlen($username) < 3 || strlen($username) > 16) {
-                $error['username'] = "Username must be between 3 and 16 characters long.";
-            } else {
-                $stmt = $conn->prepare("SELECT id FROM user_data WHERE username = ? AND id != ?");
-                $stmt->bind_param("si", $username, $userId);
-                $stmt->execute();
-                $stmt->store_result();
-                if ($stmt->num_rows > 0) {
-                    $error['username'] = "Username is already taken.";
-                }
-            }
-        }
-
         if ($email !== $user['email']) {
-            $stmt = $conn->prepare("SELECT id FROM user_data WHERE email = ? AND id != ?");
+            $stmt = $conn->prepare("SELECT id FROM players WHERE email = ? AND id != ?");
             $stmt->bind_param("si", $email, $userId);
             $stmt->execute();
             $stmt->store_result();
@@ -77,17 +60,17 @@
 
         if (empty($error)) {
             if ($updatePassword) {
-                $stmt = $conn->prepare("UPDATE user_data SET username = ?, email = ?, password = ?, last_password_change = NOW() WHERE id = ?");
-                $stmt->bind_param("sssi", $username, $email, $hashedPassword, $userId);
-                $_SESSION['last_password_change'] = gmdate('Y-m-d H:i:s');
+                $lastPasswordChange = gmdate('Y-m-d H:i:s');
+                $stmt = $conn->prepare("UPDATE players SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
+                $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
+                $_SESSION['last_password_change'] = $lastPasswordChange;
 
             } else {
-                $stmt = $conn->prepare("UPDATE user_data SET username = ?, email = ? WHERE id = ?");
-                $stmt->bind_param("ssi", $username, $email, $userId);
+                $stmt = $conn->prepare("UPDATE players SET email = ? WHERE id = ?");
+                $stmt->bind_param("si", $email, $userId);
             }
     
             if ($stmt->execute()) {
-                $_SESSION['username'] = $username;
                 $_SESSION['email'] = $email;
                 if ($updatePassword) {
                     $_SESSION['success_password'] = "Password updated successfully!";
@@ -102,8 +85,8 @@
     }
 ?>
 
-<div class="space-y-10 md:pr-100">    
-    <div class="text-white space-y-2">
+<div class="space-y-10 md:pr-120">    
+    <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold e">Profile Settings</p>
 
         <?php if (!empty($_SESSION['success_profile'])): ?>
@@ -115,15 +98,8 @@
 
 
         <form method="POST" class="space-y-2">
-
-            <div>
-                <label for="username" class="block mb-1 text-gray-300">Username 
-                    <?php if (!empty($error['username'])): ?>
-                        <span class="text-red-500">- <?= htmlspecialchars($error['username']) ?></span>
-                    <?php endif; ?>
-                </label>
-                <input type="text" id="username" name="username" class="glob-input <?= !empty($error['username']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : htmlspecialchars($user['username']) ?>"">
-            </div>
+            <p class="block mb-1 text-gray-300">UUID</p>
+            <div class="glob-input " title="This is your unique user identifier. You can't change this."><?= htmlspecialchars($_SESSION['uuid'])  ?></div>
 
             <div>
                 <label for="email" class="block mb-1 text-gray-300">Email 
@@ -134,10 +110,10 @@
                 <input type="email" id="email" name="email" class="glob-input <?= !empty($error['email']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : htmlspecialchars($user['email']) ?>">
             </div>
 
-            <button type="submit" class="glob-btn mt-5 bg-blue-500 hover:bg-blue-600">Save Changes</button>
+            <button type="submit" class="mt-5 bg-blue-500 glob-btn hover:bg-blue-600">Save Changes</button>
         </form>
     </div>
-    <div class="text-white space-y-2">
+    <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold">Password </p>
         <p>Please remember your password as there is currently no way to reset it.</p>
         <p class="mb-5 text-sm italic text-gray-300"> Last changed: <span id="last_auth_change_timestamp" data-time="<?= htmlspecialchars($_SESSION['last_password_change'], ENT_QUOTES, 'UTF-8') ?>"></span></p>
@@ -180,7 +156,7 @@
                 <label for="showPassword">Show Password</label>
             </div>
 
-            <button type="submit" class="glob-btn mt-5 bg-blue-500 hover:bg-blue-600">Change Password</button>
+            <button type="submit" class="mt-5 bg-blue-500 glob-btn hover:bg-blue-600">Change Password</button>
         </form>
     </div>
 </div>

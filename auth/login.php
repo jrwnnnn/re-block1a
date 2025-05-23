@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM user_data WHERE username = ? OR email = ?";
+    $sql = "SELECT * FROM players WHERE username = ? OR email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $login, $login);
     mysqli_stmt_execute($stmt);
@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email']; 
+            $_SESSION['uuid'] = $user['uuid'];
             $_SESSION['last_password_change'] = $user['last_password_change']; 
             $_SESSION['permission_level'] = $user['permission_level']; 
             
