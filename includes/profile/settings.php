@@ -21,32 +21,15 @@
     $error = [];
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $username = !empty($_POST['username']) ? htmlspecialchars(trim($_POST['username'])) : $user['username'];
         $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : $user['email'];
         $currentPassword = $_POST['current_password'] ?? '';
         $newPassword = $_POST['password'] ?? '';
         $confirmPassword = $_POST['confirm_password'] ?? '';
 
-        if ($username === $user['username'] && $email === $user['email'] && empty($newPassword)) {
+        if ($email === $user['email'] && empty($newPassword)) {
             $_SESSION['success_profile'] = "No changes were made. ദ്ദി •⩊• )";
             echo "<script>window.location.href = 'profile.php';</script>";
             exit();
-        }
-
-        if ($username !== $user['username']) {
-            if (!preg_match('/^[a-zA-Z0-9_]+$/', $username) || !preg_match('/[a-zA-Z0-9]/', $username)) {
-                $error['username'] = "Username must only contain letters, numbers, or underscores, and must have at least one letter or number.";
-            } elseif (strlen($username) < 3 || strlen($username) > 16) {
-                $error['username'] = "Username must be between 3 and 16 characters long.";
-            } else {
-                $stmt = $conn->prepare("SELECT id FROM players WHERE username = ? AND id != ?");
-                $stmt->bind_param("si", $username, $userId);
-                $stmt->execute();
-                $stmt->store_result();
-                if ($stmt->num_rows > 0) {
-                    $error['username'] = "Username is already taken.";
-                }
-            }
         }
 
         if ($email !== $user['email']) {
@@ -78,17 +61,16 @@
         if (empty($error)) {
             if ($updatePassword) {
                 $lastPasswordChange = gmdate('Y-m-d H:i:s');
-                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ?, password = ?, last_password_change = ? WHERE id = ?");
-                $stmt->bind_param("ssssi", $username, $email, $hashedPassword, $lastPasswordChange, $userId);
+                $stmt = $conn->prepare("UPDATE players SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
+                $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
                 $_SESSION['last_password_change'] = $lastPasswordChange;
 
             } else {
-                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ? WHERE id = ?");
-                $stmt->bind_param("ssi", $username, $email, $userId);
+                $stmt = $conn->prepare("UPDATE players SET email = ? WHERE id = ?");
+                $stmt->bind_param("si", $email, $userId);
             }
     
             if ($stmt->execute()) {
-                $_SESSION['username'] = $username;
                 $_SESSION['email'] = $email;
                 if ($updatePassword) {
                     $_SESSION['success_password'] = "Password updated successfully!";
@@ -116,15 +98,8 @@
 
 
         <form method="POST" class="space-y-2">
-
-            <div>
-                <label for="username" class="block mb-1 text-gray-300">Username 
-                    <?php if (!empty($error['username'])): ?>
-                        <span class="text-red-500">- <?= htmlspecialchars($error['username']) ?></span>
-                    <?php endif; ?>
-                </label>
-                <input type="text" id="username" name="username" class="glob-input <?= !empty($error['username']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['username']) ? htmlspecialchars($_POST['username']) : htmlspecialchars($user['username']) ?>"">
-            </div>
+            <p class="block mb-1 text-gray-300">UUID</p>
+            <div class="glob-input " title="This is your unique user identifier. You can't change this."><?= htmlspecialchars($_SESSION['uuid'])  ?></div>
 
             <div>
                 <label for="email" class="block mb-1 text-gray-300">Email 
