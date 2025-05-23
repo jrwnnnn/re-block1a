@@ -11,8 +11,11 @@
 
 ?>
 
-
 <div class="space-y-10 md:pr-120">
+    <div class="flex items-center justify-center gap-2 px-4 py-2 mb-6 bg-red-600 rounded-lg">
+        <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Development Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
+        <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
+    </div>
     <div class="hidden p-6 space-y-4 bg-blue-500 rounded-lg shadow gap-7 md:flex">
         <img src="https://visage.surgeplay.com/full/512/<?= htmlspecialchars($_SESSION['username']); ?>" alt="User Avatar" class="mb-4 rounded-full h-60">
         <div>
@@ -114,12 +117,39 @@ function updatePlayerStats() {
                 div.innerHTML = `
                     <p class="font-bold text-white">${row.cause}</p>
                     <p class="text-sm text-gray-400">Coordinates: X: ${row.x}, Y: ${row.y}, Z: ${row.z}</p>
-                    <p class="text-sm text-gray-400">${row.timestamp}</p>
+                    <p class="text-sm text-gray-400" data-time="${row.timestamp}">Loading time...</p>
                 `;
                 logWrapper.appendChild(div);
             });
+            document.querySelectorAll('[data-time]').forEach(el => {
+                const utcTime = el.dataset.time + ' UTC';
+                const date = new Date(utcTime);
+
+                if (!isNaN(date)) {
+                    const now = new Date();
+                    const isToday = date.toDateString() === now.toDateString();
+                    
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    const isYesterday = date.toDateString() === yesterday.toDateString();
+
+                    const timePart = date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+                    if (isToday) {
+                        el.innerText = `Today at ${timePart}`;
+                    } else if (isYesterday) {
+                        el.innerText = `Yesterday at ${timePart}`;
+                    } else {
+                        const datePart = date.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+                        el.innerText = `${datePart} at ${timePart}`;
+                    }
+                } else {
+                    el.innerText = "Never";
+                }
+            });
         });
 }
+
 updatePlayerStats();
 setInterval(updatePlayerStats, 10000); // refresh every 10s
 </script>
