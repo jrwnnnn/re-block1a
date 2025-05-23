@@ -6,7 +6,7 @@
     }
 ?>
 
-<div class="space-y-10 md:pr-110">    
+<div class="space-y-10 md:pr-120">    
     <div class="text-white">
         <p class="mb-5 text-2xl font-bold">Data and Privacy</p>
         <p class="mb-5">We use your data to operate essential features—like saving preferences and displaying your content. You can stop this at any time by disabling or deleting your account.</p>

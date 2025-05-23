@@ -1,6 +1,7 @@
 <?php
     require 'includes/security-headers.php';
     require_once 'includes/session-init.php';
+    require_once 'functions/connect.php';
 
     if (!isset($_SESSION['user_id'])) {
         header('Location: auth/login.php');
@@ -30,15 +31,15 @@
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
-        <section class="bg-[#2D3748] flex md:flex-row flex-col gap-5 flex-grow">
+        <section class="bg-[#2D3748] flex md:flex-row flex-col gap-7 flex-grow">
             <div class="flex flex-col p-7 md:w-100  md:pl-30 bg-[#151a22]">
                 <div class="mb-5">
                     <img src="https://mc-heads.net/avatar/<?= $_SESSION['username'] ?>" class="object-cover w-20 aspect-square" alt="avatar">
                     <p class="pt-5 text-2xl font-bold text-white truncate md:text-4xl"><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');?></p>
                 <p class="flex items-center text-gray-400">ID: <?php echo htmlspecialchars($_SESSION['user_id'], ENT_QUOTES, 'UTF-8'); ?> </p>
-                    <div class="flex items-center mt-2 text-gray-400">
-                        <span class="w-3 h-3 mr-2 bg-green-500 rounded-full"></span>
-                        <p class="text-white">Online</p>
+                    <div id="statusBlock" class="flex items-center mt-2 text-gray-400">
+                        <span id="statusDot" class="w-3 h-3 mr-2 bg-gray-500 rounded-full"></span>
+                        <p id="statusText" class="text-white">Offline</p>
                     </div>
                 </div>
                 <div class="flex flex-col space-y-[4px] text-gray-300 ">
@@ -54,9 +55,33 @@
                     </form>
                 </div>
             </div>
-            <div class="flex flex-col flex-grow w-full pb-20 text-white p-7 md:w-100">
+            <div class="flex flex-col flex-grow w-full p-5 pb-20 text-white md:w-100">
                 <?php require 'includes/profile/' . $tab . '.php'; ?>
             </div>
         </section>
     </body>
+    <script>
+        const uuid = "<?php echo $_SESSION['uuid']; ?>"; 
+        function updateStatus() {
+            fetch(`functions/activity.php?uuid=${uuid}`)
+                .then(res => res.json())
+                .then(data => {
+                    const dot = document.getElementById("statusDot");
+                    const text = document.getElementById("statusText");
+
+                    if (data.online) {
+                        dot.classList.remove("bg-gray-500");
+                        dot.classList.add("bg-green-500");
+                        text.textContent = "Online";
+                    } else {
+                        dot.classList.remove("bg-green-500");
+                        dot.classList.add("bg-gray-500");
+                        text.textContent = "Offline";
+                    }
+                });
+        }
+
+        updateStatus();
+        setInterval(updateStatus, 5000);
+        </script>
 </html>

@@ -85,7 +85,7 @@
     }
 ?>
 
-<div class="space-y-10 md:pr-100">    
+<div class="space-y-10 md:pr-120">    
     <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold e">Profile Settings</p>
 
