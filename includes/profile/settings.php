@@ -77,9 +77,10 @@
 
         if (empty($error)) {
             if ($updatePassword) {
-                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ?, password = ?, last_password_change = NOW() WHERE id = ?");
-                $stmt->bind_param("sssi", $username, $email, $hashedPassword, $userId);
-                $_SESSION['last_password_change'] = gmdate('Y-m-d H:i:s');
+                $lastPasswordChange = gmdate('Y-m-d H:i:s');
+                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ?, password = ?, last_password_change = ? WHERE id = ?");
+                $stmt->bind_param("ssssi", $username, $email, $hashedPassword, $lastPasswordChange, $userId);
+                $_SESSION['last_password_change'] = $lastPasswordChange;
 
             } else {
                 $stmt = $conn->prepare("UPDATE players SET username = ?, email = ? WHERE id = ?");
@@ -103,7 +104,7 @@
 ?>
 
 <div class="space-y-10 md:pr-100">    
-    <div class="text-white space-y-2">
+    <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold e">Profile Settings</p>
 
         <?php if (!empty($_SESSION['success_profile'])): ?>
@@ -134,10 +135,10 @@
                 <input type="email" id="email" name="email" class="glob-input <?= !empty($error['email']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : htmlspecialchars($user['email']) ?>">
             </div>
 
-            <button type="submit" class="glob-btn mt-5 bg-blue-500 hover:bg-blue-600">Save Changes</button>
+            <button type="submit" class="mt-5 bg-blue-500 glob-btn hover:bg-blue-600">Save Changes</button>
         </form>
     </div>
-    <div class="text-white space-y-2">
+    <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold">Password </p>
         <p>Please remember your password as there is currently no way to reset it.</p>
         <p class="mb-5 text-sm italic text-gray-300"> Last changed: <span id="last_auth_change_timestamp" data-time="<?= htmlspecialchars($_SESSION['last_password_change'], ENT_QUOTES, 'UTF-8') ?>"></span></p>
@@ -180,7 +181,7 @@
                 <label for="showPassword">Show Password</label>
             </div>
 
-            <button type="submit" class="glob-btn mt-5 bg-blue-500 hover:bg-blue-600">Change Password</button>
+            <button type="submit" class="mt-5 bg-blue-500 glob-btn hover:bg-blue-600">Change Password</button>
         </form>
     </div>
 </div>
