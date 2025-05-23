@@ -78,6 +78,7 @@
                 $_SESSION['user_id'] = mysqli_insert_id($conn);
                 $_SESSION['username'] = $username;
                 $_SESSION['email'] = $email;
+                $_SESSION['uuid'] = $uuid;
                 
                 // delete the secret from auth table
                 $delete_secret_sql = "DELETE FROM auth WHERE secret = ?";

@@ -8,7 +8,7 @@
     }
 
     $tab = $_GET['tab'] ?? 'settings';
-    if (!in_array($tab, ['notifications', 'settings', 'privacy', 'language'])) {
+    if (!in_array($tab, ['notifications', 'statistics', 'playpass', 'settings', 'privacy', 'language'])) {
         $tab = 'settings';
         header('Location: profile.php?tab=settings');
     }
@@ -43,6 +43,8 @@
                 </div>
                 <div class="flex flex-col space-y-[4px] text-gray-300 ">
                     <button onclick="window.location.href='profile.php?tab=notifications';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'notifications') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Notifications</button>
+                    <button onclick="window.location.href='profile.php?tab=statistics';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'statistics') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Statistics</button>
+                    <button onclick="window.location.href='profile.php?tab=playpass';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'playpass') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">PlayPass</button>
                     <button onclick="window.location.href='profile.php?tab=settings';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'settings') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">User Settings</button>
                     <button onclick="window.location.href='profile.php?tab=privacy';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'privacy') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Data and Privacy</button>
                     <button onclick="window.location.href='profile.php?tab=language';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'language') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Language</button>

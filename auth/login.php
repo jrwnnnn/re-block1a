@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['email'] = $user['email']; 
+            $_SESSION['uuid'] = $user['uuid'];
             $_SESSION['last_password_change'] = $user['last_password_change']; 
             $_SESSION['permission_level'] = $user['permission_level']; 
             
