@@ -1,5 +1,5 @@
 <?php
-    require_once 'includes/session-init.php';
+    require_once '../includes/session-init.php';
     unset($_SESSION['id']);
 
     session_unset();
