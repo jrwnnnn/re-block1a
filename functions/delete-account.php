@@ -7,7 +7,7 @@
                 die("Connection failed: " . $conn->connect_error);
             }
             $user = htmlspecialchars($_SESSION['user_id'], ENT_QUOTES, 'UTF-8'); 
-            $stmt = $conn->prepare("DELETE FROM user_data WHERE id = ?"); 
+            $stmt = $conn->prepare("DELETE FROM players WHERE id = ?"); 
             $stmt->bind_param("s", $user); 
             $sqlres = $stmt->execute(); 
             $stmt->close();

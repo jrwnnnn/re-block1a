@@ -8,7 +8,7 @@
     }
 
     $userId = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT * FROM user_data WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM players WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -39,7 +39,7 @@
             } elseif (strlen($username) < 3 || strlen($username) > 16) {
                 $error['username'] = "Username must be between 3 and 16 characters long.";
             } else {
-                $stmt = $conn->prepare("SELECT id FROM user_data WHERE username = ? AND id != ?");
+                $stmt = $conn->prepare("SELECT id FROM players WHERE username = ? AND id != ?");
                 $stmt->bind_param("si", $username, $userId);
                 $stmt->execute();
                 $stmt->store_result();
@@ -50,7 +50,7 @@
         }
 
         if ($email !== $user['email']) {
-            $stmt = $conn->prepare("SELECT id FROM user_data WHERE email = ? AND id != ?");
+            $stmt = $conn->prepare("SELECT id FROM players WHERE email = ? AND id != ?");
             $stmt->bind_param("si", $email, $userId);
             $stmt->execute();
             $stmt->store_result();
@@ -77,12 +77,12 @@
 
         if (empty($error)) {
             if ($updatePassword) {
-                $stmt = $conn->prepare("UPDATE user_data SET username = ?, email = ?, password = ?, last_password_change = NOW() WHERE id = ?");
+                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ?, password = ?, last_password_change = NOW() WHERE id = ?");
                 $stmt->bind_param("sssi", $username, $email, $hashedPassword, $userId);
                 $_SESSION['last_password_change'] = gmdate('Y-m-d H:i:s');
 
             } else {
-                $stmt = $conn->prepare("UPDATE user_data SET username = ?, email = ? WHERE id = ?");
+                $stmt = $conn->prepare("UPDATE players SET username = ?, email = ? WHERE id = ?");
                 $stmt->bind_param("ssi", $username, $email, $userId);
             }
     
