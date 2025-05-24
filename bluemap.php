@@ -31,7 +31,7 @@
         <p class="text-2xl font-bold text-white md:text-4xl">Loading Map...</p>
         <p class="text-white">Hang tight while we load this.</p>
       </div>
-      <iframe id="iframe" src="http://118.127.8.162:25789/#world:<?= $x . ':0:' . $z . ':' . $zoom ?>:0:0:0:0:perspective" class="hidden w-full h-full" onload="const t = Math.floor(Math.random() * 5 + 1) * 1000; setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('iframe').classList.remove('hidden'); }, t);"></iframe>
+      <iframe id="iframe" src="https://bluemap-proxy.onrender.com/bluemap/#world:<?= $x . ':0:' . $z . ':' . $zoom ?>:0:0:0:0:perspective" class="hidden w-full h-full" onload="const t = Math.floor(Math.random() * 5 + 1) * 1000; setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('iframe').classList.remove('hidden'); }, t);"></iframe>
     </div>
   </section>
 </body>
