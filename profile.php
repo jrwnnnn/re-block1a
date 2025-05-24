@@ -9,9 +9,40 @@
     }
 
     $tab = $_GET['tab'] ?? 'statistics';
-    if (!in_array($tab, ['notifications', 'statistics', 'playpass', 'settings', 'privacy', 'language'])) {
+    if (!in_array($tab, ['statistics', 'playpass', 'settings'])) {
         $tab = 'statistics';
         header('Location: profile.php?tab=statistics');
+    }
+
+    $uuid = $_SESSION['uuid'];
+    
+    $sql = "SELECT firstJoined, playTime, lastSeen FROM statistics WHERE uuid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $uuid);
+    $stmt->execute();
+    $stmt->bind_result($firstJoined, $playTime, $lastSeen);
+    $stmt->fetch();
+    $stmt->close();
+
+    function ticksToReadable($ticks) {
+    if (!is_numeric($ticks) || $ticks <= 0) return "0s";
+
+    $seconds = floor($ticks / 20);
+    $minutes = floor($seconds / 60);
+    $hours   = floor($minutes / 60);
+    $days    = floor($hours / 24);
+
+    $seconds = $seconds % 60;
+    $minutes = $minutes % 60;
+    $hours   = $hours % 24;
+
+    $parts = [];
+    if ($days > 0)    $parts[] = "{$days}d";
+    if ($hours > 0)   $parts[] = "{$hours}h";
+    if ($minutes > 0) $parts[] = "{$minutes}m";
+    if ($seconds > 0 && empty($parts)) $parts[] = "{$seconds}s";
+
+    return implode(' ', $parts);
     }
 ?> 
 
@@ -31,57 +62,110 @@
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
-        <section class="bg-[#2D3748] flex md:flex-row flex-col flex-grow">
-            <div class="flex flex-col p-7 md:w-100  md:pl-30 bg-[#151a22]">
-                <div class="mb-5">
-                    <img src="https://mc-heads.net/avatar/<?= $_SESSION['username'] ?>" class="object-cover w-20 aspect-square" alt="avatar">
-                    <p class="pt-5 text-2xl font-bold text-white truncate md:text-4xl"><?php echo htmlspecialchars($_SESSION['username'], ENT_QUOTES, 'UTF-8');?></p>
-                <p class="flex items-center text-gray-400">ID: <?php echo htmlspecialchars($_SESSION['user_id'], ENT_QUOTES, 'UTF-8'); ?> </p>
-                    <div id="statusBlock" class="flex items-center mt-2 text-gray-400">
-                        <span id="statusDot" class="w-3 h-3 mr-2 bg-gray-500 rounded-full"></span>
-                        <p id="statusText" class="text-white">Offline</p>
+        <!-- Beta Warning -->
+        <div class="flex items-center justify-center gap-2 px-4 py-2 bg-red-600">
+            <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
+            <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
+        </div>
+        <!-- Top Card -->
+        <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-7">
+            <img src="https://visage.surgeplay.com/bust/512/<?= htmlspecialchars($_SESSION['username']); ?>" alt="User Avatar" class="w-40 md:w-50">
+            <div class="flex flex-col justify-between flex-grow">
+                <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
+                    <div class="text-white topCardText">
+                        <p class="mb-2 text-4xl font-bold"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
+                        <p class="hidden md:block"><b>UUID:</b> <?= htmlspecialchars($_SESSION['uuid']); ?></p>
+                        <p class="block md:hidden"><b>Status</b> <span id="mdStatusText">Loading...</span></p>
+                        <p><b>Last Seen:</b> <span class="py-1 text-right" id="lastSeen">Loading...</span></p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-5 mt-5 md:mt-0">
+                        <img src="https://cdn-icons-png.flaticon.com/128/6853/6853826.png" alt="Playpass Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" />
+                        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917103.png" alt="Settings Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
                     </div>
                 </div>
-                <div class="flex flex-col space-y-[4px] text-gray-300 ">
-                    <button onclick="window.location.href='profile.php?tab=notifications';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'notifications') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Notifications</button>
-                    <button onclick="window.location.href='profile.php?tab=statistics';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'statistics') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Statistics</button>
-                    <button onclick="window.location.href='profile.php?tab=playpass';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'playpass') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">PlayPass</button>
-                    <button onclick="window.location.href='profile.php?tab=settings';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'settings') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">User Settings</button>
-                    <button onclick="window.location.href='profile.php?tab=privacy';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'privacy') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Data and Privacy</button>
-                    <button onclick="window.location.href='profile.php?tab=language';" class="py-2 px-3 text-left rounded-md hover:bg-[#222a37] hover:text-white <?php echo ($tab === 'language') ? 'bg-blue-500 text-white' : ''; ?> hover:cursor-pointer">Language</button>
-                    <hr class="flex-grow my-2 border-gray-800 border-1">
-                    <form action="functions/logout.php" method="POST" class="flex">
-                        <button type="submit" class="flex-grow px-3 py-2 text-left text-gray-300 rounded-md hover:bg-red-500 hover:text-white hover:cursor-pointer">Logout</button>
-                    </form>
+                <div class="flex-shrink hidden grid-cols-3 mr-10 md:grid gap-15">
+                    <div class="text-white topCardText">
+                        <p class="text-sm">Status</p>
+                        <p class="flex items-center gap-2 text-lg font-bold" id="statusText">Loading...</p>
+                    </div>
+                    <div class="text-white topCardText">
+                        <p class="text-sm">Total Playtime</p>
+                        <p class="text-lg font-bold"><?= htmlspecialchars(ticksToReadable($playTime)); ?></p>
+                    </div>
+                    <div class="text-white topCardText">
+                        <p class="text-sm">Joined</p>
+                        <p class="text-lg font-bold" id="firstJoined">Loading...</p>
+                    </div>
                 </div>
             </div>
-            <div class="flex flex-col flex-grow w-full px-5 py-10 pb-20 text-white md:px-10 md:pr-30">
+        </div>
+        <section class="bg-[#2D3748] py-10 md:px-30 flex flex-col space-y-6">
+            <div class="flex flex-col flex-grow w-full min-h-screen mt-5 text-white md:px-20">
                 <?php require 'includes/profile/' . $tab . '.php'; ?>
             </div>
         </section>
     </body>
-    <script>
-        const uuid = "<?php echo $_SESSION['uuid']; ?>"; 
-        function updateStatus() {
-            fetch(`functions/activity.php?uuid=${uuid}`)
-                .then(res => res.json())
-                .then(data => {
-                    const dot = document.getElementById("statusDot");
-                    const text = document.getElementById("statusText");
+<script src="script/timeFunctions.js"></script>
+<script>
+    const firstJoined = "<?= htmlspecialchars($firstJoined); ?>";
+    const lastSeen = "<?= htmlspecialchars($lastSeen); ?>";
+    document.getElementById("firstJoined").textContent = convertToLocalTime(firstJoined, {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+    });
+    document.getElementById("lastSeen").textContent = convertToLocalTime(lastSeen, {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+    });
 
+    const uuid = "<?php echo $_SESSION['uuid']; ?>"; 
+    function updateStatus() {
+        fetch(`functions/activity.php?uuid=${uuid}`)
+            .then(res => res.json())
+            .then(data => {
+                const card = document.getElementById("topCard");
+                const status = document.getElementById("statusText");
+                const mdStatus = document.getElementById("mdStatusText");
+
+                // Animate background color transition
+                card.style.transition = "background-color 0.5s";
+                if (data.online) {
+                    card.classList.remove("!bg-[url(../assets/topcard-blue.jpg)]");
+                    card.classList.add("!bg-[url(../assets/topcard-green.jpg)]");
+                    status.textContent = "Online";
+                    mdStatus.textContent = "Online";
+                } else {
+                    card.classList.remove("!bg-[url(../assets/topcard-green.jpg)]");
+                    card.classList.add("!bg-[url(../assets/topcard-blue.jpg)]");
+                    status.textContent = "Offline";
+                    mdStatus.textContent = "Offline";
+                }
+
+                document.querySelectorAll(".topCardText").forEach(text => {
                     if (data.online) {
-                        dot.classList.remove("bg-gray-500");
-                        dot.classList.add("bg-green-500");
-                        text.textContent = "Online";
+                        text.classList.remove("!text-white");
+                        text.classList.add("!text-black");
                     } else {
-                        dot.classList.remove("bg-green-500");
-                        dot.classList.add("bg-gray-500");
-                        text.textContent = "Offline";
+                        text.classList.remove("!text-black");
+                        text.classList.add("!text-white");
                     }
                 });
-        }
+                document.querySelectorAll(".topCardIcon").forEach(icon => {
+                    if (data.online) {
+                        icon.style.setProperty("filter", "invert(0)", "important");
+                    } else {
+                        icon.style.setProperty("filter", "invert(1)", "important");
+                    }
+                });
+            });
+    }
 
-        updateStatus();
-        setInterval(updateStatus, 5000);
-        </script>
+    updateStatus();
+    setInterval(updateStatus, 5000);
+</script>
 </html>

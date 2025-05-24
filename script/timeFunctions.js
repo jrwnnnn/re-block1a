@@ -1,13 +1,10 @@
 function convertToLocalTime(utcDateStr, options = {}) {
     if (!utcDateStr) return 'Never';
 
-    const utcWithTag = utcDateStr + ' UTC';
-    const date = new Date(utcWithTag);
+    const date = new Date(utcDateStr);
 
-    if (isNaN(date)) {
-        return 'Invalid date';
-    }
+    if (isNaN(date)) return 'Invalid date';
 
-    return date.toLocaleDateString(undefined, options);
+    // Use toLocaleString to include both date and time
+    return date.toLocaleString(undefined, options);
 }
-

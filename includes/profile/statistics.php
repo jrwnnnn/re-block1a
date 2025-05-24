@@ -23,59 +23,9 @@
     $stmt->execute();
     $result = $stmt->get_result();
 
-    function ticksToReadable($ticks) {
-        if (!is_numeric($ticks) || $ticks <= 0) return "0s";
-
-        $seconds = floor($ticks / 20);
-        $minutes = floor($seconds / 60);
-        $hours   = floor($minutes / 60);
-        $days    = floor($hours / 24);
-
-        $seconds = $seconds % 60;
-        $minutes = $minutes % 60;
-        $hours   = $hours % 24;
-
-        $parts = [];
-        if ($days > 0)    $parts[] = "{$days}d";
-        if ($hours > 0)   $parts[] = "{$hours}h";
-        if ($minutes > 0) $parts[] = "{$minutes}m";
-        if ($seconds > 0 && empty($parts)) $parts[] = "{$seconds}s";
-
-        return implode(' ', $parts);
-    }
-
 ?>
 
 <div class="flex flex-col space-y-5 md:space-y-10">
-    <!-- Beta Warning -->
-    <div class="flex items-center justify-center gap-2 px-4 py-2 mb-6 bg-red-600 rounded-lg">
-        <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Development Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
-        <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
-    </div>
-
-    <!-- Top Card -->
-    <div class="hidden p-6 space-y-4 bg-blue-500 rounded-lg shadow gap-7 md:flex">
-        <img src="https://visage.surgeplay.com/full/512/<?= htmlspecialchars($_SESSION['username']); ?>" alt="User Avatar" class="mb-4 rounded-full h-60">
-        <div>
-            <div class="flex items-center mt-5 space-x-4">
-                <div>
-                    <div class="text-4xl font-bold text-slate-900"><?php echo htmlspecialchars($_SESSION['username']); ?></div>
-                    <div class="text-black ">UUID: <?= htmlspecialchars($_SESSION['uuid']); ?></div>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-5">
-                <div class="py-4 text-black rounded">
-                    <div class="text-sm">Total Playtime</div>
-                    <div class="text-lg font-bold"><?= htmlspecialchars(ticksToReadable($playTime)); ?></div>
-
-                </div>
-                <div class="py-4 text-black rounded">
-                    <div class="text-sm">Joined</div>
-                    <div class="text-lg font-bold" data-time="<?= htmlspecialchars($firstJoined); ?>" data-format='{"year":"numeric","month":"long","day":"numeric"}'>Loading...</div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Statistics and Skin -->
     <div class="grid gap-10 px-5 md:grid-cols-2">
         <div class="flex flex-col">
@@ -151,6 +101,10 @@
                 <img src="https://icons.veryicon.com/png/o/object/material-design-icons-1/minecraft-8.png" alt="Statistics Icon" class="w-6 h-6 mr-2" style="filter: invert(1);">
                 <p class="text-2xl font-bold text-white">Skin</p>
             </div>
+            <div class="flex items-center justify-center gap-2 px-4 py-2 mt-2 bg-red-600 rounded-md">
+                <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
+                <p class="text-sm font-semibold text-white "> Skin fetching for offline players is not supported yet. </p>
+            </div>
         </div>
     </div>
     <div class="flex flex-col px-5">
@@ -161,7 +115,7 @@
         <p class="mb-5 text-sm italic text-gray-300">Your last 5 deaths will be shown here.</p>
         <?php if ($result && $result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
-                <div onclick="window.location.href='bluemap.php?x=<?= htmlspecialchars($row['x']); ?>&z=<?= htmlspecialchars($row['z']); ?>&zoom=100'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
+                <div onclick="window.location.href='bluemap.php?x=<?= htmlspecialchars($row['x']); ?>&z=<?= htmlspecialchars($row['z']); ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
                     <p class="font-bold text-white"><?= htmlspecialchars($row['cause']); ?></p>
                     <p class="text-sm text-gray-400"><?= htmlspecialchars($row['x']) ?>, <?= htmlspecialchars($row['y']) ?>, <?= htmlspecialchars($row['z']) ?></p>
                     <p class="text-sm text-gray-400" 
@@ -182,6 +136,7 @@
             <img src="https://cdn-icons-png.flaticon.com/128/786/786346.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Armor</p>
         </div>
+        <p class="mt-2 italic text-gray-500">We're still building this feature. Please check back later!</p>
     </div> 
 </div>
 <script src="script/timeFunctions.js"></script>
