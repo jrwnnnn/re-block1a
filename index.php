@@ -46,7 +46,7 @@
     <section class="bg-[#1a202a] md:px-30 px-5 py-5">
         <div class="grid grid-cols-3 gap-3 md:gap-10">
             <div class="text-center text-white">
-                <p class="text-2xl font-bold text-yellow-500 md:text-5xl">27</p>
+                <p class="text-2xl font-bold text-yellow-500 md:text-5xl">22</p>
                 <p>Unique players</p>
             </div>
             <div class="text-center text-white">

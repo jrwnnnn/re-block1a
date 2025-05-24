@@ -4,7 +4,7 @@ function copyToClipboard() {
     navigator.clipboard.writeText(text);
   }
 
-  fetch('https://api.mcsrvstat.us/2/invadedlands.net')
+  fetch('https://api.mcsrvstat.us/2/cs1a.minecra.fr')
   .then(response => response.json())
   .then(data => {
     document.getElementById('player-count').innerText = data.players.online;
