@@ -1,6 +1,10 @@
 <?php
   require 'includes/security-headers.php';
   require_once 'includes/session-init.php';
+
+  $x = isset($_GET['x']) ? floatval($_GET['x']) : 1857;
+  $z = isset($_GET['z']) ? floatval($_GET['z']) : 1435;
+  $zoom = isset($_GET['zoom']) ? floatval($_GET['zoom']) : 1250;
 ?>
 
 <!doctype html>
@@ -27,7 +31,7 @@
         <p class="text-2xl font-bold text-white md:text-4xl">Loading Map...</p>
         <p class="text-white">Hang tight while we load this.</p>
       </div>
-      <iframe id="iframe" src="https://bluecolored.de/bluemap/#acrana:302:1778:0.81:113.91:0.78:67" class="hidden w-full h-full" onload="const t = Math.floor(Math.random() * 5 + 1) * 1000; setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('iframe').classList.remove('hidden'); }, t);"></iframe>
+      <iframe id="iframe" src="http://118.127.8.162:25789/#world:<?= $x . ':0:' . $z . ':' . $zoom ?>:0:0:0:0:perspective" class="hidden w-full h-full" onload="const t = Math.floor(Math.random() * 5 + 1) * 1000; setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('iframe').classList.remove('hidden'); }, t);"></iframe>
     </div>
   </section>
 </body>

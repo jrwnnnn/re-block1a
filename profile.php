@@ -8,10 +8,10 @@
         exit();
     }
 
-    $tab = $_GET['tab'] ?? 'settings';
+    $tab = $_GET['tab'] ?? 'statistics';
     if (!in_array($tab, ['notifications', 'statistics', 'playpass', 'settings', 'privacy', 'language'])) {
-        $tab = 'settings';
-        header('Location: profile.php?tab=settings');
+        $tab = 'statistics';
+        header('Location: profile.php?tab=statistics');
     }
 ?> 
 
@@ -31,7 +31,7 @@
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
-        <section class="bg-[#2D3748] flex md:flex-row flex-col gap-7 flex-grow">
+        <section class="bg-[#2D3748] flex md:flex-row flex-col flex-grow">
             <div class="flex flex-col p-7 md:w-100  md:pl-30 bg-[#151a22]">
                 <div class="mb-5">
                     <img src="https://mc-heads.net/avatar/<?= $_SESSION['username'] ?>" class="object-cover w-20 aspect-square" alt="avatar">
@@ -55,7 +55,7 @@
                     </form>
                 </div>
             </div>
-            <div class="flex flex-col flex-grow w-full p-5 pb-20 text-white md:w-100">
+            <div class="flex flex-col flex-grow w-full px-5 py-10 pb-20 text-white md:px-10 md:pr-30">
                 <?php require 'includes/profile/' . $tab . '.php'; ?>
             </div>
         </section>

@@ -116,7 +116,7 @@
     <div class="space-y-2 text-white">
         <p class="mb-5 text-2xl font-bold">Password </p>
         <p>Please remember your password as there is currently no way to reset it.</p>
-        <p class="mb-5 text-sm italic text-gray-300"> Last changed: <span id="last_auth_change_timestamp" data-time="<?= htmlspecialchars($_SESSION['last_password_change'], ENT_QUOTES, 'UTF-8') ?>"></span></p>
+        <p class="mb-5 text-sm italic text-gray-300"> Last changed: <span data-time="<?= htmlspecialchars($_SESSION['last_password_change']) ?>" data-format='{"year":"numeric","month":"long","day":"numeric", "hour":"numeric","minute":"2-digit","second":"2-digit"}'></span></p>
 
         <?php if (!empty($_SESSION['success_password'])): ?>
             <div class="p-3 font-semibold text-center text-white bg-green-600 rounded-md">
@@ -161,23 +161,20 @@
     </div>
 </div>
 
+<script src="script/timeFunctions.js"></script>
 <script>
-    document.getElementById('showPassword').addEventListener('change', function () {
-    const cu_pass = document.getElementById('current_password');
-    const pass = document.getElementById('password');
-    const confirm = document.getElementById('confirm_password');
-    const type = this.checked ? 'text' : 'password';
-    cu_pass.type = type;
-    pass.type = type;
-    confirm.type = type;
-    });
+    document.querySelectorAll('[data-time]').forEach(el => {
+        const utcDateStr = el.getAttribute('data-time');
+        let formatOptions = {};
 
-    const el = document.getElementById('last_auth_change_timestamp');
-    const utcTime = el.dataset.time + ' UTC';
-    const date = new Date(utcTime); 
-    if (!isNaN(date)) {
-        el.innerText = date.toLocaleString(); 
-    } else {
-        el.innerText = "Never"; 
-    }
+        try {
+            const formatData = el.getAttribute('data-format');
+            if (formatData) {
+                formatOptions = JSON.parse(formatData);
+            }
+        } catch(e) {
+        }
+
+        el.textContent = convertToLocalTime(utcDateStr, formatOptions);
+    });
 </script>
