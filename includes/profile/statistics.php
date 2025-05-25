@@ -27,7 +27,7 @@
 
 <div class="flex flex-col space-y-5 md:space-y-10">
     <!-- Statistics and Skin -->
-    <div class="grid gap-10 px-5 md:grid-cols-2">
+    <div class="grid gap-10 md:grid-cols-2">
         <div class="flex flex-col">
             <div class="flex items-center">
                 <img src="https://cdn-icons-png.flaticon.com/128/5528/5528021.png" alt="Statistics Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
@@ -120,7 +120,7 @@
             <img src="https://cdn-icons-png.flaticon.com/128/786/786346.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Armor</p>
         </div>
-        <p class="mt-2 italic text-gray-500">We're still building this feature. Please check back later!</p>
+            
     </div> 
 </div>
 <script src="script/timeFunctions.js"></script>

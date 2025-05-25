@@ -86,7 +86,7 @@
 ?>
 <a href="profile.php" class="mb-5 glob-link">&larr; Back to Statistics</a>
 <div class="space-y-10">
-    <div class="grid grid-cols-2 gap-15">  
+    <div class="grid md:grid-cols-2 gap-15">  
         <div class="space-y-10">
             <div class="space-y-2 text-white">
                 <p class="mb-5 text-2xl font-bold">Profile Settings</p>

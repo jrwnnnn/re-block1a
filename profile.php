@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <section class="bg-[#2D3748] py-10 md:px-30 flex flex-col space-y-6">
+        <section class="bg-[#2D3748] py-10 md:px-30 px-5 flex flex-col space-y-6">
             <div class="flex flex-col flex-grow w-full min-h-screen mt-5 text-white md:px-20">
                 <?php require 'includes/profile/' . $tab . '.php'; ?>
             </div>
