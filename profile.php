@@ -69,7 +69,7 @@
         </div>
         <!-- Top Card -->
         <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-7">
-            <img src="https://visage.surgeplay.com/bust/512/<?= htmlspecialchars($_SESSION['username']); ?>" alt="User Avatar" class="w-40 md:w-50">
+            <img src="https://visage.surgeplay.com/full/512/<?= htmlspecialchars($_SESSION['username']); ?>" alt="User Avatar" class="w-40 md:w-50">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">

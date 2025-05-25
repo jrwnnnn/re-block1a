@@ -3,6 +3,14 @@
     @import "./help-and-support.css";
     @import "./markdown.css";
 
+    @font-face {
+        font-family: 'Minecraftia';
+        src: url('../assets/fonts/Minecraft_Seven.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+    .font-minecraft { font-family: 'Minecraftia', 'monospace', monospace; }
+
     body {
         font-family: 'Outfit';
     }
