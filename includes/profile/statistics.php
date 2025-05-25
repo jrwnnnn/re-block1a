@@ -35,18 +35,6 @@
             </div>
             <table class="w-full mt-2 text-sm text-gray-200">
                 <tr>
-                <td class="py-1 pr-2 font-medium text-gray-200">Advancements</td>
-                <td class="py-1 text-right">
-                    <?php
-                    $totalAdvancements = 122;
-                    $progress = is_numeric($advancement) && $totalAdvancements > 0
-                        ? round(($advancement / $totalAdvancements) * 100)
-                        : 0;
-                    ?>
-                    <?= htmlspecialchars($advancement); ?> / <?= $totalAdvancements; ?> (<?= $progress; ?>%)
-                </td>
-                </tr>
-                <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Blocks Broken</td>
                 <td class="py-1 text-right"><?= htmlspecialchars($blockMined); ?></td>
                 </tr>
@@ -73,10 +61,6 @@
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Distance Traveled</td>
                 <td class="py-1 text-right"><?= htmlspecialchars($distanceTraveled); ?> Blocks</td>
-                </tr>
-                <tr>
-                <td class="py-1 pr-2 font-medium text-gray-300">Last Seen</td>
-                <td class="py-1 text-right" data-time='<?= htmlspecialchars($lastSeen); ?>' data-format='{"year":"numeric","month":"long","day":"numeric" ,"hour":"2-digit","minute":"2-digit"}'></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Level</td>
