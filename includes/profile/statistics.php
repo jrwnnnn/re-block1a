@@ -91,7 +91,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col px-5">
+    <div class="flex flex-col">
         <div class="flex items-center">
             <img src="https://cdn-icons-png.flaticon.com/128/18650/18650881.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Death Logs</p>
@@ -115,7 +115,7 @@
         </div>
         <?php endif; ?>
     </div> 
-    <div class="flex flex-col px-5">
+    <div class="flex flex-col">
         <div class="flex items-center">
             <img src="https://cdn-icons-png.flaticon.com/128/786/786346.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Armor</p>
