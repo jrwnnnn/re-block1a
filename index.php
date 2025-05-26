@@ -120,36 +120,25 @@
         </section>
         <section class="bg-[#2D3748] text-white">
             <div class="px-5 pt-10 md:px-30">
-                <?php if (!empty($onlinePlayers)): ?>
-                    <div class="flex overflow-x-auto gap-2 md:gap-5 md:pl-5 py-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
-                        <?php foreach ($onlinePlayers as $player): ?>
-                            <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
-                                <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
-                                <p class="font-bold truncate"><?= $player['username'] ?></p>
-                                <p class="text-sm text-gray-700">Online</p>
-                            </div>
-                        <?php endforeach; ?>
-                        <?php foreach ($offlinePlayers as $player): ?>
-                            <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-gray-400 bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
-                                <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
-                                <p class="font-bold truncate"><?= $player['username'] ?></p>
-                                <p class="text-sm text-gray-700">Offline</p>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
-                <?php endif; ?>
+                <div class="flex overflow-x-auto gap-2 md:gap-5 md:pl-5 py-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
+                    <?php foreach ($onlinePlayers as $player): ?>
+                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                            <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
+                            <p class="font-bold truncate"><?= $player['username'] ?></p>
+                            <p class="text-sm text-gray-700">Online</p>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php foreach ($offlinePlayers as $player): ?>
+                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-gray-400 bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
+                            <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
+                            <p class="font-bold truncate"><?= $player['username'] ?></p>
+                            <p class="text-sm text-gray-700">Offline</p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
         </section>
     <?php endif; ?>
-
-
-
-
-
-
-
-
-    
     <section class="flex flex-col px-5 py-10 <?= !isset($_SESSION['user_id']) ? 'bg-white ' : 'bg-[#2D3748] ' ?> md:px-30">
         <p class="text-3xl font-bold <?= !isset($_SESSION['user_id']) ? 'text-black ' : 'text-white ' ?> md:text-5xl mb-7">News</p>
         <div class="grid gap-10 md:grid-cols-3 hover:cursor-pointer">
