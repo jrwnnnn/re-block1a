@@ -108,7 +108,7 @@
             </div>
             <?php if ($spotlightPost): ?>
                 <div class="relative">
-                    <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[40vh] h-[60vh] object-cover object-center">
+                    <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
                     <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
                         <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
                         <p class="pb-5 text-3xl font-bold md:text-5xl"><?= htmlspecialchars($spotlightPost['title'], ENT_QUOTES, 'UTF-8') ?></p>
