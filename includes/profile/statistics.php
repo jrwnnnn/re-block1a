@@ -270,7 +270,7 @@
             <img src="https://cdn-icons-png.flaticon.com/128/18650/18650881.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Death Logs</p>
         </div>
-        <p class="mb-5 text-sm italic text-gray-300">The last 5 deaths will be shown here.</p>
+        <p class="mb-5 text-sm italic text-gray-300">The last 10 deaths will be shown here.</p>
         <?php if ($result && $result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div onclick="window.location.href='bluemap.php?x=<?= htmlspecialchars($row['x']); ?>&z=<?= htmlspecialchars($row['z']); ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
