@@ -205,6 +205,16 @@
 
         el.textContent = convertToLocalTime(utcDateStr, formatOptions);
     });
+
+    document.getElementById('showPassword').addEventListener('change', function () {
+        const cu_pass = document.getElementById('current_password');
+        const pass = document.getElementById('password');
+        const confirm = document.getElementById('confirm_password');
+        const type = this.checked ? 'text' : 'password';
+        cu_pass.type = type;
+        pass.type = type;
+        confirm.type = type;
+    });
     
     function showDeleteForm() {
         const deleteForm = document.getElementById('delete-form');
