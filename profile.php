@@ -1,48 +1,60 @@
 <?php
-    require 'includes/security-headers.php';
+    require_once 'includes/security-headers.php';
     require_once 'includes/session-init.php';
     require_once 'functions/connect.php';
 
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['user_id']) && !isset($_GET['player'])) {
         header('Location: auth/login.php');
         exit();
     }
 
+    $uuid = $_GET['player'] ?? $_SESSION['uuid'];
+    
+    $sql = "SELECT uuid FROM players WHERE uuid = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $uuid);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if (!$result || $result->num_rows === 0) {
+        header('Location: 404.php?error=player_not_found');
+    }
+    $stmt->close();
+    
     $tab = $_GET['tab'] ?? 'statistics';
     if (!in_array($tab, ['statistics', 'playpass', 'settings'])) {
         $tab = 'statistics';
         header('Location: profile.php?tab=statistics');
+    } else if ($tab === 'settings') {
+        $uuid = $_SESSION['uuid'];
     }
 
-    $uuid = $_SESSION['uuid'];
-    
-    $sql = "SELECT firstJoined, playTime, lastSeen FROM statistics WHERE uuid = ?";
+    $sql = "SELECT username, uuid, firstJoined, playTime, lastSeen FROM statistics WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();
-    $stmt->bind_result($firstJoined, $playTime, $lastSeen);
+    $stmt->bind_result($username, $uuid, $firstJoined, $playTime, $lastSeen);
     $stmt->fetch();
     $stmt->close();
 
     function ticksToReadable($ticks) {
-    if (!is_numeric($ticks) || $ticks <= 0) return "0s";
+        if (!is_numeric($ticks) || $ticks <= 0) return "0s";
 
-    $seconds = floor($ticks / 20);
-    $minutes = floor($seconds / 60);
-    $hours   = floor($minutes / 60);
-    $days    = floor($hours / 24);
+            $seconds = floor($ticks / 20);
+            $minutes = floor($seconds / 60);
+            $hours   = floor($minutes / 60);
+            $days    = floor($hours / 24);
 
-    $seconds = $seconds % 60;
-    $minutes = $minutes % 60;
-    $hours   = $hours % 24;
+            $seconds = $seconds % 60;
+            $minutes = $minutes % 60;
+            $hours   = $hours % 24;
 
-    $parts = [];
-    if ($days > 0)    $parts[] = "{$days}d";
-    if ($hours > 0)   $parts[] = "{$hours}h";
-    if ($minutes > 0) $parts[] = "{$minutes}m";
-    if ($seconds > 0 && empty($parts)) $parts[] = "{$seconds}s";
+            $parts = [];
+            if ($days > 0)    $parts[] = "{$days}d";
+            if ($hours > 0)   $parts[] = "{$hours}h";
+            if ($minutes > 0) $parts[] = "{$minutes}m";
+            if ($seconds > 0 && empty($parts)) $parts[] = "{$seconds}s";
 
-    return implode(' ', $parts);
+        return implode(' ', $parts);
     }
 ?> 
 
@@ -62,25 +74,27 @@
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
-        <!-- Beta Warning -->
-        <div class="flex items-center justify-center gap-2 px-4 py-2 bg-red-600">
-            <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
-            <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
-        </div>
         <!-- Top Card -->
         <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-7">
-            <img src="https://visage.surgeplay.com/full/512/<?= $_SESSION['username'] ?>" alt="User Avatar" class="w-40 md:w-50" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/full/512/X-Steve';">
+            <img src="https://visage.surgeplay.com/full/512/<?= $username ?>" alt="User Avatar" class="w-40 md:w-50" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/full/512/X-Steve';">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
-                        <p class="mb-2 text-4xl font-bold"><?php echo htmlspecialchars($_SESSION['username']); ?></p>
-                        <p class="hidden md:block"><b>UUID:</b> <?= htmlspecialchars($_SESSION['uuid']); ?></p>
+                        <p class="mb-2 text-4xl font-bold"><?php echo htmlspecialchars($username); ?></p>
+                        <p class="hidden md:block"><b>UUID:</b> <?= htmlspecialchars($uuid); ?></p>
                         <p class="block md:hidden"><b>Status</b> <span id="mdStatusText">Loading...</span></p>
                         <p><b>Last Seen:</b> <span class="py-1 text-right" id="lastSeen">Loading...</span></p>
                     </div>
-                    <div class="grid grid-cols-2 gap-5 mt-5 md:mt-0">
+                    <div class="flex justify-end gap-5 mt-5 md:mt-0">
                         <img src="https://cdn-icons-png.flaticon.com/128/6853/6853826.png" alt="Playpass Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" />
-                        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917103.png" alt="Settings Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
+                        <?php if (isset($_SESSION['uuid']) && $uuid === $_SESSION['uuid']): ?>
+                            <img src="https://cdn-icons-png.flaticon.com/128/503/503849.png" alt="Settings Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
+                            <form action="functions/logout.php" method="POST">
+                                <button type="submit" style="background: none; border: none; padding: 0;">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/4400/4400629.png" alt="Logout Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" />
+                                </button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="flex-shrink hidden grid-cols-3 mr-10 md:grid gap-15">
@@ -123,7 +137,7 @@
             hour12: true
     });
 
-    const uuid = "<?php echo $_SESSION['uuid']; ?>"; 
+    const uuid = "<?php echo $uuid; ?>"; 
     function updateStatus() {
         fetch(`functions/activity.php?uuid=${uuid}`)
             .then(res => res.json())
@@ -133,7 +147,7 @@
                 const mdStatus = document.getElementById("mdStatusText");
 
                 // Animate background color transition
-                card.style.transition = "background-color 0.5s";
+                card.style.transition = "background-image 0.5s";
                 if (data.online) {
                     card.classList.remove("!bg-[url(../assets/topcard-blue.jpg)]");
                     card.classList.add("!bg-[url(../assets/topcard-green.jpg)]");

@@ -90,7 +90,7 @@
                 $success_message = "Success! Logging you in...";
                 echo "<script>
                     setTimeout(function() {
-                        window.location.href = '../profile.php';
+                        window.location.href = '../index.php';
                     }, 2000);
                 </script>";
             } else {

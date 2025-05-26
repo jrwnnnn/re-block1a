@@ -165,19 +165,12 @@
         <div class="space-y-10">    
             <div class="text-white">
                 <p class="mb-5 text-2xl font-bold">Data and Privacy</p>
-                <p class="mb-5">We use your data to operate essential features—like saving preferences and displaying your content. You can stop this at any time by disabling or deleting your account.</p>
-            </div>
-            <div class="space-y-2 text-white">
-                <p class="mb-5 text-2xl font-bold">Account Deactivation</p>
-                <p>Disabling your account will make it inactive and hide your profile and posts from other users. You can reactivate it by logging back in. </p>
-                <form action="functions/logout.php" method="POST">
-                    <button type="submit" class="px-3 py-2 mt-5 text-white bg-red-500 rounded-md white hover:bg-red-600 hover:text-white hover:cursor-pointer">Disable Account</button>
-                </form>
+                <p class="mb-5">We use your data to operate essential features—like saving preferences and displaying your playerdata. You can stop this at any time by disabling or deleting your account.</p>
             </div>
 
             <div class="space-y-2 text-white">
                 <p class="mb-5 text-2xl font-bold">Account Removal</p>
-                <p id="state-del">Deleting your account is permanent and cannot be undone. All your data, including posts and profile information, will be removed.</p>
+                <p id="state-del">Deleting your account is permanent and cannot be undone. All your playerdata and profile information, will be removed.</p>
                 <button onclick="showDeleteForm()" id="expand-delete-form" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer">Delete Account</button>
                 <form id="delete-form" action="functions/delete-account.php" method="POST" class="hidden space-y-2">
                     <label for="confirm-username" class="pb-3 text-white"><span class="text-red-500">You're about to delete your account! </span>To confirm, type <b>"<?= htmlspecialchars($_SESSION['username'], ENT_QUOTES< 'UTF_8'); ?>"</b> in the box below</label>

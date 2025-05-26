@@ -15,7 +15,32 @@
     $nonSpotlightPosts = $nonSpotlightResult->fetch_all(MYSQLI_ASSOC);
     $nonSpotlightStmt->close();
 
-    $conn->close();
+    if (isset($_SESSION['user_id'])) {
+        $sql = "SELECT username, uuid FROM statistics WHERE status = 1 AND uuid != '$_SESSION[uuid]' ORDER BY username";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $onlinePlayers = [];
+        while ($row = $result->fetch_assoc()) {
+            $onlinePlayers[] = [
+            'username' => htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8'),
+            'uuid' => htmlspecialchars($row['uuid'], ENT_QUOTES, 'UTF-8')
+            ];
+        }
+        $stmt->close();
+
+        $sql = "SELECT username, uuid FROM statistics WHERE status = 0 AND uuid != '$_SESSION[uuid]' ORDER BY username";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $offlinePlayers = [];
+        while ($row = $result->fetch_assoc()) {
+            $offlinePlayers[] = [
+            'username' => htmlspecialchars($row['username'], ENT_QUOTES, 'UTF-8'),
+            'uuid' => htmlspecialchars($row['uuid'], ENT_QUOTES, 'UTF-8')
+            ];
+        }
+    }
 ?>
 
 
@@ -35,45 +60,98 @@
     <title>Block1A - Home</title>
 </head>
 <body>
-    <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/home_splash.webp')">
-        <?php require 'includes/navigation.php'; ?>
-        <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
-            <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
-            <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.</p>
-            <button id="copy-button" onclick="copyToClipboard()" class="bg-yellow-500 text-black md:text-lg font-bold py-2 px-5 rounded-md mt-5 hover:bg-[#2D3748] hover:text-white hover:cursor-pointer transition duration-300 ease-in-out">Copy IP : cs1a.minecra.fr</button>
-        </div>        
-    </section>
-    <section class="bg-[#1a202a] md:px-30 px-5 py-5">
-        <div class="grid grid-cols-3 gap-3 md:gap-10">
-            <div class="text-center text-white">
-                <p class="text-2xl font-bold text-yellow-500 md:text-5xl">22</p>
-                <p>Unique players</p>
-            </div>
-            <div class="text-center text-white">
-                <p id="player-count" class="text-2xl font-bold text-yellow-500 md:text-5xl">Loading...</p>
-                <p>Online players</p>
-            </div>
-            <div class="text-center text-white">
-                <p class="text-2xl font-bold text-yellow-500 md:text-5xl">99.8%</p>
-                <p>Server Uptime</p>
-            </div>
-        </div>
-    </section>
-    <section class="relative bg-[#2D3748] text-white">
-        <?php if ($spotlightPost): ?>
-            <div class="relative">
-                <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[70vh] h-[80vh] object-cover object-center">
-                <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
-                    <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
-                    <p class="pb-5 text-3xl font-bold md:text-5xl"><?= htmlspecialchars($spotlightPost['title'], ENT_QUOTES, 'UTF-8') ?></p>
-                    <p class="text-base md:text-lg"><?= htmlspecialchars($spotlightPost['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
-                    <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlightPost['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
+    <?php require 'includes/navigation.php'; ?>
+    <?php if (!isset($_SESSION['user_id'])): ?>
+        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/home_splash.webp')">
+            <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
+                <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
+                <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.</p>
+                <button id="copy-button" onclick="copyToClipboard()" class="bg-yellow-500 text-black md:text-lg font-bold py-2 px-5 rounded-md mt-5 hover:bg-[#2D3748] hover:text-white hover:cursor-pointer transition duration-300 ease-in-out">Copy IP : cs1a.minecra.fr</button>
+            </div>        
+        </section>
+        <section class="bg-[#1a202a] md:px-30 px-5 py-5">
+            <div class="grid grid-cols-3 gap-3 md:gap-10">
+                <div class="text-center text-white">
+                    <p class="text-2xl font-bold text-yellow-500 md:text-5xl">22</p>
+                    <p>Unique players</p>
+                </div>
+                <div class="text-center text-white">
+                    <p id="player-count" class="text-2xl font-bold text-yellow-500 md:text-5xl">Loading...</p>
+                    <p>Online players</p>
+                </div>
+                <div class="text-center text-white">
+                    <p class="text-2xl font-bold text-yellow-500 md:text-5xl">99.8%</p>
+                    <p>Server Uptime</p>
                 </div>
             </div>
-        <?php endif; ?>
-    </section>
-    <section class="flex flex-col px-5 py-10 bg-white md:px-30">
-        <p class="text-3xl font-bold text-black md:text-5xl mb-7">News</p>
+        </section>
+        <section class="relative bg-[#2D3748] text-white">
+            <?php if ($spotlightPost): ?>
+                <div class="relative">
+                    <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[70vh] h-[80vh] object-cover object-center">
+                    <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
+                        <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
+                        <p class="pb-5 text-3xl font-bold md:text-5xl"><?= htmlspecialchars($spotlightPost['title'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <p class="text-base md:text-lg"><?= htmlspecialchars($spotlightPost['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlightPost['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
+    <?php endif; ?>
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <section class="relative bg-[#2D3748] text-white">
+            <!-- Beta Warning -->
+            <div class="flex items-center justify-center gap-2 px-4 py-2 bg-red-600">
+                <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
+                <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
+            </div>
+            <?php if ($spotlightPost): ?>
+                <div class="relative">
+                    <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[40vh] h-[60vh] object-cover object-center">
+                    <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
+                        <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
+                        <p class="pb-5 text-3xl font-bold md:text-5xl"><?= htmlspecialchars($spotlightPost['title'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <p class="text-base md:text-lg"><?= htmlspecialchars($spotlightPost['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlightPost['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
+                    </div>
+                </div>
+            <?php endif; ?>
+        </section>
+        <section class="bg-[#2D3748] text-white">
+            <div class="px-5 pt-10 md:px-30">
+                <?php if (!empty($onlinePlayers)): ?>
+                    <div class="flex overflow-x-auto gap-2 md:gap-5 md:pl-5 py-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
+                        <?php foreach ($onlinePlayers as $player): ?>
+                            <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                                <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
+                                <p class="font-bold truncate"><?= $player['username'] ?></p>
+                                <p class="text-sm text-gray-700">Online</p>
+                            </div>
+                        <?php endforeach; ?>
+                        <?php foreach ($offlinePlayers as $player): ?>
+                            <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 bg-gray-400 bg-cover bg-bottom-right rounded-lg shadow-md p-3 md:pr-15 pr-5 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
+                                <img src="https://visage.surgeplay.com/bust/512/<?= $player['username'] ?>" alt="User Avatar" class="md:w-30 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/bust/512/X-Steve';">
+                                <p class="font-bold truncate"><?= $player['username'] ?></p>
+                                <p class="text-sm text-gray-700">Offline</p>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </section>
+    <?php endif; ?>
+
+
+
+
+
+
+
+
+    
+    <section class="flex flex-col px-5 py-10 <?= !isset($_SESSION['user_id']) ? 'bg-white ' : 'bg-[#2D3748] ' ?> md:px-30">
+        <p class="text-3xl font-bold <?= !isset($_SESSION['user_id']) ? 'text-black ' : 'text-white ' ?> md:text-5xl mb-7">News</p>
         <div class="grid gap-10 md:grid-cols-3 hover:cursor-pointer">
             <?php foreach ($nonSpotlightPosts  as $post): ?>
                 <?php
@@ -85,7 +163,7 @@
                         default => 'text-white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $post['id'] ?>'" class="text-black hover:cursor-pointer">
+                <div onclick="window.location.href='news/article.php?id=<?= $post['id'] ?>'" class="<?= !isset($_SESSION['user_id']) ? 'text-black ' : 'text-white ' ?>hover:cursor-pointer">
                     <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
                         <img src="<?= htmlspecialchars($post['cover'], ENT_QUOTES, 'UTF-8') ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
                     </div>
@@ -93,8 +171,8 @@
                     <p class="mb-2 text-2xl font-bold"><?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?></p>
                     <p><?= htmlspecialchars($post['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
                     <div class="flex items-center gap-2 mt-5">                      
-                        <p class="text-sm text-gray-600"><?= date("F d, Y", strtotime($post['date_posted'])) ?></p>
-                        <hr class="flex-grow border-gray-500 md:hidden border-1">
+                        <p class="text-sm <?= !isset($_SESSION['user_id']) ? 'text-gray-600 ' : 'text-gray-300 ' ?>"><?= date("F d, Y", strtotime($post['date_posted'])) ?></p>
+                        <hr class="flex-grow <?= !isset($_SESSION['user_id']) ? 'border-gray-600 ' : 'border-gray-300 ' ?> md:hidden border-1">
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -108,30 +186,32 @@
             </a>
         </div>
     </section>
-    <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
-        <p class="text-4xl font-bold text-yellow-500 md:text-6xl mb-7">The Server</p>
-        <div class="md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
-          <div id="carousel" class="flex transition-transform duration-500 ease-in-out group-hover:brightness-50">
-            <img src="assets/carousel-1.webp" alt="Screenshot 1" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-2.webp" alt="Screenshot 2" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-3.webp" alt="Screenshot 3" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-4.webp" alt="Screenshot 4" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-5.webp" alt="Screenshot 5" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-6.webp" alt="Screenshot 6" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-7.webp" alt="Screenshot 7" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-8.webp" alt="Screenshot 8" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-9.webp" alt="Screenshot 9" class="flex-shrink-0 w-full">
-            <img src="assets/carousel-10.webp" alt="Screenshot 10" class="flex-shrink-0 w-full">
-          </div>
-          <div class="flex flex-col items-center justify-center gap-5 transition-opacity duration-300 ease-in-out md:absolute md:inset-0 md:opacity-0 group-hover:opacity-100">
-            <img src="assets/cs1a.png" class="hidden md:block w-50">
-            <p class="mt-5 text-white md:text-lg md:text-center md:mt-0 md:px-50">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
-          </div>
-        </div>
-    </section>
-    <section class="flex flex-col items-center px-5 py-5 bg-blue-500 md:px-30">
-        <p class="text-center text-white "> Whether you’re here to build, explore, or just vibe with friends, welcome to the crew!</p>
-    </section>
+    <?php if (!isset($_SESSION['user_id'])): ?>
+        <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
+            <p class="text-4xl font-bold text-yellow-500 md:text-6xl mb-7">The Server</p>
+            <div class="md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
+            <div id="carousel" class="flex transition-transform duration-500 ease-in-out group-hover:brightness-50">
+                <img src="assets/carousel-1.webp" alt="Screenshot 1" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-2.webp" alt="Screenshot 2" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-3.webp" alt="Screenshot 3" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-4.webp" alt="Screenshot 4" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-5.webp" alt="Screenshot 5" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-6.webp" alt="Screenshot 6" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-7.webp" alt="Screenshot 7" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-8.webp" alt="Screenshot 8" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-9.webp" alt="Screenshot 9" class="flex-shrink-0 w-full">
+                <img src="assets/carousel-10.webp" alt="Screenshot 10" class="flex-shrink-0 w-full">
+            </div>
+            <div class="flex flex-col items-center justify-center gap-5 transition-opacity duration-300 ease-in-out md:absolute md:inset-0 md:opacity-0 group-hover:opacity-100">
+                <img src="assets/cs1a.png" class="hidden md:block w-50">
+                <p class="mt-5 text-white md:text-lg md:text-center md:mt-0 md:px-50">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
+            </div>
+            </div>
+        </section>
+        <section class="flex flex-col items-center px-5 py-5 bg-blue-500 md:px-30">
+            <p class="text-center text-white "> Whether you’re here to build, explore, or just vibe with friends, welcome to the crew!</p>
+        </section>
+    <?php endif ?>
     <?php require 'includes/footer.php'; ?>
     <script src="script/index.js"></script>
 </body>

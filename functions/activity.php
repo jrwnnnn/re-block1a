@@ -5,7 +5,7 @@
     $uuid = $_GET["uuid"] ?? "";
     if (!$uuid) { echo json_encode(["online" => false]); exit; }
 
-    $sql = "SELECT online FROM players WHERE uuid = ?";
+    $sql = "SELECT status FROM statistics WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();

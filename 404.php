@@ -9,6 +9,9 @@
   } else if ($returnError == 'unauthorized') {
       $title = 'Unauthorized Access';
       $message = 'You do not have permission to access this page.';
+  } else if ($returnError == 'player_not_found') {
+      $title = 'Player Not Found';
+      $message = 'The player you are looking for is either not yet created or does not exist.';
   } else {
       $title = 'Error';
       $message = 'An unknown error occurred.';

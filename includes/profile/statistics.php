@@ -1,15 +1,14 @@
-<!-- TODO - Add enchantment glints to armor pieces -->
-
 <?php
+    require_once 'includes/security-headers.php';
     require_once 'includes/session-init.php';
     require_once 'functions/connect.php';
-    
-    if (!isset($_SESSION['user_id'])) {
+
+    if (!isset($_SESSION['user_id']) && !isset($_GET['player'])) {
         header('Location: auth/login.php');
         exit();
     }
-    
-    $uuid = $_SESSION['uuid'];
+
+    $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
     $sql = "SELECT 
         blockMined, blockPlaced, damageAbsorbed, damageDealt, damageTaken, damageResisted, deaths, 
@@ -85,7 +84,7 @@
                 'leggings' => '+ 2 Armor',
                 'boots' => '+ 1 Armor',
             ],
-            'gold' => [
+            'golden' => [
                 'helmet' => '+ 2 Armor',
                 'chestplate' => '+ 5 Armor',
                 'leggings' => '+ 3 Armor',
@@ -123,14 +122,12 @@
         echo "No statistics found for UUID: $uuid";
     }
 
-    $sql = "SELECT cause, x, y, z, timestamp FROM death_log WHERE uuid = '$uuid' ORDER BY id DESC LIMIT 5";
+    $sql = "SELECT cause, x, y, z, timestamp FROM death_log WHERE uuid = '$uuid' ORDER BY id DESC LIMIT 10";
     $result = $conn->query($sql);
 
     $conn->close();
 ?>
-
 <div class="flex flex-col space-y-5 md:space-y-10">
-    <!-- Statistics and Skin -->
     <div class="grid gap-10 md:grid-cols-2">
         <div class="flex flex-col">
             <div class="flex items-center">
@@ -250,20 +247,20 @@
             </div>
             <table class="w-full mt-5 text-sm text-gray-200">
                 <tr>
-                <td class="py-1 pr-2 font-medium text-gray-300">Damage Absorbed</td>
-                <td class="py-1 text-right"><?= htmlspecialchars($damageAbsorbed); ?></td>
+                    <td class="py-1 pr-2 font-medium text-gray-300">Damage Absorbed</td>
+                    <td class="py-1 text-right"><?= htmlspecialchars($damageAbsorbed); ?></td>
                 </tr>
                 <tr>
-                <td class="py-1 pr-2 font-medium text-gray-300">Damage Dealt</td>
-                <td class="py-1 text-right"><?= htmlspecialchars($damageDealt); ?></td>
+                    <td class="py-1 pr-2 font-medium text-gray-300">Damage Dealt</td>
+                    <td class="py-1 text-right"><?= htmlspecialchars($damageDealt); ?></td>
                 </tr>
                 <tr>
-                <td class="py-1 pr-2 font-medium text-gray-300">Damage Resisted</td>
-                <td class="py-1 text-right"><?= htmlspecialchars($damageResisted); ?></td>
+                    <td class="py-1 pr-2 font-medium text-gray-300">Damage Resisted</td>
+                    <td class="py-1 text-right"><?= htmlspecialchars($damageResisted); ?></td>
                 </tr>
                 <tr>
-                <td class="py-1 pr-2 font-medium text-gray-300">Damage Taken</td>
-                <td class="py-1 text-right"><?= htmlspecialchars($damageTaken); ?></td>
+                    <td class="py-1 pr-2 font-medium text-gray-300">Damage Taken</td>
+                    <td class="py-1 text-right"><?= htmlspecialchars($damageTaken); ?></td>
                 </tr>
             </table>
         </div>
@@ -273,17 +270,13 @@
             <img src="https://cdn-icons-png.flaticon.com/128/18650/18650881.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
             <p class="text-2xl font-bold text-white">Death Logs</p>
         </div>
-        <p class="mb-5 text-sm italic text-gray-300">Your last 5 deaths will be shown here.</p>
+        <p class="mb-5 text-sm italic text-gray-300">The last 5 deaths will be shown here.</p>
         <?php if ($result && $result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div onclick="window.location.href='bluemap.php?x=<?= htmlspecialchars($row['x']); ?>&z=<?= htmlspecialchars($row['z']); ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
                     <p class="font-bold text-white"><?= htmlspecialchars($row['cause']); ?></p>
                     <p class="text-sm text-gray-400"><?= htmlspecialchars($row['x']) ?>, <?= htmlspecialchars($row['y']) ?>, <?= htmlspecialchars($row['z']) ?></p>
-                    <p class="text-sm text-gray-400" 
-                        data-time="<?= htmlspecialchars($row['timestamp']); ?>" 
-                        data-format='{"year":"numeric","month":"long","day":"numeric" ,"hour":"2-digit","minute":"2-digit"}'>
-                        Loading time...
-                    </p>
+                    <p class="text-sm text-gray-400" data-time="<?= htmlspecialchars($row['timestamp']); ?>" data-format='{"year":"numeric","month":"long","day":"numeric" ,"hour":"2-digit","minute":"2-digit"}'>Loading...</p>
                 </div>
             <?php endwhile; ?>
         <?php else: ?>

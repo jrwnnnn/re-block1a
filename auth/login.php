@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $success_message = "Welcome back, " . htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8') . "!";
             echo "<script>
                 setTimeout(function() {
-                    window.location.href = '../profile.php';
+                    window.location.href = '../index.php';
                 }, 2000);
             </script>";
         } else {
