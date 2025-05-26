@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <meta property="og:type" content="website">
         <meta property="og:title" content="Login - Block1A">
         <meta property="og:description" content="Login to your Block1A account to access exclusive features and content.">
-        <meta property="og:image" content="assets/season2-banner.PNG">
+        <meta property="og:image" content="../assets/season2-banner.PNG">
         <meta property="og:url" content="https://block1a.onrender.com/auth/login.php">
         <meta property="og:site_name" content="Block1A">
         <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
