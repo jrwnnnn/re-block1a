@@ -241,7 +241,7 @@
                         </div>
                     </div>
                     <?php else: ?>
-                    <div class="relative flex items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
+                    <div class="relative flex items-center justify-center p-4 group aspect-square bg-[url(../assets/item_slot.webp)] bg-cover" data-index="<?= $i ?>">
                         <img src="<?= htmlspecialchars($piece['image']) ?>" alt="Empty Slot" class="w-12">
                     </div>
                     <?php endif; ?>
