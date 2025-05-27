@@ -177,8 +177,8 @@
             <div class="flex mt-4 justify-between">
                 <?php foreach ($armor as $i => $piece): ?>
                     <?php if (!empty($piece['name'])): ?>
-                    <div class="flex relative items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500 armor-piece" data-index="<?= $i ?>">
-                        <img src="<?= htmlspecialchars($piece['image']) ?>" alt="<?= htmlspecialchars($piece['name']) ?>" class="w-15">
+                    <div class="flex relative items-center justify-center p-4 rounded-sm group aspect-square bg-[url(../assets/item_slot.webp)] armor-piece bg-cover" data-index="<?= $i ?>">
+                        <img src="<?= htmlspecialchars($piece['image']) ?>" alt="<?= htmlspecialchars($piece['name']) ?>" class="w-12">
                         <div class="armor-tooltip absolute z-50 left-0 top-0 hidden flex-col min-w-[200px] bg-neutral-900/95 border border-neutral-600 rounded shadow-lg p-2 text-white font-minecraft pointer-events-none leading-none">                    
                             <p class="mb-1 font-bold text-white"><?= htmlspecialchars($piece['name']) ?></p>
                             <?php if (!empty($piece['trim'])): ?>
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                     <?php else: ?>
-                    <div class="relative flex items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
+                    <div class="relative flex items-center justify-center p-4 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
                         <img src="<?= htmlspecialchars($piece['image']) ?>" alt="Empty Slot" class="w-12">
                     </div>
                     <?php endif; ?>
