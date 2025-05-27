@@ -19,7 +19,6 @@ document.querySelectorAll('.armor-piece').forEach(piece => {
         tooltip.style.left = (e.offsetX + offsetX) + 'px';
         tooltip.style.top = (e.offsetY + offsetY) + 'px';
     });
-    // Hide tooltip if screen is md on load/resize
     function hideOnMd() {
         if (isMdScreen()) tooltip.style.display = 'none';
     }

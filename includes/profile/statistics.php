@@ -49,7 +49,7 @@
                 'name' => $row['helmet'] !== null ? ucwords($row['helmet']) : null,
                 'trim' => $row['helmetPattern'] !== null ? str_replace(['minecraft:', '_pattern'], '', $row['helmetPattern']) : null,
                 'trim_material' => $row['helmetMaterial'] !== null ? str_replace(['minecraft:', '_material'], '', $row['helmetMaterial']) : null,
-                'enchants' => array_map('ucwords', explode(', ', $row['helmetEnchants'])),
+                'enchants' => $row['helmetEnchants'] !== null ? array_map('ucwords', explode(', ', $row['helmetEnchants'])) : null,
             ],
             [
                 'slot' => 'Body',
@@ -57,7 +57,7 @@
                 'name' => $row['chestplate'] !== null ? ucwords($row['chestplate']) : null,
                 'trim' => $row['chestplatePattern'] !== null ? str_replace(['minecraft:', '_pattern'], '', $row['chestplatePattern']) : null,
                 'trim_material' => $row['chestplateMaterial'] !== null ? str_replace(['minecraft:', '_material'], '', $row['chestplateMaterial']) : null,
-                'enchants' => array_map('ucwords', explode(', ', $row['chestplateEnchants'])),
+                'enchants' => $row['chestplateEnchants'] !== null ? array_map('ucwords', explode(', ', $row['chestplateEnchants'])) : null,
             ],
             [
                 'slot' => 'Legs',
@@ -65,7 +65,7 @@
                 'name' => $row['leggings'] !== null ? ucwords($row['leggings']) : null,
                 'trim' => $row['leggingsPattern'] !== null ? str_replace(['minecraft:', '_pattern'], '', $row['leggingsPattern']) : null,
                 'trim_material' => $row['leggingsMaterial'] !== null ? str_replace(['minecraft:', 'material'], '', $row['leggingsMaterial']) : null,
-                'enchants' => array_map('ucwords', explode(', ', $row['leggingsEnchants'])),
+                'enchants' =>  $row['leggingsEnchants'] !== null ? array_map('ucwords', explode(', ', $row['leggingsEnchants'])) : null,
             ],
             [
                 'slot' => 'Feet',
@@ -73,7 +73,7 @@
                 'name' => $row['boot'] !== null ? ucwords($row['boot']) : null,
                 'trim' => $row['bootPattern'] !== null ? str_replace(['minecraft:', '_pattern'], '', $row['bootPattern']) : null,
                 'trim_material' => $row['bootMaterial'] !== null ? str_replace(['minecraft:', '_material'], '', $row['bootMaterial']) : null,
-                'enchants' => array_map('ucwords', explode(', ', $row['bootEnchants'])),
+                'enchants' =>  $row['bootEnchants'] !== null ? array_map('ucwords', explode(', ', $row['bootEnchants'])) : null
             ],
         ];
 
@@ -174,7 +174,7 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/786/786346.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
                 <p class="text-2xl font-bold text-white">Armor</p>
             </div>
-            <div class="flex justify-between mt-4 gap-5">
+            <div class="flex mt-4 justify-between">
                 <?php foreach ($armor as $i => $piece): ?>
                     <?php if (!empty($piece['name'])): ?>
                     <div class="flex relative items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500 armor-piece" data-index="<?= $i ?>">
@@ -239,7 +239,7 @@
                         </div>
                     </div>
                     <?php else: ?>
-                    <div class="relative flex items-center justify-center p-2 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
+                    <div class="relative flex items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
                         <img src="<?= htmlspecialchars($piece['image']) ?>" alt="Empty Slot" class="w-12">
                     </div>
                     <?php endif; ?>
