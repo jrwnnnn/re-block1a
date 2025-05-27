@@ -28,7 +28,7 @@
         $uuid = $_SESSION['uuid'];
     }
 
-    $sql = "SELECT username, uuid, firstJoined, playTime, lastSeen FROM statistics WHERE uuid = ?";
+    $sql = "SELECT username, uuid, firstJoined, playTime, lastSeen FROM player_data WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();

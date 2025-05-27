@@ -18,7 +18,7 @@
         chestplate, chestplatePattern, chestplateMaterial, chestplateEnchants,
         leggings, leggingsPattern, leggingsMaterial, leggingsEnchants,
         boot, bootPattern, bootMaterial, bootEnchants
-    FROM statistics
+    FROM player_data
     WHERE uuid = '$uuid'";
 
     $result = $conn->query($sql);
@@ -174,72 +174,74 @@
                 <img src="https://cdn-icons-png.flaticon.com/128/786/786346.png" alt="Death Logs Icon" class="w-5 h-5 mr-2" style="filter: invert(1);">
                 <p class="text-2xl font-bold text-white">Armor</p>
             </div>
-            <div class="flex mt-4 justify-between">
+            <div class="flex mt-4">
                 <?php foreach ($armor as $i => $piece): ?>
                     <?php if (!empty($piece['name'])): ?>
-                    <div class="flex relative items-center justify-center p-4 rounded-sm group aspect-square bg-[url(../assets/item_slot.webp)] armor-piece bg-cover" data-index="<?= $i ?>">
+                    <div class="flex relative items-center justify-center p-4 group aspect-square bg-[url(../assets/item_slot.webp)] armor-piece bg-cover" data-index="<?= $i ?>">
                         <img src="<?= htmlspecialchars($piece['image']) ?>" alt="<?= htmlspecialchars($piece['name']) ?>" class="w-12">
-                        <div class="armor-tooltip absolute z-50 left-0 top-0 hidden flex-col min-w-[200px] bg-neutral-900/95 border border-neutral-600 rounded shadow-lg p-2 text-white font-minecraft pointer-events-none leading-none">                    
+                        <div class="armor-tooltip absolute z-50 left-0 top-0 hidden min-w-[200px] bg-neutral-900/95 shadow-lg p-1 pointer-events-none">                    
+                            <div class="border-2 border-[#34009a] p-1 text-white font-minecraft leading-none flex-col flex-grow">
                             <p class="mb-1 font-bold text-white"><?= htmlspecialchars($piece['name']) ?></p>
-                            <?php if (!empty($piece['trim'])): ?>
-                                <p class="text-gray-400">Upgrade:</p>
-                                <p class="ml-2 text-white"><?= ucwords(htmlspecialchars($piece['trim'])) ?> Armor Trim</p>
-                                <p class="ml-2 text-white"><?= ucwords(htmlspecialchars($piece['trim_material'])) ?> Material</p>
-                            <?php endif; ?>
-                            <?php if (!empty($piece['enchants'])): ?>
-                                <?php foreach ($piece['enchants'] as $enchant): ?>
-                                    <?php
-                                        $isCurse = stripos($enchant, 'Curse Of Binding') !== false || stripos($enchant, 'Curse Of Vanishing') !== false;
-                                        $enchantClass = $isCurse ? 'text-red-500' : 'text-gray-400';
-                                    ?>
-                                    <p class="<?= $enchantClass ?>"><?= htmlspecialchars($enchant) ?></p>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                            <?php
-                                $nonArmor = ['elytra', 'jack o lantern', 'carved pumpkin', 'creeper head', 'skeleton skull', 'wither skeleton skull', 'zombie head', 'player head', 'dragon head', 'piglin head'];
-                                $isArmor = true;
-                                if (!empty($piece['name'])) {
-                                    $lowerName = strtolower($piece['name']);
-                                    foreach ($nonArmor as $nonArmorItem) {
-                                        if (strpos($lowerName, $nonArmorItem) !== false) {
-                                            $isArmor = false;
-                                            break;
+                                <?php if (!empty($piece['trim'])): ?>
+                                    <p class="text-gray-400">Upgrade:</p>
+                                    <p class="ml-2 text-white"><?= ucwords(htmlspecialchars($piece['trim'])) ?> Armor Trim</p>
+                                    <p class="ml-2 text-white"><?= ucwords(htmlspecialchars($piece['trim_material'])) ?> Material</p>
+                                <?php endif; ?>
+                                <?php if (!empty($piece['enchants'])): ?>
+                                    <?php foreach ($piece['enchants'] as $enchant): ?>
+                                        <?php
+                                            $isCurse = stripos($enchant, 'Curse Of Binding') !== false || stripos($enchant, 'Curse Of Vanishing') !== false;
+                                            $enchantClass = $isCurse ? 'text-red-500' : 'text-gray-400';
+                                        ?>
+                                        <p class="<?= $enchantClass ?>"><?= htmlspecialchars($enchant) ?></p>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?php
+                                    $nonArmor = ['elytra', 'jack o lantern', 'carved pumpkin', 'creeper head', 'skeleton skull', 'wither skeleton skull', 'zombie head', 'player head', 'dragon head', 'piglin head'];
+                                    $isArmor = true;
+                                    if (!empty($piece['name'])) {
+                                        $lowerName = strtolower($piece['name']);
+                                        foreach ($nonArmor as $nonArmorItem) {
+                                            if (strpos($lowerName, $nonArmorItem) !== false) {
+                                                $isArmor = false;
+                                                break;
+                                            }
                                         }
+                                    } else {
+                                        $isArmor = false;
                                     }
-                                } else {
-                                    $isArmor = false;
-                                }
-                            ?>
-                            <?php if ($isArmor): ?>
-                                <p class="mt-5 text-gray-400">When on <?=$piece['slot']?>:</p>
-                            <?php endif; ?>
-                            <?php
-                                $pieceName = strtolower($piece['name']); 
-                                $parts = explode(' ', $pieceName);
-                                $material = $parts[0]; // "iron"
-                                $slot = strtolower($piece['slot']); 
+                                ?>
+                                <?php if ($isArmor): ?>
+                                    <p class="mt-5 text-gray-400">When on <?=$piece['slot']?>:</p>
+                                <?php endif; ?>
+                                <?php
+                                    $pieceName = strtolower($piece['name']); 
+                                    $parts = explode(' ', $pieceName);
+                                    $material = $parts[0]; // "iron"
+                                    $slot = strtolower($piece['slot']); 
 
-                                $slotMap = [
-                                    'head' => 'helmet',
-                                    'body' => 'chestplate',
-                                    'legs' => 'leggings',
-                                    'feet' => 'boots',
-                                ];
-                                $slotKey = isset($slotMap[$slot]) ? $slotMap[$slot] : $slot;
+                                    $slotMap = [
+                                        'head' => 'helmet',
+                                        'body' => 'chestplate',
+                                        'legs' => 'leggings',
+                                        'feet' => 'boots',
+                                    ];
+                                    $slotKey = isset($slotMap[$slot]) ? $slotMap[$slot] : $slot;
 
-                                if ($material === 'turtle') {
-                                    $attribute = isset($armorAttributes['turtle']['helmet']) ? $armorAttributes['turtle']['helmet'] : '';
-                                } else {
-                                    $attribute = isset($armorAttributes[$material][$slotKey]) ? $armorAttributes[$material][$slotKey] : '';
-                                }
-                            ?>
-                            <?php if ($attribute): ?>
-                                <p class="text-[#504fed]"><?= $attribute ?></p>
-                            <?php endif; ?>
+                                    if ($material === 'turtle') {
+                                        $attribute = isset($armorAttributes['turtle']['helmet']) ? $armorAttributes['turtle']['helmet'] : '';
+                                    } else {
+                                        $attribute = isset($armorAttributes[$material][$slotKey]) ? $armorAttributes[$material][$slotKey] : '';
+                                    }
+                                ?>
+                                <?php if ($attribute): ?>
+                                    <p class="text-[#504fed]"><?= $attribute ?></p>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </div>
                     <?php else: ?>
-                    <div class="relative flex items-center justify-center p-4 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
+                    <div class="relative flex items-center justify-center p-3 rounded-sm group aspect-square bg-neutral-500" data-index="<?= $i ?>">
                         <img src="<?= htmlspecialchars($piece['image']) ?>" alt="Empty Slot" class="w-12">
                     </div>
                     <?php endif; ?>
