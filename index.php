@@ -122,17 +122,17 @@
         </section>
         <section class="bg-[#2D3748] text-white">
             <div class="px-5 pt-10 md:px-30">
-                <div class="flex overflow-x-auto gap-2 md:gap-5 md:pl-5 py-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
+                <div class="flex gap-2 py-5 overflow-x-auto md:gap-5 md:pl-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
                     <?php foreach ($onlinePlayers as $player): ?>
-                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-5 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
-                            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" alt="User Avatar" class="md:w-25 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110">
+                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" alt="User Avatar" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                             <p class="font-bold truncate"><?= $player['username'] ?></p>
                             <p class="text-sm text-gray-700">Online</p>
                         </div>
                     <?php endforeach; ?>
                     <?php foreach ($offlinePlayers as $player): ?>
-                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-5 bg-gray-400 bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-40 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
-                            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" alt="User Avatar" class="md:w-25 w-25 md:mt-10 mt-5 mb-1 transition-transform duration-300 group-hover:scale-110">
+                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="flex flex-col flex-shrink-0 p-3 pt-10 pr-10 text-black transition-transform duration-300 ease-in-out bg-gray-400 bg-cover rounded-lg shadow-md bg-bottom-right max-w-35 hover:cursor-pointer hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
+                            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" alt="User Avatar" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                             <p class="font-bold truncate"><?= $player['username'] ?></p>
                             <p class="text-sm text-gray-700">Offline</p>
                         </div>
