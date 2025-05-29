@@ -28,11 +28,11 @@
         $uuid = $_SESSION['uuid'];
     }
 
-    $sql = "SELECT username, uuid, firstJoined, playTime, lastSeen FROM player_data WHERE uuid = ?";
+    $sql = "SELECT username, uuid, skin, firstJoined, playTime, lastSeen FROM player_data WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();
-    $stmt->bind_result($username, $uuid, $firstJoined, $playTime, $lastSeen);
+    $stmt->bind_result($username, $uuid, $skin, $firstJoined, $playTime, $lastSeen);
     $stmt->fetch();
     $stmt->close();
 
@@ -76,7 +76,7 @@
         <?php require 'includes/navigation.php'; ?>
         <!-- Top Card -->
         <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-7">
-            <img src="https://visage.surgeplay.com/full/512/<?= $username ?>" alt="User Avatar" class="w-40 md:w-50" onerror="this.onerror=null;this.src='https://visage.surgeplay.com/full/512/X-Steve';">
+            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-25 md:w-35">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
