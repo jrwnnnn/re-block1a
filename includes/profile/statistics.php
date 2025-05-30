@@ -167,6 +167,10 @@
                 <td class="py-1 pr-2 font-medium text-gray-300">Time Since Last Death</td>
                 <td class="py-1 text-right"><?= htmlspecialchars(ticksToReadable($timeSinceDeath)); ?></td>
                 </tr>
+                <tr>
+                <td class="py-1 pr-2 font-medium text-gray-300">Total Playtime</td>
+                <td class="py-1 text-right"><?= htmlspecialchars(ticksToReadable($playTime)); ?></td>
+                </tr>
             </table>
         </div>
         <div class="flex flex-col">

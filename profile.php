@@ -75,14 +75,14 @@
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
         <!-- Top Card -->
-        <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-7">
-            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-25 md:w-35">
+        <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-10">
+            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-30 md:w-45">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
                         <p class="mb-2 text-4xl font-bold"><?php echo htmlspecialchars($username); ?></p>
                         <p class="hidden md:block"><b>UUID:</b> <?= htmlspecialchars($uuid); ?></p>
-                        <p class="block md:hidden"><b>Status</b> <span id="mdStatusText">Loading...</span></p>
+                        <p class="block md:hidden"><b>Status: </b> <span id="mdStatusText">Loading...</span></p>
                         <p><b>Last Seen:</b> <span class="py-1 text-right" id="lastSeen">Loading...</span></p>
                     </div>
                     <div class="flex justify-end gap-5 mt-5 md:mt-0">
