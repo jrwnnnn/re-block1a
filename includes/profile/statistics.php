@@ -287,7 +287,7 @@
             <?php endwhile; ?>
         <?php else: ?>
             <div class="flex items-center justify-center px-4 py-3 mb-2 bg-gray-800 rounded-lg">
-                <p class="text-white">Congrats. You haven't died yet.</p>
+                <p class="text-white">No death records. Yet.</p>
             </div>
         <?php endif; ?>
     </div> 
