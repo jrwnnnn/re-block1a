@@ -76,7 +76,7 @@
         <?php require 'includes/navigation.php'; ?>
         <!-- Top Card -->
         <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-5 md:gap-10">
-            <!-- <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-35 md:w-45"> -->
+            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-35 md:w-45">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
