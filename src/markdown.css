@@ -86,3 +86,7 @@
 .markdown hr {
     @apply border-[#DEE2E6] mb-4;
 }
+
+.markdown p code {
+    @apply bg-gray-800 text-white p-0.5 text-sm flex-wrap;
+}
