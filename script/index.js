@@ -1,10 +1,10 @@
 function copyToClipboard() {
-    const text = "cs1a.minecra.fr";
+    const text = "cs1a.sparked.network";
     document.getElementById("copy-button").innerHTML = "Copied!";
     navigator.clipboard.writeText(text);
   }
 
-  fetch('https://api.mcsrvstat.us/2/cs1a.minecra.fr')
+  fetch('https://api.mcsrvstat.us/2/cs1a.sparked.network')
   .then(response => response.json())
   .then(data => {
     document.getElementById('player-count').innerText = data.players.online;
