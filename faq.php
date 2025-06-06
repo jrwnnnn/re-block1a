@@ -49,7 +49,7 @@
 </head>
 <body>
     <?php require 'includes/navigation.php'; ?>
-    <section class="flex md:flex-row flex-col gap-5 bg-[#2D3748] pt-10 pb-20 md:px-30 px-10">
+    <section class="flex md:flex-row flex-col gap-5 bg-[#2D3748] pt-10 pb-20 md:px-30 px-5">
         <div class="flex-grow text-white">
             <p class="text-4xl font-bold md:text-6xl"><?php echo htmlspecialchars($mainTopic, ENT_QUOTES, 'UTF-8'); ?></p>
 
