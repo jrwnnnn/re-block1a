@@ -36,6 +36,9 @@
     $stmt->fetch();
     $stmt->close();
 
+    $firstJoined = $firstJoined ? date('F j, Y', strtotime($firstJoined)) : 'N/A';
+    $lastSeen = $lastSeen ? date('F j, Y, g:i A', strtotime($lastSeen)) : 'N/A';
+
     function ticksToReadable($ticks) {
         if (!is_numeric($ticks) || $ticks <= 0) return "0s";
 
@@ -80,10 +83,10 @@
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
-                        <p class="mb-2 text-4xl font-bold"><?php echo htmlspecialchars($username); ?></p>
-                        <p class="hidden md:block"><b>UUID:</b> <?= htmlspecialchars($uuid); ?></p>
+                        <p class="mb-2 text-4xl font-bold"><?= $username ?></p>
+                        <p class="hidden md:block"><b>UUID:</b> <?= $uuid ?></p>
                         <p class="block md:hidden"><b>Status: </b> <span id="mdStatusText">Loading...</span></p>
-                        <p><b>Last Seen:</b> <span class="py-1 text-right" id="lastSeen">Loading...</span></p>
+                        <p><b>Last Seen:</b> <span class="py-1 text-right"><?php $lastSeen ?></span></p>
                     </div>
                     <div class="flex justify-end gap-5 mt-5 md:mt-0">
                         <img src="https://cdn-icons-png.flaticon.com/128/6853/6853826.png" alt="Playpass Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" />
@@ -108,7 +111,7 @@
                     </div>
                     <div class="text-white topCardText">
                         <p class="text-sm">Joined</p>
-                        <p class="text-lg font-bold" id="firstJoined">Loading...</p>
+                        <p class="text-lg font-bold"><?php echo htmlspecialchars($firstJoined); ?></p>
                     </div>
                 </div>
             </div>
@@ -121,22 +124,6 @@
     </body>
 <script src="script/timeFunctions.js"></script>
 <script>
-    const firstJoined = "<?= htmlspecialchars($firstJoined); ?>";
-    const lastSeen = "<?= htmlspecialchars($lastSeen); ?>";
-    document.getElementById("firstJoined").textContent = convertToLocalTime(firstJoined, {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-    });
-    document.getElementById("lastSeen").textContent = convertToLocalTime(lastSeen, {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-    });
-
     const uuid = "<?php echo $uuid; ?>"; 
     function updateStatus() {
         fetch(`functions/activity.php?uuid=${uuid}`)
