@@ -1,13 +1,13 @@
-# Block1A <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1067px-PHP-logo.svg.png?" style="height:30px;"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/2560px-Tailwind_CSS_Logo.svg.png" style="margin-left: 2rem; height:30px;">
+<h1 align="center">Block1A</h1>
 
-<!-- PROGRAMMING LANGUAGE ICONS
-HTML: https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/512px-HTML5_logo_and_wordmark.svg.png
-JAVA: https://upload.wikimedia.org/wikipedia/en/thumb/3/30/Java_programming_language_logo.svg/1200px-Java_programming_language_logo.svg.png
-Python: https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/1869px-Python-logo-notext.svg.png
-PHP : https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/PHP-logo.svg/1067px-PHP-logo.svg.png?20180502235434
-mySQL: https://upload.wikimedia.org/wikipedia/labs/8/8e/Mysql_logo.png
+<p align="center"><i>Block1A official source repo.</i></p>
 
---->
+<p align="center">
+   <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
+   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white">
+  <a href="https://opensource.org/license/mit"><img src="https://img.shields.io/badge/MIT-green?style=for-the-badge"></a>
+   <a href="https://github.com/jrwnnnn/priv-block1a"><img src="https://img.shields.io/github/stars/jrwnnnn/priv-block1a?style=for-the-badge"></a>
+</p>
 
 ## Prerequisites
 
@@ -78,3 +78,8 @@ This project is a PHP-based website using Composer for dependency management and
      ```
      http://localhost/block1a/index.php
      ```
+## License
+This project uses the MIT license. For details, please refer to the LICENSE file.
+
+
+<img src="https://forthebadge.com/images/badges/built-with-love.png">
