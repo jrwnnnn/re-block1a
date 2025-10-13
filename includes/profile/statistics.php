@@ -37,6 +37,9 @@
     }
 ?>
 <div class="flex flex-col space-y-5 md:space-y-10">
+    <div>
+        <?php include 'playpass.php'; ?>
+    </div>
     <div class="grid gap-10 md:grid-cols-2">
         <div class="flex flex-col">
             <div class="flex items-center">
