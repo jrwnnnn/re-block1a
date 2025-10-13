@@ -63,8 +63,13 @@
 </head>
 <body>
     <?php require 'includes/navigation.php'; ?>
+    <div class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 via-red-500 to-red-400">
+        <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
+        <p class="text-sm font-semibold text-white"> The server is currently closed. Re-opening soon!</p>
+    </div>
+    <!-- Main Splash Screen -->
     <?php if (!isset($_SESSION['user_id'])): ?>
-        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/home_splash.webp')">
+        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/s2-background.webp')">
             <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
                 <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
                 <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.</p>
@@ -101,22 +106,19 @@
             <?php endif; ?>
         </section>
     <?php endif; ?>
+    <!-- Logged in homepage -->
     <?php if (isset($_SESSION['user_id'])): ?>
         <section class="relative bg-[#2D3748] text-white">
-            <!-- Beta Warning -->
-            <div class="flex items-center justify-center gap-2 px-4 py-2 bg-red-600">
-                <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" alt="Warning Icon" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
-                <p class="text-sm font-semibold text-white"> This page is currently in Development. Features may change or break.</p>
-            </div>
             <?php if ($spotlightPost): ?>
                 <div class="relative">
-                    <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
+                    <img src="assets/temp-splash.webp" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
+                    <!-- <img src="<?= htmlspecialchars($spotlightPost['cover'], ENT_QUOTES, 'UTF-8') ?>" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
                     <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
                         <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
                         <p class="pb-5 text-3xl font-bold md:text-5xl"><?= htmlspecialchars($spotlightPost['title'], ENT_QUOTES, 'UTF-8') ?></p>
                         <p class="text-base md:text-lg"><?= htmlspecialchars($spotlightPost['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
                         <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlightPost['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
-                    </div>
+                    </div> -->
                 </div>
             <?php endif; ?>
         </section>
@@ -178,27 +180,24 @@
         </div>
     </section>
     <?php if (!isset($_SESSION['user_id'])): ?>
-        <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
-            <p class="text-4xl font-bold text-yellow-500 md:text-6xl mb-7">The Server</p>
-            <div class="md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
-            <div id="carousel" class="flex transition-transform duration-500 ease-in-out group-hover:brightness-50">
-                <img src="assets/carousel-1.webp" alt="Screenshot 1" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-2.webp" alt="Screenshot 2" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-3.webp" alt="Screenshot 3" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-4.webp" alt="Screenshot 4" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-5.webp" alt="Screenshot 5" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-6.webp" alt="Screenshot 6" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-7.webp" alt="Screenshot 7" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-8.webp" alt="Screenshot 8" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-9.webp" alt="Screenshot 9" class="flex-shrink-0 w-full">
-                <img src="assets/carousel-10.webp" alt="Screenshot 10" class="flex-shrink-0 w-full">
-            </div>
-            <div class="flex flex-col items-center justify-center gap-5 transition-opacity duration-300 ease-in-out md:absolute md:inset-0 md:opacity-0 group-hover:opacity-100">
-                <img src="assets/cs1a.png" class="hidden md:block w-50">
-                <p class="mt-5 text-white md:text-lg md:text-center md:mt-0 md:px-50">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
-            </div>
-            </div>
-        </section>
+        <?php
+            // Get all images from assets/carousel/ folder
+            $carouselImages = glob('assets/carousel/*.webp');
+        ?>
+                <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
+                    <p class="text-4xl font-bold text-yellow-500 md:text-6xl mb-7">The Server</p>
+                    <div class="md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
+                    <div id="carousel" class="flex transition-transform duration-500 ease-in-out group-hover:brightness-50">
+                        <?php foreach ($carouselImages as $img): ?>
+                            <img src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8') ?>" alt="Screenshot" class="flex-shrink-0 w-full">
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="flex flex-col items-center justify-center gap-5 transition-opacity duration-300 ease-in-out md:absolute md:inset-0 md:opacity-0 group-hover:opacity-100">
+                        <img src="assets/cs1a.png" class="hidden md:block w-50">
+                        <p class="mt-5 text-white md:text-lg md:text-center md:mt-0 md:px-50">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
+                    </div>
+                    </div>
+                </section>
         <section class="flex flex-col items-center px-5 py-5 bg-blue-500 md:px-30">
             <p class="text-center text-white "> Whether you’re here to build, explore, or just vibe with friends, welcome to the crew!</p>
         </section>

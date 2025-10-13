@@ -5,10 +5,17 @@ function copyToClipboard() {
   }
 
   fetch('https://api.mcsrvstat.us/2/cs1a.sparked.network')
-  .then(response => response.json())
-  .then(data => {
-    document.getElementById('player-count').innerText = data.players.online;
-  });
+    .then(response => response.json())
+    .then(data => {
+      if (data.online) {
+        document.getElementById('player-count').innerText = data.players && data.players.online !== undefined ? data.players.online : "0";
+      } else {
+        document.getElementById('player-count').innerText = "Offline";
+      }
+    })
+    .catch(() => {
+      document.getElementById('player-count').innerText = "Offline";
+    });
 
   const carousel = document.getElementById('carousel');
     const total = carousel.children.length;
