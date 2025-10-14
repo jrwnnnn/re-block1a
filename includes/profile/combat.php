@@ -15,12 +15,11 @@ $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
 // Query player combat and armor data
 $sql = "SELECT 
-    damageAbsorbed, damageDealt, damageTaken, damageResisted,
     helmet, helmetPattern, helmetMaterial, helmetEnchants,
     chestplate, chestplatePattern, chestplateMaterial, chestplateEnchants,
     leggings, leggingsPattern, leggingsMaterial, leggingsEnchants,
     boot, bootPattern, bootMaterial, bootEnchants
-    FROM player_data
+    FROM loadouts
     WHERE uuid = '$uuid'";
 
 $result = $conn->query($sql);
@@ -187,15 +186,17 @@ function renderArmorTooltip($piece, $nonArmorItems, $armorAttributes) {
     return ob_get_clean();
 }
 
+$sql = "SELECT damageAbsorbed, damageDealt, damageTaken, damageResisted  FROM player_statistics WHERE uuid = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $uuid);
+$stmt->execute();
+$stmt->bind_result($damageAbsorbed, $damageDealt, $damageTaken, $damageResisted);
+$stmt->fetch();
+$stmt->close();
+
 // If player data found, extract stats and armor info
 if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
-
-    // Damage stats
-    $damageAbsorbed = $row['damageAbsorbed'];
-    $damageDealt = $row['damageDealt'];
-    $damageTaken = $row['damageTaken'];
-    $damageResisted = $row['damageResisted'];
 
     // Build armor array for rendering
     $armor = [];
@@ -223,19 +224,19 @@ if ($result && $result->num_rows > 0) {
     <table class="w-full mt-5 text-sm text-gray-200">
         <tr>
             <td class="py-1 pr-2 font-medium text-gray-300">Damage Absorbed</td>
-            <td class="py-1 text-right"><?= number_format($damageAbsorbed); ?></td>
+            <td class="py-1 text-right"><?= $damageAbsorbed ?></td>
         </tr>
         <tr>
             <td class="py-1 pr-2 font-medium text-gray-300">Damage Dealt</td>
-            <td class="py-1 text-right"><?= number_format($damageDealt); ?></td>
+            <td class="py-1 text-right"><?= $damageDealt ?></td>
         </tr>
         <tr>
             <td class="py-1 pr-2 font-medium text-gray-300">Damage Resisted</td>
-            <td class="py-1 text-right"><?= number_format($damageResisted); ?></td>
+            <td class="py-1 text-right"><?= $damageResisted ?></td>
         </tr>
         <tr>
             <td class="py-1 pr-2 font-medium text-gray-300">Damage Taken</td>
-            <td class="py-1 text-right"><?= number_format($damageTaken); ?></td>
+            <td class="py-1 text-right"><?= $damageTaken ?></td>
         </tr>
     </table>
 </div>

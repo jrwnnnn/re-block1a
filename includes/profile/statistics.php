@@ -11,30 +11,19 @@
     $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
     $sql = "SELECT 
-        blockMined, blockPlaced, damageAbsorbed, damageDealt, damageTaken, damageResisted, deaths, 
-        firstJoined, lastSeen, mobKills, playerKills, playTime, 
-        distanceTraveled, level
-    FROM player_data
+        blockMined, blockPlaced, damageAbsorbed, damageDealt, damageTaken, 
+        damageResisted,  distanceTraveled, deaths, level,
+        mobKills, playerKills, playTime
+    FROM player_statistics
     WHERE uuid = '$uuid'";
-    $result = $conn->query($sql);
+    $result  = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    extract($row);
 
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $blockMined = $row['blockMined'];
-        $blockPlaced = $row['blockPlaced'];
-        $damageAbsorbed = $row['damageAbsorbed'];
-        $damageDealt = $row['damageDealt'];
-        $damageTaken = $row['damageTaken'];
-        $damageResisted = $row['damageResisted'];
-        $deaths = $row['deaths'];
-        $firstJoined = $row['firstJoined'];
-        $lastSeen = $row['lastSeen'];
-        $mobKills = $row['mobKills'];
-        $playerKills = $row['playerKills'];
-        $playTime = $row['playTime'];
-        $distanceTraveled = $row['distanceTraveled'];
-        $level = $row['level'];
-    }
+    $sql = "SELECT firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    extract($row);
 ?>
 <div class="flex flex-col space-y-5 md:space-y-10">
     <div>

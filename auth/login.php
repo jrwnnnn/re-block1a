@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $login = $_POST['login'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM players WHERE username = ? OR email = ?";
+    $sql = "SELECT * FROM users WHERE username = ? OR email = ?";
     $stmt = mysqli_prepare($conn, $sql);
     mysqli_stmt_bind_param($stmt, "ss", $login, $login);
     mysqli_stmt_execute($stmt);

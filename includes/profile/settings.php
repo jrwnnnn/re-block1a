@@ -8,7 +8,7 @@
     }
 
     $userId = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT * FROM players WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -33,7 +33,7 @@
         }
 
         if ($email !== $user['email']) {
-            $stmt = $conn->prepare("SELECT id FROM players WHERE email = ? AND id != ?");
+            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
             $stmt->bind_param("si", $email, $userId);
             $stmt->execute();
             $stmt->store_result();
@@ -61,12 +61,12 @@
         if (empty($error)) {
             if ($updatePassword) {
                 $lastPasswordChange = gmdate('Y-m-d H:i:s');
-                $stmt = $conn->prepare("UPDATE players SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
+                $stmt = $conn->prepare("UPDATE users SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
                 $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
                 $_SESSION['last_password_change'] = $lastPasswordChange;
 
             } else {
-                $stmt = $conn->prepare("UPDATE players SET email = ? WHERE id = ?");
+                $stmt = $conn->prepare("UPDATE users SET email = ? WHERE id = ?");
                 $stmt->bind_param("si", $email, $userId);
             }
     

@@ -40,7 +40,7 @@
         }
 
         // Check if email already exists
-        $email_check_sql = "SELECT id FROM players WHERE email = ?";
+        $email_check_sql = "SELECT id FROM users WHERE email = ?";
         $email_stmt = mysqli_prepare($conn, $email_check_sql);
         mysqli_stmt_bind_param($email_stmt, "s", $email);
         mysqli_stmt_execute($email_stmt);
@@ -70,7 +70,7 @@
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             // Insert into players
-            $insert_sql = "INSERT INTO players (email, password, uuid, username) VALUES (?, ?, ?, ?)";
+            $insert_sql = "INSERT INTO users (email, password, uuid, username) VALUES (?, ?, ?, ?)";
             $stmt = mysqli_prepare($conn, $insert_sql);
             mysqli_stmt_bind_param($stmt, "ssss", $email, $hashed_password, $uuid, $username);
 

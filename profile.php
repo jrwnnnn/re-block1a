@@ -10,7 +10,7 @@
 
     $uuid = $_GET['player'] ?? $_SESSION['uuid'];
     
-    $sql = "SELECT uuid FROM players WHERE uuid = ?";
+    $sql = "SELECT uuid FROM users WHERE uuid = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $uuid);
     $stmt->execute();
@@ -28,13 +28,15 @@
         $uuid = $_SESSION['uuid'];
     }
 
-    $sql = "SELECT username, uuid, skin, firstJoined, playTime, lastSeen FROM player_data WHERE uuid = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $uuid);
-    $stmt->execute();
-    $stmt->bind_result($username, $uuid, $skin, $firstJoined, $playTime, $lastSeen);
-    $stmt->fetch();
-    $stmt->close();
+    $sql = "SELECT username, uuid, skin, firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    extract($row);
+
+    $sql = "SELECT playTime FROM player_statistics WHERE uuid = '$uuid'";
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
+    extract($row);
 
     $firstJoined = $firstJoined ? date('F j, Y', strtotime($firstJoined)) : 'N/A';
     $lastSeen = $lastSeen ? date('F j, Y, g:i A', strtotime($lastSeen)) : 'N/A';
