@@ -18,12 +18,17 @@
     WHERE uuid = '$uuid'";
     $result  = $conn->query($sql);
     $row = $result->fetch_assoc();
-    extract($row);
+    if ($row = $result->fetch_assoc()) {
+        extract($row);
+    } else {
+        $blockMined = $blockPlaced = $damageAbsorbed = $damageDealt = $damageTaken = $damageResisted = $distanceTraveled = $deaths = $level = $mobKills = $playerKills = $playTime = 0;
+    }
 
     $sql = "SELECT firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    extract($row);
+    if ($row = $result->fetch_assoc()) {
+        extract($row);
+    }
 ?>
 <div class="flex flex-col space-y-5 md:space-y-10">
     <div>

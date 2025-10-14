@@ -185,17 +185,14 @@
             $carouselImages = glob('assets/carousel/*.webp');
         ?>
                 <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
-                    <p class="text-4xl font-bold text-yellow-500 md:text-6xl mb-7">The Server</p>
-                    <div class="md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
-                    <div id="carousel" class="flex transition-transform duration-500 ease-in-out group-hover:brightness-50">
-                        <?php foreach ($carouselImages as $img): ?>
-                            <img src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8') ?>" alt="Screenshot" class="flex-shrink-0 w-full">
-                        <?php endforeach; ?>
-                    </div>
-                    <div class="flex flex-col items-center justify-center gap-5 transition-opacity duration-300 ease-in-out md:absolute md:inset-0 md:opacity-0 group-hover:opacity-100">
-                        <img src="assets/cs1a.png" class="hidden md:block w-50">
-                        <p class="mt-5 text-white md:text-lg md:text-center md:mt-0 md:px-50">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
-                    </div>
+                    <p class="text-3xl font-bold text-yellow-500 md:text-5xl mb-7">The Server</p>
+                    <p class="text-white md:text-lg">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
+                    <div class="mt-5 md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
+                        <div id="carousel" class="flex duration-500 ease-in-out">
+                            <?php foreach ($carouselImages as $img): ?>
+                                <img src="<?= htmlspecialchars($img, ENT_QUOTES, 'UTF-8') ?>" alt="Screenshot" class="flex-shrink-0 w-full">
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </section>
         <section class="flex flex-col items-center px-5 py-5 bg-blue-500 md:px-30">

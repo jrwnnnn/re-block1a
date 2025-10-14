@@ -30,14 +30,19 @@
 
     $sql = "SELECT username, uuid, skin, firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    extract($row);
+    if($row = $result->fetch_assoc()){
+        extract($row);
+    }
+    
 
     $sql = "SELECT playTime FROM player_statistics WHERE uuid = '$uuid'";
     $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    extract($row);
-
+    if($row = $result->fetch_assoc()){
+        extract($row);
+    } else {
+        $playTime = 0;
+    }
+    
     $firstJoined = $firstJoined ? date('F j, Y', strtotime($firstJoined)) : 'N/A';
     $lastSeen = $lastSeen ? date('F j, Y, g:i A', strtotime($lastSeen)) : 'N/A';
 
