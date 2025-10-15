@@ -17,7 +17,6 @@
     FROM player_statistics
     WHERE uuid = '$uuid'";
     $result  = $conn->query($sql);
-    $row = $result->fetch_assoc();
     if ($row = $result->fetch_assoc()) {
         extract($row);
     } else {
@@ -28,6 +27,8 @@
     $result = $conn->query($sql);
     if ($row = $result->fetch_assoc()) {
         extract($row);
+    } else {
+        $firstJoined = $lastSeen = 'N/A';
     }
 ?>
 <div class="flex flex-col space-y-5 md:space-y-10">
