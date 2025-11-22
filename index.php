@@ -3,12 +3,12 @@
     require_once 'functions/connect.php';
     require_once 'includes/session-init.php';
 
-    $spotlight = $conn->query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1")->fetch_assoc();
-    $article = $conn->query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3")->fetch_all(MYSQLI_ASSOC);
+    $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
+    $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");
 
     if (isset($_SESSION['user_id'])) {
-        $onlinePlayers = $conn->query("SELECT username, uuid, skin FROM player_data WHERE status = 1 ORDER BY username")->fetch_all(MYSQLI_ASSOC);
-        $offlinePlayers = $conn->query("SELECT username, uuid, skin FROM player_data WHERE status = 0 ORDER BY username LIMIT 10")->fetch_all(MYSQLI_ASSOC);
+        $onlinePlayers = query("SELECT username, uuid, skin FROM player_data WHERE status = 1 ORDER BY username");
+        $offlinePlayers = query("SELECT username, uuid, skin FROM player_data WHERE status = 0 ORDER BY username LIMIT 10");
     }
 ?>
 

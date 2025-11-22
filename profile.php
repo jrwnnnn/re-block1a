@@ -10,41 +10,22 @@
 
     $uuid = $_GET['player'] ?? $_SESSION['uuid'];
     
-    $sql = "SELECT uuid FROM users WHERE uuid = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $uuid);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if (!$result || $result->num_rows === 0) {
+    $playerData = query("SELECT username, uuid, skin, firstJoined, lastSeen FROM player_data WHERE uuid = ?", [$uuid], "s");
+    if (!$playerData) {
         header('Location: 404.php?error=player_not_found');
+        exit();
     }
-    $stmt->close();
-    
+    $playTime = query("SELECT playTime FROM player_statistics WHERE uuid = ?", [$uuid], "s");
+
     $tab = $_GET['tab'] ?? 'statistics';
     if (!in_array($tab, ['statistics', 'playpass', 'settings'])) {
         $tab = 'statistics';
         header('Location: profile.php?tab=statistics');
     } else if ($tab === 'settings') {
         $uuid = $_SESSION['uuid'];
-    }
-
-    $sql = "SELECT username, uuid, skin, firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
-    $result = $conn->query($sql);
-    if($row = $result->fetch_assoc()){
-        extract($row);
-    }
-    
-
-    $sql = "SELECT playTime FROM player_statistics WHERE uuid = '$uuid'";
-    $result = $conn->query($sql);
-    if($row = $result->fetch_assoc()){
-        extract($row);
-    } else {
-        $playTime = 0;
-    }
-    
-    $firstJoined = $firstJoined ? date('F j, Y', strtotime($firstJoined)) : 'N/A';
-    $lastSeen = $lastSeen ? date('F j, Y, g:i A', strtotime($lastSeen)) : 'N/A';
+    }    
+    $playerData['firstJoined'] = $playerData['firstJoined'] ? date('F j, Y', strtotime($playerData['firstJoined'])) : 'N/A';
+    $playerData['lastSeen'] = $playerData['lastSeen'] ? date('F j, Y, g:i A', strtotime($playerData['lastSeen'])) : 'N/A';
 
     function ticksToReadable($ticks) {
         if (!is_numeric($ticks) || $ticks <= 0) return "0s";
@@ -72,25 +53,25 @@
 <html>
 <head>
     <?php
-      $title = "Profile - Block1A";
+      $title = sanitize($playerData['username']) . "'s Profile - Block1A";
       include 'includes/meta.php';
     ?>
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
     <link href="src/output.css" rel="stylesheet">
-    <title>Block1A - Profile</title>
+    <title><?= sanitize($playerData['username']) . "'s Profile - Block1A" ?></title>
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
         <!-- Top Card -->
         <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-5 md:gap-10">
-            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= $skin ?>" alt="User Avatar" class="w-35 md:w-45">
+            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= sanitize($playerData['skin']) ?>" class="w-35 md:w-45">
             <div class="flex flex-col justify-between flex-grow">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
-                        <p class="mb-2 text-4xl font-bold"><?= $username ?></p>
-                        <p class="hidden md:block"><b>UUID:</b> <?= $uuid ?></p>
+                        <p class="mb-2 text-4xl font-bold"><?= sanitize($playerData['username']) ?></p>
+                        <p class="hidden md:block"><b>UUID:</b> <?= $playerData['uuid'] ?></p>
                         <p class="block md:hidden"><b>Status: </b> <span id="mdStatusText">Loading...</span></p>
-                        <p><b>Last Seen:</b> <span class="py-1 text-right"><?php $lastSeen ?></span></p>
+                        <p><b>Last Seen:</b> <span class="py-1 text-right"><?= sanitize($playerData['lastSeen']) ?></span></p>
                     </div>
                     <div class="flex justify-end gap-5 mt-5 md:mt-0">
                         <img src="https://cdn-icons-png.flaticon.com/128/6853/6853826.png" alt="Playpass Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" />
@@ -111,11 +92,11 @@
                     </div>
                     <div class="text-white topCardText">
                         <p class="text-sm">Total Playtime</p>
-                        <p class="text-lg font-bold"><?= htmlspecialchars(ticksToReadable($playTime)); ?></p>
+                        <p class="text-lg font-bold"><?= sanitize(ticksToReadable($playTime)); ?></p>
                     </div>
                     <div class="text-white topCardText">
                         <p class="text-sm">Joined</p>
-                        <p class="text-lg font-bold"><?php echo htmlspecialchars($firstJoined); ?></p>
+                        <p class="text-lg font-bold"><?= sanitize($playerData['firstJoined']); ?></p>
                     </div>
                 </div>
             </div>
@@ -128,7 +109,7 @@
     </body>
 <script src="script/timeFunctions.js"></script>
 <script>
-    const uuid = "<?php echo $uuid; ?>"; 
+    const uuid = "<?= $playerData['uuid']; ?>"; 
     function updateStatus() {
         fetch(`functions/activity.php?uuid=${uuid}`)
             .then(res => res.json())
@@ -137,7 +118,6 @@
                 const status = document.getElementById("statusText");
                 const mdStatus = document.getElementById("mdStatusText");
 
-                // Animate background color transition
                 card.style.transition = "background-image 0.5s";
                 if (data.online) {
                     card.classList.remove("!bg-[url(../assets/topcard-blue.jpg)]");

@@ -1,5 +1,5 @@
 <?php
-  require 'includes/security-headers.php';
+  require_once 'includes/security-headers.php';
   require_once 'includes/session-init.php';
   
   $page = $_GET['page'] ?? 'home';

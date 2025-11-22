@@ -13,7 +13,7 @@
         $article_id = $_GET['id'] ?? null;
 
         if ($action == 'edit' && $article_id) {
-            $article = $conn->query("SELECT * FROM articles WHERE id = " . (int)$article_id)->fetch_assoc();
+            $article = query("SELECT * FROM articles WHERE id = ?", [$article_id], "s");
         } else {
             $article = null;
         }

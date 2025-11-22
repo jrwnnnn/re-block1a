@@ -4,7 +4,7 @@
     require_once '../includes/session-init.php';
 
     $article_id = $_GET['id'] ?? '';
-    $article = $conn->query("SELECT * FROM articles WHERE id = " . (int)$article_id)->fetch_assoc();
+    $article = query("SELECT * FROM articles WHERE id = ?", [$article_id], "s");
 
     if (!$article) {
         header("Location: ../404.php?error=notfound");
