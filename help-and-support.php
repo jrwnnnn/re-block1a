@@ -5,19 +5,15 @@
 
 <!doctype html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Help & Support - Block1A">
-    <meta property="og:description" content="Need a hand? You're at the right place!">
-    <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
-    <meta property="og:url" content="https://block1a.onrender.com/help-and-support.php">
-    <meta property="og:site_name" content="Block1A">
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link href="src/output.css" rel="stylesheet">
-    <title>Block1A - Help and Support</title>
-</head>
+    <head>
+        <?php
+        $title = "Help and Support - Block1A";
+        include 'includes/meta.php';
+        ?>
+        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+        <link href="src/output.css" rel="stylesheet">
+        <title>Block1A - Help and Support</title>
+    </head>
     <body>
     <?php require 'includes/navigation.php'; ?>
         <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('assets/help-and-support-hero.webp')">
