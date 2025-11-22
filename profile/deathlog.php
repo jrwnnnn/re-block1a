@@ -8,9 +8,7 @@
         exit();
     }
 
-    $sql = "SELECT cause, x, y, z, world, timestamp FROM death_log WHERE uuid = '$uuid' ORDER BY id DESC LIMIT 10";
-    $deathResult = $conn->query($sql);
-    $conn->close();
+    $deathResult = query("SELECT cause, x, y, z, world, timestamp FROM death_log WHERE uuid = ? ORDER BY id DESC LIMIT 10", [$uuid], "s");
 ?>
 
 <div class="flex flex-col">
@@ -41,10 +39,6 @@
                 <p class="text-sm text-gray-400"><?= date('F j, Y - h:i A', strtotime($row['timestamp'])) ?: 'N/A' ?></p>
             </div>
         <?php endwhile; ?>
-    <?php else: ?>
-        <div class="flex items-center justify-center px-4 py-3 mb-2 bg-gray-800 rounded-lg">
-            <p class="text-white">No death records. Yet.</p>
-        </div>
     <?php endif; ?>
     </div>
 </div> 

@@ -10,26 +10,14 @@
 
     $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
-    $sql = "SELECT 
+    $playerStatistics = query("SELECT 
         blockMined, blockPlaced, damageAbsorbed, damageDealt, damageTaken, 
         damageResisted,  distanceTraveled, deaths, level,
         mobKills, playerKills, playTime
     FROM player_statistics
-    WHERE uuid = '$uuid'";
-    $result  = $conn->query($sql);
-    if ($row = $result->fetch_assoc()) {
-        extract($row);
-    } else {
-        $blockMined = $blockPlaced = $damageAbsorbed = $damageDealt = $damageTaken = $damageResisted = $distanceTraveled = $deaths = $level = $mobKills = $playerKills = $playTime = 0;
-    }
+    WHERE uuid = ?", [$uuid], "s");
 
-    $sql = "SELECT firstJoined, lastSeen FROM player_data WHERE uuid = '$uuid'";
-    $result = $conn->query($sql);
-    if ($row = $result->fetch_assoc()) {
-        extract($row);
-    } else {
-        $firstJoined = $lastSeen = 'N/A';
-    }
+    $playerData = query("SELECT firstJoined, lastSeen FROM player_data WHERE uuid = ?", [$uuid], "s");
 ?>
 <div class="flex flex-col space-y-5 md:space-y-10">
     <div>
@@ -44,35 +32,35 @@
             <table class="w-full mt-2 text-sm text-gray-200">
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Blocks Broken</td>
-                <td class="py-1 text-right"><?= number_format($blockMined)?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['blockMined'])?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Blocks Placed</td>
-                <td class="py-1 text-right"><?= number_format($blockPlaced)?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['blockPlaced'])?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Deaths</td>
-                <td class="py-1 text-right"><?= number_format($deaths)?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['deaths'])?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Distance Traveled</td>
-                <td class="py-1 text-right"><?= number_format($distanceTraveled) ?> Blocks</td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['distanceTraveled']) ?> Blocks</td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Level</td>
-                <td class="py-1 text-right"><?= number_format($level); ?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['level']); ?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Mob Kills</td>
-                <td class="py-1 text-right"><?= number_format($mobKills); ?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['mobKills']); ?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Player Kills</td>
-                <td class="py-1 text-right"><?= number_format($playerKills); ?></td>
+                <td class="py-1 text-right"><?= number_format($playerStatistics['playerKills']); ?></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Total Playtime</td>
-                <td class="py-1 text-right"><?= ticksToReadable($playTime); ?></td>
+                <td class="py-1 text-right"><?= ticksToReadable($playerStatistics['playTime']); ?></td>
                 </tr>
             </table>
         </div>
