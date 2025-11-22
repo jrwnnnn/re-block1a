@@ -11,6 +11,7 @@
     <head>
         <?php 
         $title = "News - Block1A";
+        $description = "Stay updated with the latest news, updates, and events happening in our server.";
         require 'includes/meta.php'; ?>
         <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
         <link href="src/output.css" rel="stylesheet">
@@ -20,7 +21,7 @@
         <?php require 'includes/navigation.php'; ?>
         <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('assets/blog-hero.webp')">
             <p class="text-4xl font-bold text-yellow-500 md:text-6xl">News</p>
-            <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our community.</p>
+            <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1): ?>
             <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='news/editor.php?action=create';">

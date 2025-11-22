@@ -19,14 +19,11 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Rules - Block1A">
-  <meta property="og:description" content="The official rules for Block1A Minecraft server.">
-  <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
-  <meta property="og:url" content="https://block1a.onrender.com/rules.php">
-  <meta property="og:site_name" content="Block1A">
+  <?php
+    $title = "Rules - Block1A";
+    $description = "The official rules of Block1A Minecraft server.";
+    include 'includes/meta.php';
+  ?>
   <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
   <link href="src/output.css" rel="stylesheet">
   <title>Block1A - Rules</title>
