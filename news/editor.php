@@ -5,10 +5,6 @@
 
 
     if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1) {
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-    
         $action = $_GET['action'] ?? 'create';
         $article_id = $_GET['id'] ?? null;
 
