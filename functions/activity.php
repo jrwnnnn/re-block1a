@@ -5,13 +5,7 @@
     $uuid = $_GET["uuid"] ?? "";
     if (!$uuid) { echo json_encode(["online" => false]); exit; }
 
-    $sql = "SELECT status FROM player_data WHERE uuid = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $uuid);
-    $stmt->execute();
-    $stmt->bind_result($online);
-    $stmt->fetch();
-    $stmt->close();
+    $article = $conn->query("SELECT status FROM player_data WHERE id = " . (int)$uuid)->fetch_assoc();
 
-    echo json_encode(["online" => $online == 1])
+    echo json_encode(["online" => $article['status'] == 1]);
 ?>
