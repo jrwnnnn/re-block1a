@@ -29,7 +29,7 @@
 <head>
     <?php
         $title = "Editor - Block1A";
-        include '../includes/head.php';
+        include '../includes/meta.php';
     ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link href="../src/output.css" rel="stylesheet">

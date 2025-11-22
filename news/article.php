@@ -36,7 +36,7 @@
             $title = $article['title'] . " - Block1A";
             $description = $article['subtitle'];
             $image = $article['cover'];
-            include '../includes/head.php';
+            include '../includes/meta.php';
         ?>
         <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
         <link href="../src/output.css" rel="stylesheet">
