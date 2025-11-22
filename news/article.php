@@ -40,37 +40,30 @@
         ?>
         <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
         <link href="../src/output.css" rel="stylesheet">
-        <title>Block1A - <?= htmlspecialchars($article['title'],) ?></title>
+        <title>Block1A - <?= sanitize($article['title'],) ?></title>
     </head>
     <body>
         <!-- Top navigation bar -->
         <?php require '../includes/navigation.php'; ?>
 
-        <!-- Admin controls (delete / edit) shown only to permission_level 1 -->
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1): ?>
             <div class="fixed z-10 flex flex-col gap-3 bottom-5 right-5">
-                <!-- Delete button (with JS confirm dialog) -->
                 <div class="flex items-center gap-2 p-4 bg-red-500 rounded-md hover:cursor-pointer hover:bg-red-600"
                     onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='../functions/delete-article.php?id=<?= $article['id'] ?>'; }">
                     <img src="https://cdn-icons-png.flaticon.com/128/3096/3096687.png" class="w-5">
                 </div>
-                <!-- Edit button -->
                 <div class="flex items-center gap-2 p-4 bg-yellow-500 rounded-md hover:cursor-pointer hover:bg-yellow-600"
                     onclick="window.location.href='editor.php?action=edit&id=<?= $article['id'] ?>';">
                     <img src="https://cdn-icons-png.flaticon.com/128/9356/9356210.png" class="w-5">
                 </div>
-        </div>
+            </div>
         <?php endif; ?>
 
-        <!-- Cover image -->
         <img src="<?= sanitize($article['cover']) ?>" class="w-full max-h-[40vh] object-cover object-center">
-
-        <!-- Article header (title, subtitle, meta info) -->
         <section class="flex flex-col bg-[#2D3748] space-y-2 md:px-30 px-5 pt-10">
             <p class="text-4xl font-bold text-center text-white md:text-6xl"><?= sanitize($article['title']) ?></p>
             <p class="text-center text-white md:text-lg"><?= sanitize($article['subtitle']) ?></p>
 
-            <!-- Tag, author, date -->
             <div class="flex self-center gap-3 pt-5">
                 <p class="text-sm <?= $tagColor ?>"><?= sanitize($article['tag']) ?></p>
                 <p class="text-sm text-gray-500">|</p>
@@ -79,29 +72,22 @@
                 <p class="text-sm text-white"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
             </div>
 
-            <!-- Divider -->
             <hr class="border-t-2 border-[#4A5568] mt-5">
         </section>
 
-        <!-- Article content container (Markdown will be rendered here) -->
         <div id="content" class="bg-[#2D3748] md:px-[20vw] px-5 py-20 text-white markdown"></div>
-
-        <!-- Last edited info (shown only if not null) -->
         <?php if (!$article['last_edited'] == NULL): ?>
             <div class="flex justify-center items-flex-end bg-[#2D3748] md:px-30 px-5 pb-5">
                 <p class="text-sm italic text-center text-gray-500">Last edited on <?= date("F d, Y", strtotime($article['last_edited'])) ?></p>
             </div>
         <?php endif; ?>
 
-        <!-- Footer -->
         <?php require '../includes/footer.php'; ?>
 
-        <!-- Marked.js CDN for Markdown parsing -->
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script>
-            // Pass PHP article content into JS and render it as HTML from Markdown
-            const content = <?= json_encode($article['content']) ?>;
+            const content = <?= json_encode(sanitize($article['content'])) ?>;
             document.querySelector('#content').innerHTML = marked.parse(content);
         </script>
     </body>
-    </html>
+</html>
