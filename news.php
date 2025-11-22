@@ -1,27 +1,17 @@
 <?php
-    require 'includes/security-headers.php';
-    require 'functions/connect.php';
+    require_once 'includes/security-headers.php';
+    require_once 'functions/connect.php';
     require_once 'includes/session-init.php';
 
-    $stmt = $conn->prepare("SELECT * FROM articles ORDER BY date_posted DESC");
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $posts = $result->fetch_all(MYSQLI_ASSOC);
-    $stmt->close();
-    $conn->close();
+    $article = $conn->query("SELECT * FROM articles ORDER BY date_posted DESC")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!doctype html>
-    <html>
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta property="og:type" content="website">
-        <meta property="og:title" content="News - Block1A">
-        <meta property="og:description" content="Stay updated with the latest news, updates, and events happening in our community.">
-        <meta property="og:image" content="https://block1a.onrender.com/assets/season2-banner.jpg">
-        <meta property="og:url" content="https://block1a.onrender.com/news.php">
-        <meta property="og:site_name" content="Block1A">
+        <?php 
+        $title = "News - Block1A";
+        require 'includes/meta.php'; ?>
         <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
         <link href="src/output.css" rel="stylesheet">
         <title>Block1A - News</title>
@@ -38,9 +28,9 @@
             </div>
         <?php endif; ?>
         <section class="bg-[#2D3748] grid md:grid-cols-3 px-5 md:px-30 py-20 gap-10">
-            <?php foreach ($posts as $post): ?>
+            <?php foreach ($article as $article): ?>
                 <?php
-                    $tagColor = match ($post['tag']) {
+                    $tagColor = match ($article['tag']) {
                         'server_updates' => 'text-red-500',
                         'event' => 'text-blue-500',
                         'game_updates' => 'text-green-500',
@@ -48,15 +38,15 @@
                         default => 'text-white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $post['id'] ?>'" class="text-white hover:cursor-pointer">
+                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="text-white hover:cursor-pointer">
                     <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
-                        <img src="<?= htmlspecialchars($post['cover'], ENT_QUOTES, 'UTF-8') ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
+                        <img src="<?= sanitize($article['cover'], ENT_QUOTES, 'UTF-8') ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
                     </div>
-                    <p class="<?= $tagColor ?> capitalize"><?= htmlspecialchars(str_replace('_', ' ', $post['tag']), ENT_QUOTES, 'UTF-8') ?></p>
-                    <p class="mb-2 text-2xl font-bold"><?= htmlspecialchars($post['title'], ENT_QUOTES, 'UTF-8') ?></p>
-                    <p><?= htmlspecialchars($post['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
+                    <p class="<?= $tagColor ?> capitalize"><?= sanitize(str_replace('_', ' ', $article['tag']), ENT_QUOTES, 'UTF-8') ?></p>
+                    <p class="mb-2 text-2xl font-bold"><?= sanitize($article['title'], ENT_QUOTES, 'UTF-8') ?></p>
+                    <p><?= sanitize($article['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
                     <div class="flex items-center gap-2 mt-5">                      
-                        <p class="text-sm text-gray-400"><?= date("F d, Y", strtotime($post['date_posted'])) ?></p>
+                        <p class="text-sm text-gray-400"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
                         <hr class="flex-grow border-gray-600 md:hidden border-1">
                     </div>
                 </div>
@@ -64,4 +54,4 @@
         </section>
         <?php require 'includes/footer.php'; ?>
     </body>
-    </html>
+</html>
