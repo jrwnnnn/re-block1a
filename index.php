@@ -5,6 +5,7 @@
 
     $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
     $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");
+    $uniquePlayers = query("SELECT COUNT(DISTINCT uuid) AS total FROM player_data");
 
     if (isset($_SESSION['uuid'])) {
         $onlinePlayers = query("SELECT username, uuid, skin FROM player_data WHERE status = 1 ORDER BY username");
@@ -43,7 +44,7 @@
         <section class="bg-[#1a202a] md:px-30 px-5 py-5">
             <div class="grid grid-cols-3 gap-3 md:gap-10">
                 <div class="text-center text-white">
-                    <p class="text-2xl font-bold text-yellow-500 md:text-5xl">22</p>
+                    <p class="text-2xl font-bold text-yellow-500 md:text-5xl"><?= sanitize($uniquePlayers['total']) ?></p>
                     <p>Unique players</p>
                 </div>
                 <div class="text-center text-white">
