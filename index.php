@@ -6,7 +6,7 @@
     $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
     $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");
 
-    if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['uuid'])) {
         $onlinePlayers = query("SELECT username, uuid, skin FROM player_data WHERE status = 1 ORDER BY username");
         $offlinePlayers = query("SELECT username, uuid, skin FROM player_data WHERE status = 0 ORDER BY username LIMIT 10");
     }
@@ -32,11 +32,11 @@
         <p class="text-sm font-semibold text-white"> The server is currently closed. Re-opening soon!</p>
     </div>
     <!-- Main Splash Screen -->
-    <?php if (!isset($_SESSION['user_id'])): ?>
+    <?php if (!isset($_SESSION['uuid'])): ?>
         <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/s2-background.webp')">
             <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
                 <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
-                <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.</p>
+                <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-2A! Available for Minecraft Java Edition players.</p>
                 <button id="copy-button" onclick="copyToClipboard()" class="bg-yellow-500 text-black md:text-lg font-bold py-2 px-5 rounded-md mt-5 hover:bg-[#2D3748] hover:text-white hover:cursor-pointer transition duration-300 ease-in-out">Copy IP : cs1a.sparked.network</button>
             </div>        
         </section>
@@ -56,10 +56,12 @@
                 </div>
             </div>
         </section>
-        <section class="relative bg-[#2D3748] text-white">
+    <?php endif; ?>
+     <section class="relative bg-[#2D3748] text-white">
             <?php if ($spotlight): ?>
                 <div class="relative">
-                    <img src="<?= sanitize($spotlight['cover']) ?>" class="w-full md:h-[70vh] h-[80vh] object-cover object-center">
+                    <!-- <img src="assets/temp-splash.webp" class="w-full md:h-[50vh] h-[60vh] object-cover object-center"> -->
+                    <img src="<?= sanitize($spotlight['cover']) ?>" class="w-full md:h-[60vh] h-[50vh] object-cover object-center">
                     <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
                         <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
                         <p class="pb-5 text-3xl font-bold md:text-5xl"><?= sanitize($spotlight['title']) ?></p>
@@ -69,23 +71,7 @@
                 </div>
             <?php endif; ?>
         </section>
-    <?php endif; ?>
-    <!-- Logged in homepage -->
-    <?php if (isset($_SESSION['user_id'])): ?>
-        <section class="relative bg-[#2D3748] text-white">
-            <?php if ($spotlight): ?>
-                <div class="relative">
-                    <img src="assets/temp-splash.webp" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
-                    <!-- <img src="<?= sanitize($spotlight['cover']) ?>" class="w-full md:h-[50vh] h-[60vh] object-cover object-center">
-                    <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
-                        <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
-                        <p class="pb-5 text-3xl font-bold md:text-5xl"><?= sanitize($spotlight['title']) ?></p>
-                        <p class="text-base md:text-lg"><?= sanitize($spotlight['subtitle']) ?></p>
-                        <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlight['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
-                    </div> -->
-                </div>
-            <?php endif; ?>
-        </section>
+    <?php if (isset($_SESSION['uuid'])): ?>
         <section class="bg-[#2D3748] text-white">
             <div class="px-5 pt-10 md:px-30">
                 <div class="flex gap-2 py-5 overflow-x-auto md:gap-5 md:pl-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
@@ -107,8 +93,8 @@
             </div>
         </section>
     <?php endif; ?>
-    <section class="flex flex-col px-5 py-10 <?= !isset($_SESSION['user_id']) ? 'bg-white ' : 'bg-[#2D3748] ' ?> md:px-30">
-        <p class="text-3xl font-bold <?= !isset($_SESSION['user_id']) ? 'text-black ' : 'text-white ' ?> md:text-4xl mb-7">News</p>
+    <section class="flex flex-col px-5 py-10 <?= !isset($_SESSION['uuid']) ? 'bg-white ' : 'bg-[#2D3748] ' ?> md:px-30">
+        <p class="text-3xl font-bold <?= !isset($_SESSION['uuid']) ? 'text-black ' : 'text-white ' ?> md:text-4xl mb-7">News</p>
         <div class="grid gap-10 md:grid-cols-3 hover:cursor-pointer">
             <?php foreach ($article  as $article): ?>
                 <?php
@@ -120,7 +106,7 @@
                         default => 'text-white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="<?= !isset($_SESSION['user_id']) ? 'text-black ' : 'text-white ' ?>hover:cursor-pointer">
+                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="<?= !isset($_SESSION['uuid']) ? 'text-black ' : 'text-white ' ?>hover:cursor-pointer">
                     <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
                         <img src="<?= sanitize($article['cover']) ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
                     </div>
@@ -128,8 +114,8 @@
                     <p class="mb-2 text-2xl font-bold"><?= sanitize($article['title']) ?></p>
                     <p><?= sanitize($article['subtitle']) ?></p>
                     <div class="flex items-center gap-2 mt-5">                      
-                        <p class="text-sm <?= !isset($_SESSION['user_id']) ? 'text-gray-600 ' : 'text-gray-300 ' ?>"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
-                        <hr class="flex-grow <?= !isset($_SESSION['user_id']) ? 'border-gray-600 ' : 'border-gray-300 ' ?> md:hidden border-1">
+                        <p class="text-sm <?= !isset($_SESSION['uuid']) ? 'text-gray-600 ' : 'text-gray-300 ' ?>"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
+                        <hr class="flex-grow <?= !isset($_SESSION['uuid']) ? 'border-gray-600 ' : 'border-gray-300 ' ?> md:hidden border-1">
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -142,7 +128,7 @@
             </a>
         </div>
     </section>
-    <?php if (!isset($_SESSION['user_id'])): ?>
+    <?php if (!isset($_SESSION['uuid'])): ?>
         <?php
             $carouselImages = glob('assets/carousel/*.webp');
         ?>

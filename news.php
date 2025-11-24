@@ -3,7 +3,7 @@
     require_once 'functions/connect.php';
     require_once 'includes/session-init.php';
 
-    $article = $conn->query("SELECT * FROM articles ORDER BY date_posted DESC")->fetch_all(MYSQLI_ASSOC);
+    $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
 ?>
 
 <!doctype html>
@@ -23,6 +23,7 @@
             <p class="text-4xl font-bold text-yellow-500 md:text-6xl">News</p>
             <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>
+        <!-- Create article button -->
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1): ?>
             <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='news/editor.php?action=create';">
                 <img src="https://cdn-icons-png.flaticon.com/128/3524/3524388.png" class="w-5">

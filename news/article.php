@@ -33,9 +33,9 @@
     <html>
     <head>
         <?php
-            $title = $article['title'] . " - Block1A";
-            $description = $article['subtitle'];
-            $image = $article['cover'];
+            $title = sanitize($article['title']) . " - Block1A";
+            $description = sanitize($article['subtitle']);
+            $image = sanitize($article['cover']);
             include '../includes/meta.php';
         ?>
         <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
@@ -46,10 +46,11 @@
         <!-- Top navigation bar -->
         <?php require '../includes/navigation.php'; ?>
 
+        <!-- Delete and edit article buttons -->
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1): ?>
             <div class="fixed z-10 flex flex-col gap-3 bottom-5 right-5">
                 <div class="flex items-center gap-2 p-4 bg-red-500 rounded-md hover:cursor-pointer hover:bg-red-600"
-                    onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='../functions/delete-article.php?id=<?= $article['id'] ?>'; }">
+                    onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='delete-article.php?id=<?= $article['id'] ?>'; }">
                     <img src="https://cdn-icons-png.flaticon.com/128/3096/3096687.png" class="w-5">
                 </div>
                 <div class="flex items-center gap-2 p-4 bg-yellow-500 rounded-md hover:cursor-pointer hover:bg-yellow-600"
@@ -69,24 +70,22 @@
                 <p class="text-sm text-gray-500">|</p>
                 <p class="text-sm text-white"><?= sanitize($article['author']) ?></p>
                 <p class="text-sm text-gray-500">|</p>
-                <p class="text-sm text-white"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
+                <p class="text-sm text-white"><?= date("F d, Y", strtotime(sanitize($article['date_posted']))) ?></p>
             </div>
 
             <hr class="border-t-2 border-[#4A5568] mt-5">
         </section>
-
         <div id="content" class="bg-[#2D3748] md:px-[20vw] px-5 py-20 text-white markdown"></div>
         <?php if (!$article['last_edited'] == NULL): ?>
             <div class="flex justify-center items-flex-end bg-[#2D3748] md:px-30 px-5 pb-5">
-                <p class="text-sm italic text-center text-gray-500">Last edited on <?= date("F d, Y", strtotime($article['last_edited'])) ?></p>
+                <p class="text-sm italic text-center text-gray-500">Last edited on <?= date("F d, Y", strtotime(sanitize($article['last_edited']))) ?></p>
             </div>
         <?php endif; ?>
-
         <?php require '../includes/footer.php'; ?>
 
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script>
-            const content = <?= json_encode(sanitize($article['content'])) ?>;
+            const content = <?= json_encode($article['content']) ?>;
             document.querySelector('#content').innerHTML = marked.parse(content);
         </script>
     </body>

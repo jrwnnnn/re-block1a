@@ -2,22 +2,17 @@
     require_once '../includes/security-headers.php';
     require_once '../includes/session-init.php';
     require_once '../functions/connect.php';
+    require_once '../functions/RBAC-1.php';
+        $fallback = '../news.php';
 
+    $action = $_GET['action'] ?? 'create';
+    $article_id = $_GET['id'] ?? null;
 
-    if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1) {
-        $action = $_GET['action'] ?? 'create';
-        $article_id = $_GET['id'] ?? null;
-
-        if ($action == 'edit' && $article_id) {
-            $article = query("SELECT * FROM articles WHERE id = ?", [$article_id], "s");
-        } else {
-            $article = null;
-        }
+    if ($action == 'edit' && $article_id) {
+        $article = query("SELECT * FROM articles WHERE id = ?", [$article_id], "s");
     } else {
-        header('Location: ../news.php');
-        exit;
+        $article = null;
     }
-    $conn->close();
 ?>
 
 <!doctype html>
@@ -37,14 +32,13 @@
 
     <img src="" id="coverPreview" alt="cover" class="hidden w-full max-h-[40vh] object-cover object-center">
     <section class="flex flex-col md:px-30 px-5 py-10 pb-20 text-white bg-[#2D3748]">
-        <form id="postForm" class="space-y-4" onsubmit="formLoading(); return false;">
+        <form id="postForm" class="space-y-4" method="POST" action="submit-article.php">
             <!-- Hidden fields for action type and article ID -->
             <input type="hidden" name="action" value="<?= $action ?>">
             <input type="hidden" name="id" value="<?= $article ? $article['id'] : '' ?>">
 
             <input type="text" name="title" placeholder="Title" class="w-full text-4xl font-bold text-white md:text-6xl focus:outline-none" value="<?= $article ? sanitize($article['title']) : '' ?>" required autocomplete="off">
             <textarea type="text" name="subtitle" placeholder="Subtitle" class="w-full text-lg text-white md:text-2xl focus:outline-none" required autocomplete="off"><?= $article ? sanitize($article['subtitle']) : '' ?></textarea >
-
             <div class="flex flex-col gap-3 md:flex-row">
                 <input type="text" name="cover" placeholder="Cover Image URL" class="px-3 py-2 text-white bg-gray-800 rounded-lg focus:outline-none" value="<?= $article ? $article['cover'] : '' ?>" required autocomplete="off">
                 <div class="flex gap-3">
@@ -63,7 +57,6 @@
 
             <!-- Markdown Editor Textarea -->
             <textarea name="content" id="editor"><?= $article ? sanitize($article['content']) : '' ?></textarea>
-            
             <div class="flex items-start justify-between gap-3">
                 <button type="submit" class="bg-blue-500 glob-btn md:text-lg hover:bg-blue-600"">
                     <?= $action == 'edit' ? 'Update Article' : 'Post Article' ?>

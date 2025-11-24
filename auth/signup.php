@@ -3,7 +3,7 @@
     require_once '../includes/session-init.php';
     require '../functions/connect.php';
 
-    if (isset($_SESSION['user_id'])) {
+    if (isset($_SESSION['uuid'])) {
         header('Location: ../profile.php');
         exit();
     }
@@ -74,6 +74,7 @@
     <head>
         <?php
             $title = "Signup - Block1A";
+            $description = "Create a Block1A account.";
             require_once '../includes/meta.php';
         ?>
         <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
