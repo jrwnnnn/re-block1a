@@ -3,7 +3,7 @@
     require_once 'includes/security-headers.php';
     require_once 'functions/connect.php';
     
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['uuid'])) {
         header('Location: auth/login.php');
         exit();
     }
@@ -17,7 +17,7 @@
         <p class="text-2xl font-bold text-white">Death Log</p>
     </div>
     <?php if ($deathResult && $deathResult->num_rows > 0): ?>
-        <?php while ($row = $deathResult->fetch_assoc()): ?>
+        <?php foreach ($deathResult as $row): ?>
             <div onclick="window.location.href='bluemap.php?x=<?= $row['x'] ?>&z=<?= $row['z']; ?>&world=<?= $row['world'] ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-800 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
                 <p class="font-bold text-white"><?= $row['cause'] ?></p>
                 <p class="text-sm text-gray-400">
@@ -38,7 +38,7 @@
                 </p>
                 <p class="text-sm text-gray-400"><?= date('F j, Y - h:i A', strtotime($row['timestamp'])) ?: 'N/A' ?></p>
             </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     <?php endif; ?>
     </div>
 </div> 

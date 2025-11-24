@@ -3,7 +3,7 @@
     require_once 'includes/session-init.php';
     require_once 'functions/connect.php';
 
-    if (!isset($_SESSION['user_id'])) {
+    if (!isset($_SESSION['uuid'])) {
         header('Location: auth/login.php');
         exit();
     }

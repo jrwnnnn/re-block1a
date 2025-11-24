@@ -5,7 +5,7 @@ require_once 'includes/security-headers.php';
 require_once 'functions/connect.php';
 
 // Redirect to login if user is not authenticated
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['uuid'])) {
     header('Location: auth/login.php');
     exit();
 }
