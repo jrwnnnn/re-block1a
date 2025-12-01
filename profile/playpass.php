@@ -1,12 +1,9 @@
 <?php
-    require_once 'includes/security-headers.php';
-    require_once 'includes/session-init.php';
-    require_once 'functions/connect.php';
-
-    if (!isset($_SESSION['uuid']) && !isset($_GET['player'])) {
-        header('Location: auth/login.php');
-        exit();
-    }
+require_once '../includes/security-headers.php';
+require_once '../includes/session-init.php';
+require_once '../functions/connect.php';
+require_once '../includes/RBAC.php';
+RBAC ('user', '../auth/login.php');
 ?>
 
 <!-- <div class="flex p-5 border-green-300 border-5 rounded-sm">

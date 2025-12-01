@@ -1,88 +1,86 @@
 <?php
-    require_once 'includes/session-init.php';
-    require_once 'functions/connect.php';
+require_once '../includes/security-headers.php';
+require_once '../includes/session-init.php';
+require_once '../functions/connect.php';
+require_once '../includes/RBAC.php';
+RBAC ('user', '../auth/login.php');
 
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: pages/login.php');
+$userId = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+if (!$user) {
+    die("User not found.");
+}
+
+$error = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : $user['email'];
+    $currentPassword = $_POST['current_password'] ?? '';
+    $newPassword = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirm_password'] ?? '';
+
+    if ($email === $user['email'] && empty($newPassword)) {
+        $_SESSION['success_profile'] = "No changes were made. ദ്ദി •⩊• )";
+        echo "<script>window.location.href = 'profile.php';</script>";
         exit();
     }
 
-    $userId = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->bind_param("i", $userId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-    
-    if (!$user) {
-        die("User not found.");
+    if ($email !== $user['email']) {
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
+        $stmt->bind_param("si", $email, $userId);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            $error['email'] = "Email is already in use.";
+        }
     }
 
-    $error = [];
+    $hashedPassword = null;
+    $updatePassword = false;
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $email = !empty($_POST['email']) ? filter_var(trim($_POST['email']), FILTER_SANITIZE_EMAIL) : $user['email'];
-        $currentPassword = $_POST['current_password'] ?? '';
-        $newPassword = $_POST['password'] ?? '';
-        $confirmPassword = $_POST['confirm_password'] ?? '';
+    if (!empty($newPassword)) {
+        if (!password_verify($currentPassword, $user['password'])) {
+            $error['currentPassword'] = "Password is incorrect.";
+        } elseif ($newPassword !== $confirmPassword) {
+            $error['newPassword'] = "Passwords don't match.";
+        } else if (strlen($newPassword) < 8 || !preg_match('/[A-Z]/', $newPassword) || !preg_match('/[a-z]/', $newPassword) || !preg_match('/[0-9]/', $newPassword)) {
+            $error['newPassword'] = "Password must be at least 8 characters, include uppercase, lowercase, a number.";
+        } else {
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            $updatePassword = true;
+        }
+    }
 
-        if ($email === $user['email'] && empty($newPassword)) {
-            $_SESSION['success_profile'] = "No changes were made. ദ്ദി •⩊• )";
+    if (empty($error)) {
+        if ($updatePassword) {
+            $lastPasswordChange = gmdate('Y-m-d H:i:s');
+            $stmt = $conn->prepare("UPDATE users SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
+            $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
+            $_SESSION['last_password_change'] = $lastPasswordChange;
+
+        } else {
+            $stmt = $conn->prepare("UPDATE users SET email = ? WHERE id = ?");
+            $stmt->bind_param("si", $email, $userId);
+        }
+
+        if ($stmt->execute()) {
+            $_SESSION['email'] = $email;
+            if ($updatePassword) {
+                $_SESSION['success_password'] = "Password updated successfully!";
+            } else {
+                $_SESSION['success_profile'] = "Profile updated successfully!";
+            }
+
             echo "<script>window.location.href = 'profile.php';</script>";
             exit();
         }
-
-        if ($email !== $user['email']) {
-            $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
-            $stmt->bind_param("si", $email, $userId);
-            $stmt->execute();
-            $stmt->store_result();
-            if ($stmt->num_rows > 0) {
-                $error['email'] = "Email is already in use.";
-            }
-        }
-
-        $hashedPassword = null;
-        $updatePassword = false;
-
-        if (!empty($newPassword)) {
-            if (!password_verify($currentPassword, $user['password'])) {
-                $error['currentPassword'] = "Password is incorrect.";
-            } elseif ($newPassword !== $confirmPassword) {
-                $error['newPassword'] = "Passwords don't match.";
-            } else if (strlen($newPassword) < 8 || !preg_match('/[A-Z]/', $newPassword) || !preg_match('/[a-z]/', $newPassword) || !preg_match('/[0-9]/', $newPassword)) {
-                $error['newPassword'] = "Password must be at least 8 characters, include uppercase, lowercase, a number.";
-            } else {
-                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-                $updatePassword = true;
-            }
-        }
-
-        if (empty($error)) {
-            if ($updatePassword) {
-                $lastPasswordChange = gmdate('Y-m-d H:i:s');
-                $stmt = $conn->prepare("UPDATE users SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
-                $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
-                $_SESSION['last_password_change'] = $lastPasswordChange;
-
-            } else {
-                $stmt = $conn->prepare("UPDATE users SET email = ? WHERE id = ?");
-                $stmt->bind_param("si", $email, $userId);
-            }
-    
-            if ($stmt->execute()) {
-                $_SESSION['email'] = $email;
-                if ($updatePassword) {
-                    $_SESSION['success_password'] = "Password updated successfully!";
-                } else {
-                    $_SESSION['success_profile'] = "Profile updated successfully!";
-                }
-
-                echo "<script>window.location.href = 'profile.php';</script>";
-                exit();
-            }
-        }
     }
+}
 ?>
 <a href="profile.php" class="mb-5 glob-link">&larr; Back to Statistics</a>
 <div class="space-y-10">

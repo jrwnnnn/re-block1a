@@ -1,4 +1,6 @@
 <?php
+// TO-DO: IMPROVE READABILITY
+
 include 'config.php';
 $current_page = basename($_SERVER['PHP_SELF']);
 

@@ -1,4 +1,7 @@
 <?php
+// Usage: query("SELECT * FROM table WHERE id = ?", [$id], "s");
+// Returns: associative array for SELECT, insert ID for INSERT, affected rows for UPDATE/DELETE
+// s = string, i = integer, d = double, b = blob
 
 function query($sql, $params = [], $types = "") {
     global $conn;

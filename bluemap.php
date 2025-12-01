@@ -1,11 +1,11 @@
 <?php
-  require 'includes/security-headers.php';
-  require_once 'includes/session-init.php';
+require 'includes/security-headers.php';
+require_once 'includes/session-init.php';
 
-  $world = isset($_GET['world']) ? floatval($_GET['world']) : "world";
-  $x = isset($_GET['x']) ? floatval($_GET['x']) : 1857;
-  $z = isset($_GET['z']) ? floatval($_GET['z']) : 1435;
-  $zoom = isset($_GET['zoom']) ? floatval($_GET['zoom']) : 1250;
+$world = isset($_GET['world']) ? floatval($_GET['world']) : "world";
+$x = isset($_GET['x']) ? floatval($_GET['x']) : 1857;
+$z = isset($_GET['z']) ? floatval($_GET['z']) : 1435;
+$zoom = isset($_GET['zoom']) ? floatval($_GET['zoom']) : 1250;
 ?>
 
 <!doctype html>
