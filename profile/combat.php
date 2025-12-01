@@ -1,9 +1,9 @@
 <?php
-require_once '../includes/session-init.php';
-require_once '../includes/security-headers.php';
-require_once '../functions/connect.php';
-require_once '../includes/RBAC.php';
-RBAC ('user', '../index.php');
+require_once 'includes/session-init.php';
+require_once 'includes/security-headers.php';
+require_once 'functions/connect.php';
+require_once 'includes/RBAC.php';
+RBAC ('user', 'index.php');
 
 $statistics = query("SELECT damageAbsorbed, damageDealt, damageTaken, damageResisted, mobKills, playerKills FROM player_statistics WHERE uuid = ?", [$uuid], "s");
 

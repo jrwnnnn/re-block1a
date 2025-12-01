@@ -1,9 +1,9 @@
 <?php
-require_once '../includes/security-headers.php';
-require_once '../includes/session-init.php';
-require_once '../functions/connect.php';
-require_once '../includes/RBAC.php';
-RBAC ('user', '../index.php');
+require_once 'includes/security-headers.php';
+require_once 'includes/session-init.php';
+require_once 'functions/connect.php';
+require_once 'includes/RBAC.php';
+RBAC ('user', 'index.php');
 
 $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 

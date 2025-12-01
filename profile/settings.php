@@ -1,9 +1,9 @@
 <?php
-require_once '../includes/security-headers.php';
-require_once '../includes/session-init.php';
-require_once '../functions/connect.php';
-require_once '../includes/RBAC.php';
-RBAC ('user', '../auth/login.php');
+require_once 'includes/security-headers.php';
+require_once 'includes/session-init.php';
+require_once 'functions/connect.php';
+require_once 'includes/RBAC.php';
+RBAC ('user', 'auth/login.php');
 
 $userId = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");

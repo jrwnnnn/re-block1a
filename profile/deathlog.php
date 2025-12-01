@@ -1,9 +1,9 @@
 <?php
-require_once '../includes/session-init.php';
-require_once '../includes/security-headers.php';
-require_once '../functions/connect.php';
-require_once '../includes/RBAC.php';
-RBAC ('user', '../index.php');
+require_once 'includes/session-init.php';
+require_once 'includes/security-headers.php';
+require_once 'functions/connect.php';
+require_once 'includes/RBAC.php';
+RBAC ('user', 'index.php');
 
 $deathResult = query("SELECT cause, x, y, z, world, timestamp FROM death_log WHERE uuid = ? ORDER BY id DESC LIMIT 10", [$uuid], "s");
 ?>
