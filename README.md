@@ -82,4 +82,4 @@ This project is a PHP-based website using Composer for dependency management and
 This project uses the MIT license. For details, please refer to the LICENSE file.
 
 
-<img src="https://forthebadge.com/images/badges/built-with-love.png">
+<img src="https://forthebadge.com/badges/built-with-love.svg">
