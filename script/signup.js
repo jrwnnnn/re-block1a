@@ -1,3 +1,4 @@
+// Password strength meter and toggle visibility
 const form = document.querySelector('form');
     form.addEventListener('submit', (e) => {
         if (strength < 3) {

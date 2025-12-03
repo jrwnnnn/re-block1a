@@ -1,3 +1,4 @@
+// Toggle password visibility
 document.getElementById('showPassword').addEventListener('change', function () {
     const pass = document.getElementById('password');
     const confirm = document.getElementById('confirm_password');
