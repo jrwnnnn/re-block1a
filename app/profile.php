@@ -4,11 +4,12 @@
 // Security: 9/10
 // Readability: 9/10
 
-require_once 'includes/security-headers.php';
-require_once 'includes/session-init.php';
-require_once 'functions/connect.php';
-require_once 'includes/RBAC.php';
-RBAC ('user', 'auth/login.php');
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
+require_once 'core/database.php';
+require_once 'core/RBAC.php';
+RBAC ('user', 'login.php');
 
 $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
@@ -57,14 +58,14 @@ function ticksToReadable($ticks) {
 <head>
     <?php
       $title = sanitize($playerData['username']) . "'s Profile - Block1A";
-      include 'includes/meta.php';
+      include 'views/partials/meta.php';
     ?>
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link href="src/output.css" rel="stylesheet">
+    <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+    <link href="public/css/output.css" rel="stylesheet">
     <title><?= sanitize($playerData['username']) . "'s Profile - Block1A" ?></title>
 </head>
     <body class="flex flex-col min-h-screen">
-        <?php require 'includes/navigation.php'; ?>
+        <?php require 'views/partials/navigation.php'; ?>
         <div class="relative flex flex-col md:flex-row md:gap-10 px-5 md:px-50">
             <div class="absolute inset-0 !bg-[url('https://cdna.artstation.com/p/assets/images/images/072/797/676/original/arara-vilano-lowrhen-country.gif?1708231362')] bg-cover bg-center brightness-75"></div>
             <div class="flex mt-10">
@@ -108,10 +109,10 @@ function ticksToReadable($ticks) {
         </div>
         <section class="bg-[#2D3748] py-10 md:px-30 px-5 flex flex-col space-y-6">
             <div class="flex flex-col flex-grow w-full min-h-screen mt-5 text-white md:px-20">
-                <?php require 'profile/' . $tab . '.php'; ?>
+                <?php require 'views/partials/profile/' . $tab . '.php'; ?>
             </div>
         </section>
-        <?php include 'includes/footer.php'; ?>
+        <?php include 'views/partials/footer.php'; ?>
     </body>
 <script>
     const uuid = "<?= $playerData['uuid']; ?>"; 

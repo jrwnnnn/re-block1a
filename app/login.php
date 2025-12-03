@@ -4,15 +4,16 @@
 // Security: 10/10
 // Readability:	9/10
 
-require_once '../includes/security-headers.php';
-require_once '../includes/session-init.php';
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
 
 if (isset($_SESSION['uuid'])) {
-    header('Location: ../profile.php');
+    header('Location: profile.php');
     exit();
 }
 
-require_once '../functions/connect.php';
+require_once 'core/database.php';
 require_once '../auth/actions/action_login.php';
 ?>
 
@@ -22,18 +23,18 @@ require_once '../auth/actions/action_login.php';
         <?php
             $title = "Login - Block1A";
             $description = "Login to your Block1A account.";
-            require '../includes/meta.php'; 
+            require 'views/partials/meta.php'; 
         ?>
-        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-        <link href="../src/output.css" rel="stylesheet">
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - Login</title>
     </head>
     <body>
-        <section class="bg-[url('../assets/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen px-5 md:px-30">
+        <section class="bg-[url('public/assets/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen px-5 md:px-30">
             <div class="bg-[#1a202a] flex flex-col rounded-md p-8 w-full max-w-md">
                 <div class="flex items-start justify-between pb-5">
                     <p class="text-2xl font-bold text-white">Login to Your Account</p>
-                    <img src="../assets/cs1a.png" alt="logo" class="w-20">
+                    <img src="public/assets/cs1a.png" alt="logo" class="w-20">
                 </div>
                 <form id="loginForm" class="space-y-4" method="POST" action="login.php">
                     <?php if (!empty($error_message)): ?>
@@ -54,7 +55,7 @@ require_once '../auth/actions/action_login.php';
                             <input type="checkbox" id="showPassword" class="" style="width: 16px; height: 16px; cursor: pointer;">
                             <label for="showPassword">Show Password</label>
                         </div>
-                        <a href="../contact.php" class="text-sm glob-link">Forgot password?</a>
+                        <a href="contact.php" class="text-sm glob-link">Forgot password?</a>
                     </div>
                     <button type="submit" class="w-full bg-blue-500 glob-btn hover:bg-blue-600" <?= !empty($success_message) ? 'disabled' : '' ?>>Login</button> <!-- Submit button -->
                 </form>

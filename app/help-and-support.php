@@ -1,6 +1,7 @@
 <?php
-    require 'includes/security-headers.php';
-    require_once 'includes/session-init.php';
+    require_once __DIR__ . '/../config/config.php';
+    require 'core/security-headers.php';
+    require_once 'core/session.php';
 ?>
 
 <!doctype html>
@@ -8,21 +9,21 @@
     <head>
         <?php
         $title = "Help and Support - Block1A";
-        include 'includes/meta.php';
+        include 'views/partials/meta.php';
         ?>
-        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-        <link href="src/output.css" rel="stylesheet">
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - Help and Support</title>
     </head>
     <body>
-    <?php require 'includes/navigation.php'; ?>
-        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('assets/help-and-support-hero.webp')">
+    <?php require 'views/partials/navigation.php'; ?>
+        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('public/assets/help-and-support-hero.webp')">
             <p class="text-4xl font-bold text-center text-yellow-500 md:text-6xl">Welcome to the Help and Support!</p>
             <p class="mt-5 text-center md:text-lg">Need a hand? You're at the right place!</p>
         </section>
         <section class="bg-[#2D3748] grid md:grid-cols-2 md:px-30 px-5 pt-15 pb-5 gap-10">
             <div class="has-card">
-                <img src="assets/faq.png" alt="faq">
+                <img src="public/assets/faq.png" alt="faq">
                 <div class="flex flex-col space-y-2">
                     <p class="mb-5 text-2xl font-bold">Frequently Asked Questions</p>
                     <div class="flex flex-col mb-5 space-y-2">
@@ -35,7 +36,7 @@
                 </div>
             </div>
             <div class="has-card">
-                <img src="assets/technical.png" alt="technical">
+                <img src="public/assets/technical.png" alt="technical">
                 <div class="flex flex-col space-y-2">
                     <p class="mb-5 text-2xl font-bold">Technical</p>
                     <div class="flex flex-col mb-5 space-y-2">
@@ -50,7 +51,7 @@
                 </div>
             </div>
             <div class="has-card">
-                <img src="assets/fairplay.png" alt="fairplay">
+                <img src="public/assets/fairplay.png" alt="fairplay">
                 <div class="flex flex-col space-y-2">
                     <p class="mb-5 text-2xl font-bold">Fairplay</p>
                     <div class="flex flex-col mb-5 space-y-2">
@@ -63,7 +64,7 @@
                 </div>
             </div>
             <div class="has-card">
-                <img src="assets/gameplay.png" alt="gameplay">
+                <img src="public/assets/gameplay.png" alt="gameplay">
                 <div class="flex flex-col space-y-2">
                     <p class="mb-5 text-2xl font-bold">Gameplay</p>
                     <div class="flex flex-col mb-5 space-y-2">
@@ -84,9 +85,9 @@
                 </div>
                 <button onclick="window.location.href='contact.php';" class="bg-yellow-500 text-[#2D3748] md:text-lg font-bold py-2 px-5 rounded-md hover:bg-[#3a4d60] hover:text-white hover:cursor-pointer transition duration-300 ease-in-out">Contact us</button>
             </div>
-            <img src="assets/buzzy-bees.webp" alt="faq" class="w-full mt-20 max-h-[40vh] object-cover object-center">
+            <img src="public/assets/buzzy-bees.webp" alt="faq" class="w-full mt-20 max-h-[40vh] object-cover object-center">
         </section>
-        <?php require 'includes/footer.php'; ?>
+        <?php require 'views/partials/footer.php'; ?>
         
     </body>
 </html>

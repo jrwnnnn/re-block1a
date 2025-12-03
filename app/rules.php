@@ -4,8 +4,9 @@
 // Security: 10/10
 // Readability: 9.5/10
 
-require_once 'includes/security-headers.php';
-require_once 'includes/session-init.php';
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
 
 $page = $_GET['page'] ?? 'home';
 $rules = json_decode(file_get_contents('data/rules.json'), true); // Load rules from JSON file
@@ -27,15 +28,15 @@ $nextPage = $pages[$currentIndex + 1] ?? null;
   <?php
     $title = "Rules - Block1A";
     $description = "The official rules of Block1A Minecraft server.";
-    include 'includes/meta.php';
+    include 'views/partials/meta.php';
   ?>
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <link href="src/output.css" rel="stylesheet">
+  <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+  <link href="public/css/output.css" rel="stylesheet">
   <title>Block1A - Rules</title>
 </head>
 <body>
   <div class="flex flex-col">
-    <?php require 'includes/navigation.php'; ?>
+    <?php require 'views/partials/navigation.php'; ?>
     <div class="bg-[#2D3748] flex flex-grow md:flex-row flex-col text-white min-h-screen md:px-30 px-5 rules-sidebar">
       <div class="min-w-[20vw] py-10 pr-5 md:border-r-1 md:border-gray-500">
         <div class="flex flex-col space-y-4">
@@ -70,7 +71,7 @@ $nextPage = $pages[$currentIndex + 1] ?? null;
       </div>
     </div>
   </div>
-  <?php require 'includes/footer.php'; ?>
+  <?php require 'views/partials/footer.php'; ?>
   
 </body>
 </html>

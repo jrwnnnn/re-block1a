@@ -4,14 +4,15 @@
 // Security: 9/10
 // Readability: 8/10
 
-require_once '../includes/security-headers.php';
-require_once '../functions/connect.php';
-require_once '../includes/session-init.php';
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/database.php';
+require_once 'core/session.php';
 
 $article = query("SELECT * FROM articles WHERE id = ?", [$_GET['id']], "s");
 
 if (!$article) {
-    header("Location: ../404.php?error=notfound");
+    header("Location: 404.php?error=notfound");
     exit;
 }
 
@@ -40,18 +41,18 @@ $article['tag'] = match ($article['tag']) {
             $title = sanitize($article['title']) . " - Block1A";
             $description = sanitize($article['subtitle']);
             $image = sanitize($article['cover']);
-            include '../includes/meta.php';
+            include 'views/partials/meta.php';
         ?>
-        <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
-        <link href="../src/output.css" rel="stylesheet">
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - <?= sanitize($article['title'],) ?></title>
     </head>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-    <script src="../script/localTime.js"></script>
+    <script src="public/js/localTime.js"></script>
     <body>
         <!-- Top navigation bar -->
-        <?php require '../includes/navigation.php'; ?>
+        <?php require 'views/partials/navigation.php'; ?>
 
         <!-- Delete and edit article buttons -->
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin"): ?>
@@ -89,7 +90,7 @@ $article['tag'] = match ($article['tag']) {
                 </p>
             </div>
         <?php endif; ?>
-        <?php require '../includes/footer.php'; ?>
+        <?php require 'views/partials/footer.php'; ?>
 
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script>

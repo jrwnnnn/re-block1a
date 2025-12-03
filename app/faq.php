@@ -1,6 +1,7 @@
 <?php
-    require 'includes/security-headers.php';
-    require_once 'includes/session-init.php';
+    require_once __DIR__ . '/../config/config.php';
+    require 'core/security-headers.php';
+    require_once 'core/session.php';
     
     $requestedTopic = $_GET['topic'] ?? '';
 
@@ -37,14 +38,14 @@
     <head>
         <?php
         $title = "FAQ - Block1A";
-        include 'includes/meta.php';
+        include 'views/partials/meta.php';
         ?>
-        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-        <link href="src/output.css" rel="stylesheet">
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - <?php echo htmlspecialchars($mainTopic, ENT_QUOTES, 'UTF-8'); ?></title>
     </head>
     <body>
-        <?php require 'includes/navigation.php'; ?>
+        <?php require 'views/partials/navigation.php'; ?>
         <section class="flex md:flex-row flex-col gap-5 bg-[#2D3748] pt-10 pb-20 md:px-30 px-5">
             <div class="flex-grow text-white">
                 <p class="text-4xl font-bold md:text-6xl"><?php echo htmlspecialchars($mainTopic, ENT_QUOTES, 'UTF-8'); ?></p>
@@ -104,6 +105,6 @@
                 </div>
             </div>
         </section>
-        <?php require 'includes/footer.php'; ?>  
+        <?php require 'views/partials/footer.php'; ?>  
     </body>
 </html>

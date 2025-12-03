@@ -1,5 +1,5 @@
 <?php
-require_once 'session-init.php';
+require_once 'session.php';
 function RBAC($level, $fallback = '../index.php') {
     $roleMap = [
         'admin' => 3, // administrator

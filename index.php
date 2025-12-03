@@ -1,7 +1,8 @@
 <?php
-    require_once 'includes/security-headers.php';
-    require_once 'functions/connect.php';
-    require_once 'includes/session-init.php';
+    require_once __DIR__ . '/config/config.php';
+    require_once 'app/core/security-headers.php';
+    require_once 'app/core/database.php';
+    require_once 'app/core/session.php';
 
     $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
     $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");
@@ -20,21 +21,21 @@
     <?php
       $title = "Home - Block1A";
       $description = "The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.";
-      include 'includes/meta.php';
+      include 'app/views/partials/meta.php';
     ?>
-    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-    <link href="src/output.css" rel="stylesheet">
+    <link rel="icon" href="app/public/assets/favicon.ico" type="image/x-icon">
+    <link href="app/public/css/output.css" rel="stylesheet">
     <title>Block1A - Home</title>
 </head>
 <body>
-    <?php require 'includes/navigation.php'; ?>
+    <?php require 'app/views/partials/navigation.php'; ?>
     <div class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 via-red-500 to-red-400">
         <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
         <p class="text-sm font-semibold text-white"> The server is currently closed. Re-opening soon!</p>
     </div>
     <!-- Main Splash Screen -->
     <?php if (!isset($_SESSION['uuid'])): ?>
-        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('assets/s2-background.webp')">
+        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('app/public/assets/s2-background.webp')">
             <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
                 <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
                 <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-2A! Available for Minecraft Java Edition players.</p>
@@ -67,7 +68,7 @@
                         <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
                         <p class="pb-5 text-3xl font-bold md:text-5xl"><?= sanitize($spotlight['title']) ?></p>
                         <p class="text-base md:text-lg"><?= sanitize($spotlight['subtitle']) ?></p>
-                        <button id="copy-button" onclick="window.location.href='news/article.php?id=<?= $spotlight['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
+                        <button id="copy-button" onclick="window.location.href='app/article.php?id=<?= $spotlight['id'] ?>'" class="px-5 py-2 mt-5 font-bold text-white transition duration-300 ease-in-out bg-blue-500 rounded-md md:text-lg hover:bg-white hover:text-black hover:cursor-pointer">Read</button>
                     </div>
                 </div>
             <?php endif; ?>
@@ -77,14 +78,14 @@
             <div class="px-5 pt-10 md:px-30">
                 <div class="flex gap-2 py-5 overflow-x-auto md:gap-5 md:pl-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
                     <?php foreach ($onlinePlayers as $player): ?>
-                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(../assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                        <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(app/public/assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
                             <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                             <p class="font-bold truncate"><?= $player['username'] ?></p>
                             <p class="text-sm text-gray-700">Online</p>
                         </div>
                     <?php endforeach; ?>
                     <?php foreach ($offlinePlayers as $player): ?>
-                        <div onclick="window.location.href='profile.php?player=<?= $player['uuid'] ?>'" class="flex flex-col flex-shrink-0 p-3 pt-10 pr-10 text-black transition-transform duration-300 ease-in-out bg-gray-400 bg-cover rounded-lg shadow-md bg-bottom-right max-w-35 hover:cursor-pointer hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
+                        <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="flex flex-col flex-shrink-0 p-3 pt-10 pr-10 text-black transition-transform duration-300 ease-in-out bg-gray-400 bg-cover rounded-lg shadow-md bg-bottom-right max-w-35 hover:cursor-pointer hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-gray-400/50 group">
                             <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                             <p class="font-bold truncate"><?= $player['username'] ?></p>
                             <p class="text-sm text-gray-700">Offline</p>
@@ -107,7 +108,7 @@
                         default => 'text-white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="<?= !isset($_SESSION['uuid']) ? 'text-black ' : 'text-white ' ?>hover:cursor-pointer">
+                <div onclick="window.location.href='app/article.php?id=<?= $article['id'] ?>'" class="<?= !isset($_SESSION['uuid']) ? 'text-black ' : 'text-white ' ?>hover:cursor-pointer">
                     <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
                         <img src="<?= sanitize($article['cover']) ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
                     </div>
@@ -122,7 +123,7 @@
             <?php endforeach; ?>
         </div>
         <div class="flex items-center justify-end gap-2 mt-10">
-            <a href="news.php" class="flex items-center tracking-widest text-blue-500 hover:text-blue-700">See all news
+            <a href="app/news.php" class="flex items-center tracking-widest text-blue-500 hover:text-blue-700">See all news
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -131,7 +132,7 @@
     </section>
     <?php if (!isset($_SESSION['uuid'])): ?>
         <?php
-            $carouselImages = glob('assets/carousel/*.webp');
+            $carouselImages = glob('app/public/assets/carousel/*.webp');
         ?>
                 <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
                     <p class="text-3xl font-bold text-yellow-500 md:text-4xl mb-7">The Server</p>
@@ -148,7 +149,7 @@
             <p class="text-center text-white "> Whether you’re here to build, explore, or just vibe with friends, welcome to the crew!</p>
         </section>
     <?php endif ?>
-    <?php require 'includes/footer.php'; ?>
-    <script src="script/index.js"></script>
+    <?php require 'app/views/partials/footer.php'; ?>
+    <script src="app/public/js/index.js"></script>
 </body>
 </html>

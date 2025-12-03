@@ -4,15 +4,16 @@
 // Security: 10/10
 // Readability: 9.5/10
 
-require_once '../includes/security-headers.php';
-require_once '../includes/session-init.php';
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
 
 if (isset($_SESSION['uuid'])) {
-    header('Location: ../profile.php');
+    header('Location: profile.php');
     exit();
 }
 
-require_once '../functions/connect.php';
+require_once 'core/database.php';
 require_once '../auth/actions/action_signup.php';
 ?>
 
@@ -22,18 +23,18 @@ require_once '../auth/actions/action_signup.php';
         <?php
             $title = "Signup - Block1A";
             $description = "Create a Block1A account.";
-            require_once '../includes/meta.php';
+            require_once 'views/partials/meta.php';
         ?>
-        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-        <link href="../src/output.css" rel="stylesheet">
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - Signup</title>
     </head>
     <body>
-        <section class="bg-[url('../assets/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen md:px-30 px-5">
+        <section class="bg-[url('public/assets/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen md:px-30 px-5">
             <div class="bg-[#1a202a] flex flex-col rounded-md p-8 w-full max-w-md">
                 <div class="flex flex-row items-start justify-between pb-5">
                     <p class="text-2xl font-bold text-white">Create an Account</p>
-                    <img src="../assets/cs1a.png" alt="logo" class="w-20">
+                    <img src="public/assets/cs1a.png" alt="logo" class="w-20">
                 </div>
 
                 <form id="signupForm" class="space-y-4" method="POST" action="signup.php">

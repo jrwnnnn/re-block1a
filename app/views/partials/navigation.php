@@ -1,14 +1,14 @@
 <?php
 // TO-DO: IMPROVE READABILITY
 
-include 'config.php';
+include_once __DIR__ . '/../../../config/config.php';
 $current_page = basename($_SERVER['PHP_SELF']);
 
 $grid6 = "Login";
-$grid6_link = "auth/login.php";
+$grid6_link = "app/login.php";
 if (isset($_SESSION['uuid'])) {
     $grid6 = "Profile";
-    $grid6_link = "profile.php";
+    $grid6_link = "app/profile.php";
 }
 
 function navLink($href, $label, $current_page, $activePages = []) {
@@ -22,7 +22,7 @@ function navLink($href, $label, $current_page, $activePages = []) {
 ?>
 
 <nav class="bg-[#1A212B] p-4 px-5 md:px-30 flex items-center justify-between">
-    <img src="https://block1a.onrender.com/assets/cs1a.png" alt="logo" class="w-20 hover:cursor-pointer" onclick="window.location.replace('index.php')">
+    <img src="<?= $baseUrl ?>app/public/assets/cs1a.png" alt="logo" class="w-20 hover:cursor-pointer" onclick="window.location.replace('<?= $baseUrl ?>index.php')">
 
     <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
@@ -35,10 +35,10 @@ function navLink($href, $label, $current_page, $activePages = []) {
     <div id="nav-links" class="hidden md:grid md:grid-cols-6 absolute md:static top-19.5 left-0 w-full md:w-auto bg-[#1A212B] text-center md:flex-row md:space-x-4 transition-all duration-300 ease-in-out z-10">
         <?php
         echo navLink($baseUrl . "index.php", "Home", $current_page, ["index.php"]);
-        echo navLink($baseUrl . "news.php", "News", $current_page, ["news.php", "article.php", "editor.php"]);
-        echo navLink($baseUrl . "rules.php", "Rules", $current_page, ["rules.php"]);
-        echo navLink($baseUrl . "bluemap.php", "BlueMap", $current_page, ["bluemap.php"]);
-        echo navLink($baseUrl . "help-and-support.php", "Help and Support", $current_page, ["help-and-support.php", "faq.php", "contact.php"]);
+        echo navLink($baseUrl . "app/news.php", "News", $current_page, ["news.php", "article.php", "editor.php"]);
+        echo navLink($baseUrl . "app/rules.php", "Rules", $current_page, ["rules.php"]);
+        echo navLink($baseUrl . "app/bluemap.php", "BlueMap", $current_page, ["bluemap.php"]);
+        echo navLink($baseUrl . "app/help-and-support.php", "Help and Support", $current_page, ["help-and-support.php", "faq.php", "contact.php"]);
         echo navLink($baseUrl . $grid6_link, $grid6, $current_page, [$grid6_link]);
         ?>
     </div>

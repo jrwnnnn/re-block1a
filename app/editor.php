@@ -4,11 +4,12 @@
 // Security: 9.5/10
 // Readability: 9/10
 
-require_once '../includes/security-headers.php';
-require_once '../includes/session-init.php';
-require_once '../includes/RBAC.php';
-RBAC('editor', '../news.php');
-require_once '../functions/connect.php';
+require_once __DIR__ . '/../config/config.php';
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
+require_once 'core/RBAC.php';
+RBAC('editor', 'news.php');
+require_once 'core/database.php';
 
 $action = $_GET['action'] ?? 'create';
 $article_id = $_GET['id'] ?? null;
@@ -25,15 +26,15 @@ if ($action == 'edit' && $article_id) {
 <head>
     <?php
         $title = "Editor - Block1A";
-        include '../includes/meta.php';
+        include 'views/partials/meta.php';
     ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
-    <link href="../src/output.css" rel="stylesheet">
-    <link href="../src/easymde.css" rel="stylesheet">
+    <link href="public/css/output.css" rel="stylesheet">
+    <link href="public/css/easymde.css" rel="stylesheet">
     <title>Block1A - Editor</title>
 </head>
 <body class="min-h-screen">
-    <?php require '../includes/navigation.php'; ?>
+    <?php require 'views/partials/navigation.php'; ?>
 
     <img src="" id="coverPreview" alt="cover" class="hidden w-full max-h-[40vh] object-cover object-center">
     <section class="flex flex-col md:px-30 px-5 py-10 pb-20 text-white bg-[#2D3748]">
@@ -73,13 +74,13 @@ if ($action == 'edit' && $article_id) {
         </form>
     </section>
 
-    <?php require '../includes/footer.php'; ?>
+    <?php require 'views/partials/footer.php'; ?>
 
     <!-- Scripts for EasyMDE editor and custom logic -->
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-    <script src="script/cover_preview.js"></script>
-    <script src="script/easymde.js"></script>
-    <script src="script/editor.js"></script>
+    <script src="public/js/cover_preview.js"></script>
+    <script src="public/js/easymde.js"></script>
+    <script src="public/js/editor.js"></script>
 
 </script>
 

@@ -1,7 +1,8 @@
 <?php
-    require_once 'includes/security-headers.php';
-    require_once 'functions/connect.php';
-    require_once 'includes/session-init.php';
+    require_once __DIR__ . '/../config/config.php';
+    require 'core/security-headers.php';
+    require_once 'core/database.php';
+    require_once 'core/session.php';
 
     $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
 ?>
@@ -12,23 +13,23 @@
         <?php 
         $title = "News - Block1A";
         $description = "Stay updated with the latest news, updates, and events happening in our server.";
-        require 'includes/meta.php'; ?>
-        <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-        <link href="src/output.css" rel="stylesheet">
+        require 'views/partials/meta.php'; ?>
+        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - News</title>
     </head>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-    <script src="script/localTime.js"></script>
+    <script src="public/js/localTime.js"></script>
     <body>
-        <?php require 'includes/navigation.php'; ?>
-        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('assets/blog-hero.webp')">
+        <?php require 'views/partials/navigation.php'; ?>
+        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('public/assets/blog-hero.webp')">
             <p class="text-4xl font-bold text-yellow-500 md:text-6xl">News</p>
             <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>
         <!-- Create article button -->
         <?php if (isset($_SESSION['permission_level']) && ($_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin")): ?>
-            <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='news/editor.php?action=create';">
+            <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='editor.php?action=create';">
                 <img src="https://cdn-icons-png.flaticon.com/128/3524/3524388.png" class="w-5">
             </div>
         <?php endif; ?>
@@ -43,7 +44,7 @@
                         default => 'white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="flex flex-col text-white hover:cursor-pointer justify-between">
+                <div onclick="window.location.href='article.php?id=<?= $article['id'] ?>'" class="flex flex-col text-white hover:cursor-pointer justify-between">
                     <div>
                         <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
                             <img src="<?= sanitize($article['cover']) ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
@@ -59,6 +60,6 @@
                 </div>
             <?php endforeach; ?>
         </section>
-        <?php require 'includes/footer.php'; ?>
+        <?php require 'views/partials/footer.php'; ?>
     </body>
 </html>

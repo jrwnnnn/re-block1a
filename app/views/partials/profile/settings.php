@@ -1,9 +1,9 @@
 <?php
-require_once 'includes/security-headers.php';
-require_once 'includes/session-init.php';
-require_once 'functions/connect.php';
-require_once 'includes/RBAC.php';
-RBAC ('user', 'auth/login.php');
+require_once 'core/security-headers.php';
+require_once 'core/session.php';
+require_once 'core/database.php';
+require_once 'core/RBAC.php';
+RBAC ('user', 'login.php');
 
 date_default_timezone_set('Asia/Manila');
 
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-<script src="script/localTime.js"></script>
+<script src="public/js/localTime.js"></script>
 
 <a href="profile.php" class="mb-5 glob-link">&larr; Back to Statistics</a>
 <div class="space-y-10">

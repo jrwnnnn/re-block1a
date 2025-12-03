@@ -1,6 +1,6 @@
 <?php
-    $autoloader = __DIR__ . '/../vendor/autoload.php';
-    $dotenvPath = __DIR__ . '/..';
+    $autoloader = __DIR__ . '/../../vendor/autoload.php';
+    $dotenvPath = __DIR__ . '/../..';
     $dotenvFile = $dotenvPath . '/.env';
 
     if (file_exists($autoloader)) {
@@ -35,5 +35,5 @@
         die(json_encode(['error' => 'Database connection failed: ' . $conn->connect_error]));
     }
 
-    require_once 'query.php';
+    require_once __DIR__ . '/../helpers/query.php';
 ?>
