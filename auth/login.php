@@ -6,36 +6,14 @@
 
 require_once '../includes/security-headers.php';
 require_once '../includes/session-init.php';
-require_once '../functions/connect.php';
 
 if (isset($_SESSION['uuid'])) {
     header('Location: ../profile.php');
     exit();
 }
 
-$error_message = ""; // Initialize error message variable so that PHP doesn't throw an undefined variable error
-$has_error = false;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    $auth = query("SELECT * FROM users WHERE username = ? OR email = ?", [$login, $login], "ss");
-
-    if ($auth && password_verify($password, $auth['password'])) {
-        $_SESSION['username'] = $auth['username'];
-        $_SESSION['email'] = $auth['email']; 
-        $_SESSION['uuid'] = $auth['uuid'];
-        $_SESSION['last_password_change'] = $auth['last_password_change']; 
-        $_SESSION['permission_level'] = $auth['permission_level'];
-
-        header('Location: ../index.php');
-        exit();
-    } else {
-        $error_message = "Invalid login credentials.";
-        $has_error = true;
-    }
-}
+require_once '../functions/connect.php';
+require_once '../auth/actions/action_login.php';
 ?>
 
 <!doctype html>
@@ -60,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <form id="loginForm" class="space-y-4" method="POST" action="login.php">
                     <?php if (!empty($error_message)): ?>
                         <div class="p-3 font-semibold text-center text-white bg-red-600 rounded-md">
-                            <?= sanitize($error_message) ?>
+                            <?= $error_message ?>
                         </div>
                     <?php endif; ?>
                     <div>
