@@ -5,12 +5,10 @@ require_once 'functions/connect.php';
 require_once 'includes/RBAC.php';
 RBAC ('user', 'auth/login.php');
 
-$userId = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->bind_param("i", $userId);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+date_default_timezone_set('Asia/Manila');
+
+$uuid = $_SESSION['uuid'];
+$user = query("SELECT * FROM users WHERE uuid = ?", [$uuid], "s"); // Fetch current user data
 
 if (!$user) {
     die("User not found.");
@@ -24,18 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $newPassword = $_POST['password'] ?? '';
     $confirmPassword = $_POST['confirm_password'] ?? '';
 
-    if ($email === $user['email'] && empty($newPassword)) {
+    if ($email === $user['email'] && empty($newPassword)) { // No changes made
         $_SESSION['success_profile'] = "No changes were made. ദ്ദി •⩊• )";
-        echo "<script>window.location.href = 'profile.php';</script>";
+        header("Location: profile.php");
         exit();
     }
 
-    if ($email !== $user['email']) {
-        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ? AND id != ?");
-        $stmt->bind_param("si", $email, $userId);
-        $stmt->execute();
-        $stmt->store_result();
-        if ($stmt->num_rows > 0) {
+    if ($email !== $user['email']) { // Email has changed, check for uniqueness
+        $stmt = query("SELECT id FROM users WHERE email = ? AND uuid != ?", [$email, $uuid], "ss");
+        if ($stmt) {
             $error['email'] = "Email is already in use.";
         }
     }
@@ -58,17 +53,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (empty($error)) {
         if ($updatePassword) {
-            $lastPasswordChange = gmdate('Y-m-d H:i:s');
-            $stmt = $conn->prepare("UPDATE users SET email = ?, password = ?, last_password_change = ? WHERE id = ?");
-            $stmt->bind_param("sssi", $email, $hashedPassword, $lastPasswordChange, $userId);
-            $_SESSION['last_password_change'] = $lastPasswordChange;
+            $_SESSION['last_password_change'] = date('F j, Y, g:i a');
+            $stmt = query("UPDATE users SET email = ?, password = ?, last_password_change = ? WHERE uuid = ?", [$email, $hashedPassword, $_SESSION['last_password_change'], $uuid], "ssss");
 
         } else {
-            $stmt = $conn->prepare("UPDATE users SET email = ? WHERE id = ?");
-            $stmt->bind_param("si", $email, $userId);
+            $stmt = query("UPDATE users SET email = ? WHERE uuid = ?", [$email, $uuid], "ss");
         }
 
-        if ($stmt->execute()) {
+        if ($stmt) {
             $_SESSION['email'] = $email;
             if ($updatePassword) {
                 $_SESSION['success_password'] = "Password updated successfully!";
@@ -76,12 +68,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['success_profile'] = "Profile updated successfully!";
             }
 
-            echo "<script>window.location.href = 'profile.php';</script>";
+            header("Location: profile.php");
             exit();
         }
     }
 }
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
+<script src="script/localTime.js"></script>
+
 <a href="profile.php" class="mb-5 glob-link">&larr; Back to Statistics</a>
 <div class="space-y-10">
     <div class="grid md:grid-cols-2 gap-15">  
@@ -91,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <?php if (!empty($_SESSION['success_profile'])): ?>
                     <div class="p-3 font-semibold text-center text-white bg-green-600 rounded-md">
-                        <?= htmlspecialchars($_SESSION['success_profile']) ?>
+                        <?= sanitize($_SESSION['success_profile']) ?>
                     </div>
                     <?php unset($_SESSION['success_profile']); ?>
                 <?php endif; ?>
@@ -99,15 +96,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 <form method="POST" class="space-y-2">
                     <p class="block mb-1 text-gray-300">UUID</p>
-                    <div class="glob-input " title="This is your unique user identifier. You can't change this."><?= htmlspecialchars($_SESSION['uuid'])  ?></div>
+                    <div class="glob-input " title="This is your unique user identifier. You can't change this."><?= $_SESSION['uuid']  ?></div>
 
                     <div>
                         <label for="email" class="block mb-1 text-gray-300">Email 
                             <?php if (!empty($error['email'])): ?>
-                                <span class="text-red-500">- <?= htmlspecialchars($error['email']) ?></span>
+                                <span class="text-red-500">- <?= sanitize($error['email']) ?></span>
                             <?php endif; ?>
                         </label>
-                        <input type="email" id="email" name="email" class="glob-input <?= !empty($error['email']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : htmlspecialchars($user['email']) ?>">
+                        <input type="email" id="email" name="email" class="glob-input <?= !empty($error['email']) ? '!border-red-500' : 'border-gray-600 focus:border-blue-500' ?>" value="<?= isset($_POST['email']) ? sanitize($_POST['email']) : sanitize($user['email']) ?>">
                     </div>
 
                     <button type="submit" class="mt-5 bg-blue-500 glob-btn hover:bg-blue-600">Save Changes</button>
@@ -116,11 +113,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="space-y-2 text-white">
                 <p class="mb-5 text-2xl font-bold">Password </p>
                 <p>Please remember your password as there is currently no way to reset it.</p>
-                <p class="mb-5 text-sm italic text-gray-300"> Last changed: <span data-time="<?= htmlspecialchars($_SESSION['last_password_change']) ?>" data-format='{"year":"numeric","month":"long","day":"numeric", "hour":"numeric","minute":"2-digit","second":"2-digit"}'></span></p>
+                <p class="mb-5 text-sm italic text-gray-300"> Last changed: 
+                    <script> 
+                        document.write(localTime("<?= date('c', strtotime($_SESSION['last_password_change'])) ?>", "MMMM D, YYYY, hh:mm A")) 
+                    </script>
+                </p>
 
                 <?php if (!empty($_SESSION['success_password'])): ?>
                     <div class="p-3 font-semibold text-center text-white bg-green-600 rounded-md">
-                        <?= htmlspecialchars($_SESSION['success_password']) ?>
+                        <?= sanitize($_SESSION['success_password']) ?>
                     </div>
                     <?php unset($_SESSION['success_password']); ?>
                 <?php endif; ?>
@@ -129,7 +130,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div>
                         <label for="current_password" class="block mb-2 text-gray-300">Current Password 
                             <?php if (!empty($error['currentPassword'])): ?>
-                                <span class="text-red-500">- <?= htmlspecialchars($error['currentPassword'], ENT_QUOTES, 'UTF-8') ?></span>
+                                <span class="text-red-500">- <?= sanitize($error['currentPassword']) ?></span>
                             <?php endif; ?>
                         </label>
                         <input type="password" id="current_password" name="current_password" class="glob-input <?= !empty($error['currentPassword']) ? '!border-red-500' : 'border-gray-600' ?>" required>
@@ -137,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div>
                         <label for="password" class="block mb-2 text-gray-300">New Password
                             <?php if (!empty($error['newPassword'])): ?>
-                                <span class="text-red-500">- <?= htmlspecialchars($error['newPassword'], ENT_QUOTES, 'UTF-8') ?></span>
+                                <span class="text-red-500">- <?= sanitize($error['newPassword']) ?></span>
                             <?php endif; ?>
                         </label>
                         <input type="password" id="password" name="password" class="glob-input <?= !empty($error['newPassword']) ? '!border-red-500' : '!border-gray-600' ?>" required>            
@@ -145,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <div>
                         <label for="confirm_password" class="block mb-2 text-gray-300">Confirm New Password 
                             <?php if (!empty($error['newPassword'])): ?>
-                                <span class="text-red-500">- <?= htmlspecialchars($error['newPassword'], ENT_QUOTES, 'UTF-8') ?></span>
+                                <span class="text-red-500">- <?= sanitize($error['newPassword']) ?></span>
                             <?php endif; ?>
                         </label>
                         <input type="password" id="confirm_password" name="confirm_password" class="glob-input <?= !empty($error['newPassword']) ? '!border-red-500' : 'border-gray-600' ?>" required>            
@@ -171,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <p id="state-del">Deleting your account is permanent and cannot be undone. All your playerdata and profile information, will be removed.</p>
                 <button onclick="showDeleteForm()" id="expand-delete-form" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer">Delete Account</button>
                 <form id="delete-form" action="functions/delete-account.php" method="POST" class="hidden space-y-2">
-                    <label for="confirm-username" class="pb-3 text-white"><span class="text-red-500">You're about to delete your account! </span>To confirm, type <b>"<?= htmlspecialchars($_SESSION['username'], ENT_QUOTES< 'UTF_8'); ?>"</b> in the box below</label>
+                    <label for="confirm-username" class="pb-3 text-white"><span class="text-red-500">You're about to delete your account! </span>To confirm, type <b>"<?= sanitize($_SESSION['username']); ?>"</b> in the box below</label>
                     <input id="confirm-username" name="confirmation" class="glob-input" autocomplete="off" onpaste="return false;">
                     <button id="delete-account-btn" type="submit" name="destroy" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer" disabled>Delete Account</button>
                 </form>
@@ -179,32 +180,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
 </div>
-
-<script src="script/timeFunctions.js"></script>
 <script>
-    document.querySelectorAll('[data-time]').forEach(el => {
-        const utcDateStr = el.getAttribute('data-time');
-        let formatOptions = {};
-
-        try {
-            const formatData = el.getAttribute('data-format');
-            if (formatData) {
-                formatOptions = JSON.parse(formatData);
-            }
-        } catch(e) {
-        }
-
-        el.textContent = convertToLocalTime(utcDateStr, formatOptions);
-    });
-
     document.getElementById('showPassword').addEventListener('change', function () {
-        const cu_pass = document.getElementById('current_password');
-        const pass = document.getElementById('password');
-        const confirm = document.getElementById('confirm_password');
+        const current_password = document.getElementById('current_password');
+        const password = document.getElementById('password');
+        const confirm_password = document.getElementById('confirm_password');
         const type = this.checked ? 'text' : 'password';
-        cu_pass.type = type;
-        pass.type = type;
-        confirm.type = type;
+        current_password.type = type;
+        password.type = type;
+        confirm_password.type = type;
     });
     
     function showDeleteForm() {

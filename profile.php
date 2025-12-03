@@ -17,7 +17,7 @@ if (!$playerData) {
     header('Location: 404.php?error=player_not_found');
     exit();
 }
-$playTime = query("SELECT playTime FROM player_statistics WHERE uuid = ?", [$uuid], "s");
+$stmt = query("SELECT playTime FROM player_statistics WHERE uuid = ?", [$uuid], "s");
 
 $tab = $_GET['tab'] ?? 'statistics';
 if (!in_array($tab, ['statistics', 'playpass', 'settings'])) {
@@ -25,7 +25,8 @@ if (!in_array($tab, ['statistics', 'playpass', 'settings'])) {
     header('Location: profile.php?tab=statistics');
 } else if ($tab === 'settings') {
     $uuid = $_SESSION['uuid'];
-}    
+}
+
 $playerData['firstJoined'] = $playerData['firstJoined'] ? date('F j, Y', strtotime($playerData['firstJoined'])) : 'N/A';
 $playerData['lastSeen'] = $playerData['lastSeen'] ? date('F j, Y, g:i A', strtotime($playerData['lastSeen'])) : 'N/A';
 
@@ -64,21 +65,23 @@ function ticksToReadable($ticks) {
 </head>
     <body class="flex flex-col min-h-screen">
         <?php require 'includes/navigation.php'; ?>
-        <!-- Top Card -->
-        <div id="topCard" class="flex flex-col px-5 !bg-[url(../assets/topcard-blue.jpg)] bg-no-repeat shadow md:bg-cover bg-bottom-right p-7 ace-y-4 md:flex-row md:px-30 gap-5 md:gap-10">
-            <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/full?skinUrl=<?= sanitize($playerData['skin']) ?>" class="w-35 md:w-45">
-            <div class="flex flex-col justify-between flex-grow">
+        <div class="relative flex flex-col md:flex-row md:gap-10 px-5 md:px-50">
+            <div class="absolute inset-0 !bg-[url('https://cdna.artstation.com/p/assets/images/images/072/797/676/original/arara-vilano-lowrhen-country.gif?1708231362')] bg-cover bg-center brightness-75"></div>
+            <div class="flex mt-10">
+                <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= sanitize($playerData['skin']) ?>" alt="Player Model" class="w-auto h-60 z-10 shadow-lg">
+            </div>
+            <div class="flex flex-col justify-between flex-grow py-5 z-10">
                 <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
                     <div class="text-white topCardText">
                         <p class="mb-2 text-4xl font-bold"><?= sanitize($playerData['username']) ?></p>
                         <p class="hidden md:block"><b>UUID:</b> <?= $playerData['uuid'] ?></p>
-                        <p class="block md:hidden"><b>Status: </b> <span id="mdStatusText">Loading...</span></p>
+                        <p class="block md:hidden"><b>Status: </b> <span id="activityStatus">Loading...</span></p>
                         <p><b>Last Seen:</b> <span class="py-1 text-right"><?= sanitize($playerData['lastSeen']) ?></span></p>
                     </div>
                     <div class="flex justify-end gap-5 mt-5 md:mt-0">
-                        <img src="https://cdn-icons-png.flaticon.com/128/6853/6853826.png" alt="Playpass Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" />
+                        <!-- <img src="assets/level-up.png" alt="Playpass Icon" class="h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" /> -->
                         <?php if (isset($_SESSION['uuid']) && $uuid === $_SESSION['uuid']): ?>
-                            <img src="https://cdn-icons-png.flaticon.com/128/503/503849.png" alt="Settings Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
+                            <img src="https://cdn-icons-png.flaticon.com/128/503/503849.png" alt="Settings Icon" class="h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
                             <form action="functions/logout.php" method="POST">
                                 <button type="submit" style="background: none; border: none; padding: 0;">
                                     <img src="https://cdn-icons-png.flaticon.com/128/4400/4400629.png" alt="Logout Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" />
@@ -94,7 +97,7 @@ function ticksToReadable($ticks) {
                     </div>
                     <div class="text-white topCardText">
                         <p class="text-sm">Total Playtime</p>
-                        <p class="text-lg font-bold"><?= sanitize(ticksToReadable($playTime)); ?></p>
+                        <p class="text-lg font-bold"><?= sanitize(ticksToReadable($stmt['playTime'])); ?></p>
                     </div>
                     <div class="text-white topCardText">
                         <p class="text-sm">Joined</p>
@@ -110,46 +113,19 @@ function ticksToReadable($ticks) {
         </section>
         <?php include 'includes/footer.php'; ?>
     </body>
-<script src="script/timeFunctions.js"></script>
 <script>
     const uuid = "<?= $playerData['uuid']; ?>"; 
     function updateStatus() {
         fetch(`functions/activity.php?uuid=${uuid}`)
             .then(res => res.json())
             .then(data => {
-                const card = document.getElementById("topCard");
-                const status = document.getElementById("statusText");
-                const mdStatus = document.getElementById("mdStatusText");
+                const status = document.getElementById("activityStatus");
 
-                card.style.transition = "background-image 0.5s";
                 if (data.online) {
-                    card.classList.remove("!bg-[url(../assets/topcard-blue.jpg)]");
-                    card.classList.add("!bg-[url(../assets/topcard-green.jpg)]");
                     status.textContent = "Online";
-                    mdStatus.textContent = "Online";
                 } else {
-                    card.classList.remove("!bg-[url(../assets/topcard-green.jpg)]");
-                    card.classList.add("!bg-[url(../assets/topcard-blue.jpg)]");
                     status.textContent = "Offline";
-                    mdStatus.textContent = "Offline";
                 }
-
-                document.querySelectorAll(".topCardText").forEach(text => {
-                    if (data.online) {
-                        text.classList.remove("!text-white");
-                        text.classList.add("!text-black");
-                    } else {
-                        text.classList.remove("!text-black");
-                        text.classList.add("!text-white");
-                    }
-                });
-                document.querySelectorAll(".topCardIcon").forEach(icon => {
-                    if (data.online) {
-                        icon.style.setProperty("filter", "invert(0)", "important");
-                    } else {
-                        icon.style.setProperty("filter", "invert(1)", "important");
-                    }
-                });
             });
     }
 

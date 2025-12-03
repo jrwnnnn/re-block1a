@@ -33,23 +33,25 @@
             <?php foreach ($article as $article): ?>
                 <?php
                     $tagColor = match ($article['tag']) {
-                        'server_updates' => 'text-red-500',
-                        'event' => 'text-blue-500',
-                        'game_updates' => 'text-green-500',
-                        'tech' => 'text-red-500',
-                        default => 'text-white',
+                        'server_updates' => 'red-500',
+                        'event' => 'blue-500',
+                        'game_updates' => 'green-500',
+                        'tech' => 'red-500',
+                        default => 'white',
                     };
                 ?>
-                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="text-white hover:cursor-pointer">
-                    <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
-                        <img src="<?= sanitize($article['cover'], ENT_QUOTES, 'UTF-8') ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
+                <div onclick="window.location.href='news/article.php?id=<?= $article['id'] ?>'" class="flex flex-col text-white hover:cursor-pointer justify-between">
+                    <div>
+                        <div class="w-full mb-4 overflow-hidden rounded-md aspect-video">
+                            <img src="<?= sanitize($article['cover']) ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
+                        </div>
+                        <p class="text-sm text-<?= $tagColor ?> capitalize"><?= sanitize(str_replace('_', ' ', $article['tag'])) ?></p>
+                        <p class="mb-2 text-2xl font-bold"><?= sanitize($article['title']) ?></p>
+                        <p><?= sanitize($article['subtitle']) ?></p>
                     </div>
-                    <p class="<?= $tagColor ?> capitalize"><?= sanitize(str_replace('_', ' ', $article['tag']), ENT_QUOTES, 'UTF-8') ?></p>
-                    <p class="mb-2 text-2xl font-bold"><?= sanitize($article['title'], ENT_QUOTES, 'UTF-8') ?></p>
-                    <p><?= sanitize($article['subtitle'], ENT_QUOTES, 'UTF-8') ?></p>
                     <div class="flex items-center gap-2 mt-5">                      
                         <p class="text-sm text-gray-400"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
-                        <hr class="flex-grow border-gray-600 md:hidden border-1">
+                        <hr class="flex-grow border-gray-600 border-1">
                     </div>
                 </div>
             <?php endforeach; ?>

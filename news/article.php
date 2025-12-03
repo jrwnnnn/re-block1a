@@ -47,6 +47,9 @@ $article['tag'] = match ($article['tag']) {
         <link href="../src/output.css" rel="stylesheet">
         <title>Block1A - <?= sanitize($article['title'],) ?></title>
     </head>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/advancedFormat.js"></script>
+    <script src="../script/localTime.js"></script>
     <body>
         <!-- Top navigation bar -->
         <?php require '../includes/navigation.php'; ?>
@@ -83,7 +86,11 @@ $article['tag'] = match ($article['tag']) {
         <div id="content" class="bg-[#2D3748] md:px-[20vw] px-5 py-20 text-white markdown"></div>
         <?php if (!$article['last_edited'] == NULL): ?>
             <div class="flex justify-center items-flex-end bg-[#2D3748] md:px-30 px-5 pb-5">
-                <p class="text-sm italic text-center text-gray-500">Last edited on <?= date("F d, Y", strtotime(sanitize($article['last_edited']))) ?></p>
+                <p class="text-sm italic text-center text-gray-500">Last edited on 
+                    <script>
+                        document.write(localTime("<?= date('c', strtotime($article['last_edited'])) ?>", "MMMM D, YYYY"))
+                    </script>
+                </p>
             </div>
         <?php endif; ?>
         <?php require '../includes/footer.php'; ?>
