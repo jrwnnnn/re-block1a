@@ -37,7 +37,7 @@ if ($action == 'edit' && $article_id) {
 
     <img src="" id="coverPreview" alt="cover" class="hidden w-full max-h-[40vh] object-cover object-center">
     <section class="flex flex-col md:px-30 px-5 py-10 pb-20 text-white bg-[#2D3748]">
-        <form id="postForm" class="space-y-4" method="POST" action="submit-article.php">
+        <form id="postForm" class="space-y-4" method="POST" action="actions/submit-article.php">
             <!-- Hidden fields for action type and article ID -->
             <input type="hidden" name="action" value="<?= $action ?>">
             <input type="hidden" name="id" value="<?= $article ? $article['id'] : '' ?>">
@@ -77,9 +77,9 @@ if ($action == 'edit' && $article_id) {
 
     <!-- Scripts for EasyMDE editor and custom logic -->
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-    <script src="cover_preview.js"></script>
-    <script src="easymde.js"></script>
-    <script src="editor.js"></script>
+    <script src="script/cover_preview.js"></script>
+    <script src="script/easymde.js"></script>
+    <script src="script/editor.js"></script>
 
 </script>
 

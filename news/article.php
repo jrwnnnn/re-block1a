@@ -8,8 +8,7 @@ require_once '../includes/security-headers.php';
 require_once '../functions/connect.php';
 require_once '../includes/session-init.php';
 
-$article_id = $_GET['id'] ?? '';
-$article = query("SELECT * FROM articles WHERE id = ?", [$article_id], "s");
+$article = query("SELECT * FROM articles WHERE id = ?", [$_GET['id']], "s");
 
 if (!$article) {
     header("Location: ../404.php?error=notfound");
@@ -48,7 +47,7 @@ $article['tag'] = match ($article['tag']) {
         <title>Block1A - <?= sanitize($article['title'],) ?></title>
     </head>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/advancedFormat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
     <script src="../script/localTime.js"></script>
     <body>
         <!-- Top navigation bar -->
@@ -58,7 +57,7 @@ $article['tag'] = match ($article['tag']) {
         <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin"): ?>
             <div class="fixed z-10 flex flex-col gap-3 bottom-5 right-5">
                 <div class="flex items-center gap-2 p-4 bg-red-500 rounded-md hover:cursor-pointer hover:bg-red-600"
-                    onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='delete-article.php?id=<?= $article['id'] ?>'; }">
+                    onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='actions/delete-article.php?id=<?= $article['id'] ?>'; }">
                     <img src="https://cdn-icons-png.flaticon.com/128/3096/3096687.png" class="w-5">
                 </div>
                 <div class="flex items-center gap-2 p-4 bg-yellow-500 rounded-md hover:cursor-pointer hover:bg-yellow-600"
@@ -68,7 +67,7 @@ $article['tag'] = match ($article['tag']) {
             </div>
         <?php endif; ?>
 
-        <img src="<?= sanitize($article['cover']) ?>" class="w-full max-h-[40vh] object-cover object-center">
+        <img src="<?= sanitize($article['cover']) ?>" class="w-full max-h-[60vh] object-cover object-center">
         <section class="flex flex-col bg-[#2D3748] space-y-2 md:px-30 px-5 pt-10">
             <p class="text-4xl font-bold text-center text-white md:text-6xl"><?= sanitize($article['title']) ?></p>
             <p class="text-center text-white md:text-lg"><?= sanitize($article['subtitle']) ?></p>
@@ -78,7 +77,7 @@ $article['tag'] = match ($article['tag']) {
                 <p class="text-sm text-gray-500">|</p>
                 <p class="text-sm text-white"><?= sanitize($article['author']) ?></p>
                 <p class="text-sm text-gray-500">|</p>
-                <p class="text-sm text-white"><?= date("F d, Y", strtotime(sanitize($article['date_posted']))) ?></p>
+                <p class="text-sm text-white"> <script>document.write(localTime("<?= date('c', strtotime($article['date_posted'])) ?>", "MMMM D, YYYY"))</script></p>
             </div>
 
             <hr class="border-t-2 border-[#4A5568] mt-5">
@@ -86,10 +85,7 @@ $article['tag'] = match ($article['tag']) {
         <div id="content" class="bg-[#2D3748] md:px-[20vw] px-5 py-20 text-white markdown"></div>
         <?php if (!$article['last_edited'] == NULL): ?>
             <div class="flex justify-center items-flex-end bg-[#2D3748] md:px-30 px-5 pb-5">
-                <p class="text-sm italic text-center text-gray-500">Last edited on 
-                    <script>
-                        document.write(localTime("<?= date('c', strtotime($article['last_edited'])) ?>", "MMMM D, YYYY"))
-                    </script>
+                <p class="text-sm italic text-center text-gray-500">Last edited on <script>document.write(localTime("<?= date('c', strtotime($article['last_edited'])) ?>", "MMMM D, YYYY"))</script>
                 </p>
             </div>
         <?php endif; ?>

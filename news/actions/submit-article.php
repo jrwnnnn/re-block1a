@@ -10,6 +10,8 @@ require_once '../functions/connect.php';
 require_once '../includes/RBAC.php';
 RBAC ('editor', '../news.php');
 
+date_default_timezone_set('Asia/Manila');
+
 // Function to create a unique article ID
 // Example: 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
 function createID(){

@@ -17,6 +17,9 @@
         <link href="src/output.css" rel="stylesheet">
         <title>Block1A - News</title>
     </head>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
+    <script src="script/localTime.js"></script>
     <body>
         <?php require 'includes/navigation.php'; ?>
         <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('assets/blog-hero.webp')">
@@ -24,7 +27,7 @@
             <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>
         <!-- Create article button -->
-        <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] == 1): ?>
+        <?php if (isset($_SESSION['permission_level']) && ($_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin")): ?>
             <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='news/editor.php?action=create';">
                 <img src="https://cdn-icons-png.flaticon.com/128/3524/3524388.png" class="w-5">
             </div>
@@ -50,7 +53,7 @@
                         <p><?= sanitize($article['subtitle']) ?></p>
                     </div>
                     <div class="flex items-center gap-2 mt-5">                      
-                        <p class="text-sm text-gray-400"><?= date("F d, Y", strtotime($article['date_posted'])) ?></p>
+                        <p class="text-sm text-gray-400"><script>document.write(localTime("<?= date('c', strtotime($article['date_posted'])) ?>", "MMMM D, YYYY"))</script></p>
                         <hr class="flex-grow border-gray-600 border-1">
                     </div>
                 </div>

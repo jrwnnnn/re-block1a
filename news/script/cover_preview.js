@@ -1,3 +1,4 @@
+// Update cover image preview in article creation/editing form
 document.addEventListener("DOMContentLoaded", () => {
     const coverInput = document.querySelector("input[name='cover']");
     const coverPreview = document.getElementById("coverPreview");
