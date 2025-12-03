@@ -65,6 +65,15 @@ require_once '../auth/actions/action_login.php';
                 </div>
             </div>
         </section>
-        <script src="../script/login.js"></script>
+        <script>
+            // Toggle password visibility
+            document.getElementById('showPassword').addEventListener('change', function () {
+                const password = document.getElementById('password');
+                const confirm = document.getElementById('confirm_password');
+                const type = this.checked ? 'text' : 'password';
+                password.type = type;
+                confirm.type = type;
+            });
+        </script>
     </body>
 </html>
