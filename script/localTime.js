@@ -3,7 +3,7 @@
 // Example usage:
 
 // <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-// <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/advancedFormat.js"></script>
+// <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
 // <script src="script/localTime.js"></script>
 //    <script>
 //        document.write(localTime("<?= $timestamp ?>", "MMMM D, YYYY hh:mm A")); // -> June 15, 2025 03:30 PM
