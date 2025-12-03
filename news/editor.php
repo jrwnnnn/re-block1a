@@ -6,9 +6,9 @@
 
 require_once '../includes/security-headers.php';
 require_once '../includes/session-init.php';
-require_once '../functions/connect.php';
 require_once '../includes/RBAC.php';
 RBAC('editor', '../news.php');
+require_once '../functions/connect.php';
 
 $action = $_GET['action'] ?? 'create';
 $article_id = $_GET['id'] ?? null;
