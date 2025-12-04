@@ -7,6 +7,7 @@ RBAC ('user', '../../../login.php');
 
 $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
+$status = query("SELECT status FROM player_data WHERE uuid = ?", [$uuid], "s");
 $statistics = query("SELECT blockMined, blockPlaced, damageAbsorbed, damageDealt, damageTaken, damageResisted,  distanceTraveled, deaths, level,mobKills, playerKills, playTime FROM player_statistics WHERE uuid = ?", [$uuid], "s");
 $combat = query("SELECT damageAbsorbed, damageDealt, damageTaken, damageResisted, mobKills, playerKills FROM player_statistics WHERE uuid = ?", [$uuid], "s");
 $deathLog = query("SELECT cause, x, y, z, world, timestamp FROM death_log WHERE uuid = ? ORDER BY id DESC LIMIT 10", [$uuid], "s");
@@ -54,6 +55,10 @@ $badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER B
             </div>
             <table class="w-full text-sm text-gray-200">
                 <tr>
+                <td class="py-1 pr-2 font-medium text-gray-300 md:hidden">Status</td>
+                <td class="py-1 text-right md:hidden <?= $status['status'] == 1 ? 'text-green-400' : ''?>"><?= $status['status'] == 0 ? 'Offline' : 'Online' ?></td>
+                </tr>
+                <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Blocks Broken</td>
                 <td class="py-1 text-right"><?= number_format($statistics['blockMined'])?></td>
                 </tr>
@@ -72,6 +77,10 @@ $badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER B
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Level</td>
                 <td class="py-1 text-right"><?= number_format($statistics['level']); ?></td>
+                </tr>
+                <tr>
+                <td class="py-1 pr-2 font-medium text-gray-300 md:hidden">First Joined</td>
+                <td class="py-1 text-right md:hidden"><script>document.write(localTime("<?= date('c', strtotime($playerData['firstJoined'] ?? '')) ?>", "MMMM D, YYYY"))</script></td>
                 </tr>
                 <tr>
                 <td class="py-1 pr-2 font-medium text-gray-300">Total Playtime</td>
