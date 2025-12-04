@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-<script src="public/js/localTime.js"></script>
+<script src="public/js/dateUtils.js"></script>
 
 <a href="profile.php" class="mb-5 glob-link">&larr; Back to Statistics</a>
 <div class="space-y-10">
