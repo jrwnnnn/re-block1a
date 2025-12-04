@@ -2,6 +2,7 @@
 require_once '../core/security-headers.php';
 require_once '../core/database.php';
 require_once '../core/session.php';
+require_once '../core/RBAC.php';
 require_once 'userControllers.php';
 require_once 'newsControllers.php';
 
@@ -31,6 +32,7 @@ switch ($action) {
         break;
     
     case 'articleAction':
+        RBAC('editor', '../../index.php');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $article_id = $_POST['id'] ?? null; 
             $title = $_POST['title'];
@@ -54,6 +56,7 @@ switch ($action) {
         break;
 
     case 'deleteArticle':
+        RBAC('editor', '../../index.php');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $article_id = $_POST['id'] ?? null; 
             $newsController->delete($article_id);
