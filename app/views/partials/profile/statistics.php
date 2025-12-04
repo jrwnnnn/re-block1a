@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../../core/security-headers.php';
 require_once __DIR__ . '/../../../core/session.php';
 require_once __DIR__ . '/../../../core/database.php';
 require_once __DIR__ . '/../../../core/RBAC.php';
-RBAC ('user', '../index.php');
+RBAC ('user', '../../../login.php');
 
 $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
