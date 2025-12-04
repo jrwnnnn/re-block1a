@@ -83,7 +83,8 @@ function ticksToReadable($ticks) {
                         <!-- <img src="assets/level-up.png" alt="Playpass Icon" class="h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=playpass'" /> -->
                         <?php if (isset($_SESSION['uuid']) && $uuid === $_SESSION['uuid']): ?>
                             <img src="https://cdn-icons-png.flaticon.com/128/503/503849.png" alt="Settings Icon" class="h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" onclick="window.location.href='profile.php?tab=settings'" />
-                            <form action="functions/logout.php" method="POST">
+                            <form action="controllers/action-router.php?action=logout" method="POST">
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                 <button type="submit" style="background: none; border: none; padding: 0;">
                                     <img src="https://cdn-icons-png.flaticon.com/128/4400/4400629.png" alt="Logout Icon" class="w-6 h-6 mb-1 cursor-pointer topCardIcon" style="filter: invert(1);" />
                                 </button>
