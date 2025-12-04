@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/app/core/session-init.php';
 
 if ($baseUrl !== 'http://localhost/priv-block1a/') {
     header('Location: ' . $baseUrl . 'debug.php');
@@ -8,9 +9,6 @@ if ($baseUrl !== 'http://localhost/priv-block1a/') {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
 
 function display_debug_data($label, $data) {
     echo "<div style='margin: 20px 0; border: 1px solid #ccc; border-radius: 5px; overflow: hidden;'>";
