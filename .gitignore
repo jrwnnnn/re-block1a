@@ -1,11 +1,11 @@
 node_modules/
 vendor/
+app/public/css/output.css
+debug.php
 
 .DS_Store
 Thumbs.db
-debug.php
 
 *.log
 *.env
 *.sql
-src/output.css
