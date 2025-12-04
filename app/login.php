@@ -1,15 +1,33 @@
 <?php
-// CODEX RATING
-// Efficiency: 10/10
-// Security: 10/10
-// Readability:	9/10
-
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/core/security-headers.php';
 require_once __DIR__ . '/core/session.php';
 if (isset($_SESSION['uuid'])) {
     header('Location: profile.php');
     exit();
+}
+require_once __DIR__ . '/core/database.php';
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $error_message = "";
+    $has_error = false;
+
+    $login = trim($_POST['login']);
+    $password = $_POST['password'];
+    $auth = query("SELECT * FROM users WHERE username = ? OR email = ?", [$login, $login], "ss");
+
+    if ($auth && password_verify($password, $auth['password'])) {
+        $_SESSION['uuid'] = $auth['uuid'];
+        $_SESSION['username'] = $auth['username'];
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+
+        header('Location: profile.php');
+        exit();
+    } else {
+        $error_message = "Invalid login credentials.";
+        $has_error = true;
+    }
 }
 ?>
 
@@ -30,7 +48,7 @@ if (isset($_SESSION['uuid'])) {
             <div class="bg-[#1a202a] flex flex-col rounded-md p-8 w-full max-w-md">
                 <div class="flex items-start justify-between pb-5">
                     <p class="text-2xl font-bold text-white">Login to Your Account</p>
-                    <img src="public/assets/images/cs1a.png" alt="logo" class="w-20">
+                    <img src="public/assets/images/cs1a.png" alt="cs1a logo" class="w-20">
                 </div>
                 <form id="loginForm" class="space-y-4" method="POST" action="login.php">
                     <?php if (!empty($error_message)): ?>
@@ -39,7 +57,7 @@ if (isset($_SESSION['uuid'])) {
                         </div>
                     <?php endif; ?>
                     <div>
-                        <label for="login" class="block text-sm font-medium text-white">Email</label>
+                        <label for="login" class="block text-sm font-medium text-white">Email or Username</label>
                         <input type="email" id="login" name="login" value="<?= sanitize($_POST['login'] ?? '') ?>" class="glob-input mt-1 <?= $has_error ? '!border-red-500' : 'border-gray-600' ?> focus:outline-none focus:ring-blue-500" required>
                     </div>
                     <div>
