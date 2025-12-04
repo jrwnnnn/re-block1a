@@ -26,7 +26,7 @@
       $title = "404 - Block1A";
       include 'views/partials/meta.php';
     ?>
-    <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="public/css/output.css" rel="stylesheet">
     <title>Block1A - 404</title>
   </head>
@@ -34,7 +34,7 @@
     <section class="flex flex-col bg-[#2D3748] bg-cover bg-center bg-no-repeat min-h-screen">
       <?php require 'views/partials/navigation.php'; ?>
         <div class="flex flex-col items-center justify-center flex-grow px-10 text-center text-white pb-30 md:px-30">
-          <img src="public/assets/i-am-steve-minecraft.gif" alt="Steve" class="">
+          <img src="public/assets/images/ui/404.gif" alt="Steve" class="">
           <p class="py-5 text-4xl font-bold text-center md:text-6xl"><?= $title ?></p>
           <p class="text-center md:text-lg"><?= $message ?></p>
           <p class="text-center md:text-lg">Return to the <a href="<?= $baseUrl ?>index.php" class="text-blue-300">home page</a>.</p>

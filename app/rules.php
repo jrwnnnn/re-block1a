@@ -30,7 +30,7 @@ $nextPage = $pages[$currentIndex + 1] ?? null;
     $description = "The official rules of Block1A Minecraft server.";
     include 'views/partials/meta.php';
   ?>
-  <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
   <link href="public/css/output.css" rel="stylesheet">
   <title>Block1A - Rules</title>
 </head>

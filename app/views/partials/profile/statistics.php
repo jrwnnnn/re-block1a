@@ -26,7 +26,7 @@ $badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER B
         <div class="flex justify-center flex-wrap gap-5 my-7">
             <?php foreach ($badges as $badge): ?>
                 <div class="relative group flex justify-center">
-                    <img src="public/assets/badges/<?= $badge['badgeId'] ?>.png" alt="<?= $badge['badgeId'] ?>" class="h-15 w-auto cursor-pointer shadow-lg">
+                    <img src="public/assets/content/badges/<?= $badge['badgeId'] ?>.png" alt="<?= $badge['badgeId'] ?>" class="h-15 w-auto cursor-pointer shadow-lg">
 
                     <div class="absolute bottom-full mb-3 hidden group-hover:block w-max px-3 py-1.5 bg-gray-200 rounded-md shadow-xl z-50">
                         <p class="text-black text-sm font-medium"><?= 

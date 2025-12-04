@@ -23,7 +23,7 @@
       $description = "The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.";
       include 'app/views/partials/meta.php';
     ?>
-    <link rel="icon" href="app/public/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="app/public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="app/public/css/output.css" rel="stylesheet">
     <title>Block1A - Home</title>
 </head>
@@ -35,7 +35,7 @@
     </div>
     <!-- Main Splash Screen -->
     <?php if (!isset($_SESSION['uuid'])): ?>
-        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('app/public/assets/s2-background.webp')">
+        <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('app/public/assets/images/backgrounds/s2-background.webp')">
             <div class="flex flex-col items-center justify-center flex-grow px-10 pb-20 text-white md:items-start md:justify-end md:px-30">
                 <p class="pb-5 text-5xl font-bold text-center md:text-6xl md:pt-0 pt-9">HOP IN, BUILD STUFF, HAVE FUN</p>
                 <p class="text-center md:text-lg">The Official Minecraft Server of BSCS-2A! Available for Minecraft Java Edition players.</p>
@@ -62,7 +62,7 @@
      <section class="relative bg-[#2D3748] text-white">
             <?php if ($spotlight): ?>
                 <div class="relative">
-                    <!-- <img src="assets/temp-splash.webp" class="w-full md:h-[50vh] h-[60vh] object-cover object-center"> -->
+                    <!-- <img src="app/public/assets/images/backgrounds/temporary-background.webp" class="w-full md:h-[50vh] h-[60vh] object-cover object-center"> -->
                     <img src="<?= sanitize($spotlight['cover']) ?>" class="w-full md:h-[60vh] h-[50vh] object-cover object-center">
                     <div class="absolute inset-0 flex flex-col items-start justify-end px-5 py-10 md:justify-center md:px-30">
                         <p class="text-lg tracking-widest text-blue-400">Spotlight</p>
@@ -78,7 +78,7 @@
             <div class="px-5 pt-10 md:px-30">
                 <div class="flex gap-2 py-5 overflow-x-auto md:gap-5 md:pl-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
                     <?php foreach ($onlinePlayers as $player): ?>
-                        <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(app/public/assets/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                        <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(../assets/images/ui/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
                             <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                             <p class="font-bold truncate"><?= $player['username'] ?></p>
                             <p class="text-sm text-gray-700">Online</p>
@@ -132,7 +132,7 @@
     </section>
     <?php if (!isset($_SESSION['uuid'])): ?>
         <?php
-            $carouselImages = glob('app/public/assets/carousel/*.webp');
+            $carouselImages = glob('app/public/assets/content/carousel/*.webp');
         ?>
                 <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
                     <p class="text-3xl font-bold text-yellow-500 md:text-4xl mb-7">The Server</p>

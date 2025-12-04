@@ -17,7 +17,7 @@ $zoom = isset($_GET['zoom']) ? floatval($_GET['zoom']) : 1250;
       $description = "Explore the server map powered by BlueMap.";
       include 'views/partials/meta.php';
     ?>
-    <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="public/css/output.css" rel="stylesheet">
     <title>Block1A - BlueMap</title>
   </head>
@@ -26,14 +26,14 @@ $zoom = isset($_GET['zoom']) ? floatval($_GET['zoom']) : 1250;
       <?php require 'views/partials/navigation.php'; ?>
       <div class="flex flex-grow flex-col justify-center items-center bg-[#2D3748]">
         <div class="flex flex-col items-center justify-center pb-10">
-          <img src="public/assets/panda-roll.gif" alt="Server Closed" class="w-30 h-30">
+          <img src="public/assets/images/ui/panda-roll-loading.gif" alt="Server Closed" class="w-30 h-30">
           <p class="text-2xl font-bold text-white md:text-4xl">Server offline...</p>
           <p class="text-white">No map will be shown until the server opens.</p>
         </div>
       </div>
       <!-- <div class="flex flex-grow flex-col justify-center items-center bg-[#2D3748]">
         <div id="loading" class="flex flex-col items-center justify-center bg-[#2D3748] pb-10">
-          <img src="assets/panda-roll.gif" alt="Loading" class="w-30 h-30">
+          <img src="public/assets/images/ui/panda-roll-loading.gif" alt="Loading" class="w-30 h-30">
           <p class="text-2xl font-bold text-white md:text-4xl">Loading Map...</p>
           <p class="text-white">Hang tight while we load this.</p>
         </div>

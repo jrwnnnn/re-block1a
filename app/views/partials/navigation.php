@@ -22,7 +22,7 @@ function navLink($href, $label, $current_page, $activePages = []) {
 ?>
 
 <nav class="bg-[#1A212B] p-4 px-5 md:px-30 flex items-center justify-between">
-    <img src="<?= $baseUrl ?>app/public/assets/cs1a.png" alt="logo" class="w-20 hover:cursor-pointer" onclick="window.location.replace('<?= $baseUrl ?>index.php')">
+    <img src="<?= $baseUrl ?>app/public/assets/images/cs1a.png" alt="logo" class="w-20 hover:cursor-pointer" onclick="window.location.replace('<?= $baseUrl ?>index.php')">
 
     <button id="menu-toggle" class="md:hidden text-white focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"

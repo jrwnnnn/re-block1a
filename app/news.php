@@ -14,7 +14,7 @@
         $title = "News - Block1A";
         $description = "Stay updated with the latest news, updates, and events happening in our server.";
         require 'views/partials/meta.php'; ?>
-        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - News</title>
     </head>
@@ -23,7 +23,7 @@
     <script src="public/js/localTime.js"></script>
     <body>
         <?php require 'views/partials/navigation.php'; ?>
-        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('public/assets/blog-hero.webp')">
+        <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('public/assets/images/banners/news-hero.webp')">
             <p class="text-4xl font-bold text-yellow-500 md:text-6xl">News</p>
             <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>

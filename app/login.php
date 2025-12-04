@@ -25,16 +25,16 @@ require_once '../auth/actions/action_login.php';
             $description = "Login to your Block1A account.";
             require 'views/partials/meta.php'; 
         ?>
-        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - Login</title>
     </head>
     <body>
-        <section class="bg-[url('public/assets/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen px-5 md:px-30">
+        <section class="bg-[url('../assets/images/backgrounds/auth-background.webp')] bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center min-h-screen px-5 md:px-30">
             <div class="bg-[#1a202a] flex flex-col rounded-md p-8 w-full max-w-md">
                 <div class="flex items-start justify-between pb-5">
                     <p class="text-2xl font-bold text-white">Login to Your Account</p>
-                    <img src="public/assets/cs1a.png" alt="logo" class="w-20">
+                    <img src="public/assets/images/cs1a.png" alt="logo" class="w-20">
                 </div>
                 <form id="loginForm" class="space-y-4" method="POST" action="login.php">
                     <?php if (!empty($error_message)): ?>

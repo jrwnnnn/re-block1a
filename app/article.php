@@ -43,7 +43,7 @@ $article['tag'] = match ($article['tag']) {
             $image = sanitize($article['cover']);
             include 'views/partials/meta.php';
         ?>
-        <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - <?= sanitize($article['title'],) ?></title>
     </head>

@@ -60,7 +60,7 @@ function ticksToReadable($ticks) {
       $title = sanitize($playerData['username']) . "'s Profile - Block1A";
       include 'views/partials/meta.php';
     ?>
-    <link rel="icon" href="public/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="public/css/output.css" rel="stylesheet">
     <title><?= sanitize($playerData['username']) . "'s Profile - Block1A" ?></title>
 </head>

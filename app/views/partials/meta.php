@@ -2,7 +2,7 @@
 $type    = $type ?? 'website';
 $title   = $title ?? $pageTitle;
 $description = $description ?? 'The Official Minecraft Server of CS2A.';
-$image   = $image ?? $baseUrl . 'app/public/assets/meta-default.PNG';
+$image   = $image ?? $baseUrl . 'app/public/assets/images/meta_images/default.PNG';
 $url     = $url ?? ($_SERVER['REQUEST_SCHEME'] ?? 'https') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $siteName  = $siteName ?? 'Block1A';
 ?>
