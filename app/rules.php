@@ -1,9 +1,4 @@
 <?php
-// CODEX RATING
-// Efficiency: 10/10
-// Security: 10/10
-// Readability: 9.5/10
-
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/core/security-headers.php';
 require_once __DIR__ . '/core/session.php';
