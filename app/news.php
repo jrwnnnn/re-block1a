@@ -22,7 +22,7 @@ $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
     </head>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-    <script src="public/js/localTime.js"></script>
+    <script src="public/js/dateUtils.js"></script>
     <body>
         <?php require 'views/partials/navigation.php'; ?>
         <section class="flex flex-col items-center justify-center text-white bg-cover bg-center bg-no-repeat min-h-[40vh] px-5" style="background-image: url('public/assets/images/banners/news-hero.webp')">
@@ -52,10 +52,10 @@ $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
                             <img src="<?= sanitize($article['cover']) ?>" class="object-cover w-full h-full transition duration-500 ease-in-out hover:scale-105">
                         </div>
                         <p class="text-sm text-<?= $tagColor ?> capitalize"><?= sanitize(str_replace('_', ' ', $article['tag'])) ?></p>
-                        <p class="mb-2 text-2xl font-bold"><?= sanitize($article['title']) ?></p>
-                        <p><?= sanitize($article['subtitle']) ?></p>
+                        <p class="mb-2 text-2xl font-bold line-clamp-2"><?= sanitize($article['title']) ?></p>
+                        <p class="line-clamp-3"><?= sanitize($article['subtitle']) ?></p>
                     </div>
-                    <div class="flex items-center gap-2 mt-5">                      
+                    <div class="flex items-center gap-2 mt-10">                      
                         <p class="text-sm text-gray-400"><script>document.write(localTime("<?= date('c', strtotime($article['date_posted'])) ?>", "MMMM D, YYYY"))</script></p>
                         <hr class="flex-grow border-gray-600 border-1">
                     </div>

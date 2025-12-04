@@ -46,7 +46,7 @@ $article['tag'] = match ($article['tag']) {
     </head>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
-    <script src="public/js/localTime.js"></script>
+    <script src="public/js/dateUtils.js"></script>
     <body>
         <!-- Top navigation bar -->
         <?php require 'views/partials/navigation.php'; ?>
