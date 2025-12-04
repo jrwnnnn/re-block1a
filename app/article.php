@@ -1,13 +1,10 @@
 <?php
-// CODEX RATING
-// Efficiency: 9/10
-// Security: 9/10
-// Readability: 8/10
-
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/core/security-headers.php';
 require_once __DIR__ . '/core/database.php';
 require_once __DIR__ . '/core/session.php';
+require_once __DIR__ . '/core/RBAC.php';
+$userRole = getUserRole();
 
 $article = query("SELECT * FROM articles WHERE id = ?", [$_GET['id']], "s");
 
@@ -55,12 +52,15 @@ $article['tag'] = match ($article['tag']) {
         <?php require 'views/partials/navigation.php'; ?>
 
         <!-- Delete and edit article buttons -->
-        <?php if (isset($_SESSION['permission_level']) && $_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin"): ?>
+        <?php if (($roleMap[$userRole] ?? 0) >= ($roleMap['editor'] ?? 0)): ?>
             <div class="fixed z-10 flex flex-col gap-3 bottom-5 right-5">
-                <div class="flex items-center gap-2 p-4 bg-red-500 rounded-md hover:cursor-pointer hover:bg-red-600"
-                    onclick="if (confirm('Are you sure you want to delete this article? (This action is irreversable)')) { window.location.href='actions/delete-article.php?id=<?= $article['id'] ?>'; }">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3096/3096687.png" class="w-5">
-                </div>
+                <form class="flex items-center gap-2 p-4 bg-red-500 rounded-md hover:cursor-pointer hover:bg-red-600" onsubmit="return confirm('Are you sure you want to delete this article? (This action is irreversable)');"
+                    method="POST" action="controllers/action-router.php?action=deleteArticle">
+                    <input type="hidden" name="id" value="<?= $article['id'] ?>">
+                    <button type="submit">
+                        <img src="https://cdn-icons-png.flaticon.com/128/3096/3096687.png" class="w-5">
+                    </button>
+                </form>
                 <div class="flex items-center gap-2 p-4 bg-yellow-500 rounded-md hover:cursor-pointer hover:bg-yellow-600"
                     onclick="window.location.href='editor.php?action=edit&id=<?= $article['id'] ?>';">
                     <img src="https://cdn-icons-png.flaticon.com/128/9356/9356210.png" class="w-5">

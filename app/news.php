@@ -1,10 +1,12 @@
 <?php
-    require_once __DIR__ . '/../config/config.php';
-    require_once __DIR__ . '/core/security-headers.php';
-    require_once __DIR__ . '/core/database.php';
-    require_once __DIR__ . '/core/session.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/core/security-headers.php';
+require_once __DIR__ . '/core/database.php';
+require_once __DIR__ . '/core/session.php';
+require_once __DIR__ . '/core/RBAC.php';
+$userRole = getUserRole();
 
-    $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
+$article = query("SELECT * FROM articles ORDER BY date_posted DESC");
 ?>
 
 <!doctype html>
@@ -28,7 +30,7 @@
             <p class="mt-5 text-center md:text-lg">Stay updated with the latest news, updates, and events happening in our server.</p>
         </section>
         <!-- Create article button -->
-        <?php if (isset($_SESSION['permission_level']) && ($_SESSION['permission_level'] === "editor" || $_SESSION['permission_level'] === "admin")): ?>
+        <?php if (($roleMap[$userRole] ?? 0) >= ($roleMap['editor'] ?? 0)): ?>
             <div class="fixed z-10 p-4 bg-yellow-500 rounded-md bottom-5 right-5 hover:bg-yellow-300 hover:cursor-pointer" onclick="window.location.href='editor.php?action=create';">
                 <img src="https://cdn-icons-png.flaticon.com/128/3524/3524388.png" class="w-5">
             </div>

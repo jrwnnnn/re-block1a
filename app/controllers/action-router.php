@@ -30,9 +30,33 @@ switch ($action) {
         }
         break;
     
-    case 'createArticle':
+    case 'articleAction':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $newsController->createArticle();
+            $article_id = $_POST['id'] ?? null; 
+            $title = $_POST['title'];
+            $subtitle = $_POST['subtitle'];
+            $cover = $_POST['cover'];
+            $tag = $_POST['tag'];
+            $spotlight = isset($_POST['spotlight']) ? 1 : 0;
+            $author = $_SESSION['username'];
+            $date_posted = date("Y-m-d");
+            $content = $_POST['content'];
+            
+            if ($_POST['action'] === 'create') {
+                $newsController->create($article_id, $title, $subtitle, $cover, $tag, $spotlight, $author, $date_posted, $content);
+            } elseif ($_POST['action'] === 'edit') {
+                $newsController->edit($article_id, $title, $subtitle, $cover, $tag, $spotlight, $content);
+            }
+        } else {
+            header('Location: ../../index.php');
+            exit();
+        }
+        break;
+
+    case 'deleteArticle':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $article_id = $_POST['id'] ?? null; 
+            $newsController->delete($article_id);
         } else {
             header('Location: ../../index.php');
             exit();
@@ -41,6 +65,6 @@ switch ($action) {
 
     default:
         http_response_code(404);
-        header('Location: ../404.php?');
+        header('Location: ../404.php');
         break;
 }

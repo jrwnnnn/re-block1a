@@ -1,9 +1,4 @@
 <?php
-// CODEX RATING
-// Efficiency: 9/10
-// Security: 9.5/10
-// Readability: 9/10
-
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/core/security-headers.php';
 require_once __DIR__ . '/core/session.php';
@@ -38,7 +33,7 @@ if ($action == 'edit' && $article_id) {
 
     <img src="" id="coverPreview" alt="cover" class="hidden w-full max-h-[40vh] object-cover object-center">
     <section class="flex flex-col md:px-30 px-5 py-10 pb-20 text-white bg-[#2D3748]">
-        <form id="postForm" class="space-y-4" method="POST" action="actions/submit-article.php">
+        <form id="postForm" class="space-y-4" method="POST" action="controllers/action-router.php?action=articleAction">
             <!-- Hidden fields for action type and article ID -->
             <input type="hidden" name="action" value="<?= $action ?>">
             <input type="hidden" name="id" value="<?= $article ? $article['id'] : '' ?>">
