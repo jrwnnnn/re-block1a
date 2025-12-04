@@ -170,11 +170,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="space-y-2 text-white">
                 <p class="mb-5 text-2xl font-bold">Account Removal</p>
                 <p id="state-del">Deleting your account is permanent and cannot be undone. All your playerdata and profile information, will be removed.</p>
-                <button onclick="showDeleteForm()" id="expand-delete-form" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer">Delete Account</button>
-                <form id="delete-form" action="auth/actions/delete-account.php" method="POST" class="hidden space-y-2">
-                    <label for="confirm-username" class="pb-3 text-white"><span class="text-red-500">You're about to delete your account! </span>To confirm, type <b>"<?= sanitize($_SESSION['username']); ?>"</b> in the box below</label>
-                    <input id="confirm-username" name="confirmation" class="glob-input" autocomplete="off" onpaste="return false;">
-                    <button id="delete-account-btn" type="submit" name="destroy" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer" disabled>Delete Account</button>
+                <form action="controllers/action-router.php?action=deleteAccount" method="POST" class="space-y-2" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                    <button type="submit" name="destroy" class="px-4 py-2 mt-5 text-red-400 bg-gray-700 rounded-lg hover:bg-gray-600 hover:cursor-pointer">Delete Account</button>
                 </form>
             </div>
         </div>
@@ -189,29 +187,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         current_password.type = type;
         password.type = type;
         confirm_password.type = type;
-    });
-    
-    function showDeleteForm() {
-        const deleteForm = document.getElementById('delete-form');
-        const expandDeleteForm = document.getElementById('expand-delete-form');
-        deleteForm.classList.remove('hidden');
-        expandDeleteForm.classList.add('hidden');
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const input = document.getElementById('confirm-username');
-        const button = document.getElementById('delete-account-btn');
-        const sessionUsername = <?php echo json_encode($_SESSION['username'], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT); ?>;
-
-        const checkInput = () => {
-            if (input.value === sessionUsername) {
-                button.removeAttribute('disabled');
-            } else {
-                button.setAttribute('disabled', 'true');
-            }
-        };
-
-        input.addEventListener('input', checkInput);
-        checkInput();
     });
 </script>
