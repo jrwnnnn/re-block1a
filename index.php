@@ -1,8 +1,8 @@
 <?php
     require_once __DIR__ . '/config/config.php';
-    require_once 'app/core/security-headers.php';
-    require_once 'app/core/database.php';
-    require_once 'app/core/session.php';
+    require_once __DIR__ . '/app/core/security-headers.php';
+    require_once __DIR__ . '/app/core/database.php';
+    require_once __DIR__ . '/app/core/session.php';
 
     $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
     $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");

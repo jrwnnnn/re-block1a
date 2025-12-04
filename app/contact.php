@@ -1,9 +1,7 @@
 <?php
-  require_once __DIR__ . '/../config/config.php';
-  require 'core/security-headers.php';
-  require_once 'core/session.php';
-
-?>
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/core/security-headers.php';
+require_once __DIR__ . '/core/session.php';?>
 
 <!doctype html>
 <html>

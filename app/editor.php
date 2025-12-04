@@ -5,11 +5,11 @@
 // Readability: 9/10
 
 require_once __DIR__ . '/../config/config.php';
-require_once 'core/security-headers.php';
-require_once 'core/session.php';
-require_once 'core/RBAC.php';
+require_once __DIR__ . '/core/security-headers.php';
+require_once __DIR__ . '/core/session.php';
+require_once __DIR__ . '/core/RBAC.php';
 RBAC('editor', 'news.php');
-require_once 'core/database.php';
+require_once __DIR__ . '/core/database.php';
 
 $action = $_GET['action'] ?? 'create';
 $article_id = $_GET['id'] ?? null;

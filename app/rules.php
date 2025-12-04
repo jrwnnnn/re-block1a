@@ -5,8 +5,8 @@
 // Readability: 9.5/10
 
 require_once __DIR__ . '/../config/config.php';
-require_once 'core/security-headers.php';
-require_once 'core/session.php';
+require_once __DIR__ . '/core/security-headers.php';
+require_once __DIR__ . '/core/session.php';
 
 $page = $_GET['page'] ?? 'home';
 $rules = json_decode(file_get_contents('data/rules.json'), true); // Load rules from JSON file

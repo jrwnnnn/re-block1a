@@ -5,9 +5,9 @@
 // Readability: 8/10
 
 require_once __DIR__ . '/../config/config.php';
-require_once 'core/security-headers.php';
-require_once 'core/database.php';
-require_once 'core/session.php';
+require_once __DIR__ . '/core/security-headers.php';
+require_once __DIR__ . '/core/database.php';
+require_once __DIR__ . '/core/session.php';
 
 $article = query("SELECT * FROM articles WHERE id = ?", [$_GET['id']], "s");
 

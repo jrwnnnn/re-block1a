@@ -1,8 +1,8 @@
 <?php
     require_once __DIR__ . '/../config/config.php';
-    require 'core/security-headers.php';
-    require_once 'core/database.php';
-    require_once 'core/session.php';
+    require_once __DIR__ . '/core/security-headers.php';
+    require_once __DIR__ . '/core/database.php';
+    require_once __DIR__ . '/core/session.php';
 
     $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
 ?>

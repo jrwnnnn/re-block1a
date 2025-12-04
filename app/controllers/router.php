@@ -1,12 +1,11 @@
 <?php
 session_start();
 
-// 1. Load Core & Controllers
-// (Ideally, use an autoloader later, but this is fine for now)
-require_once 'app/core/Security.php';
-require_once 'app/controllers/AuthController.php';
-require_once 'app/controllers/NewsController.php';
-require_once 'app/controllers/PageController.php';
+require_once '../core/security-headers.php';
+require_once '../core/database.php';
+require_once '../core/session.php';
+require_once 'authControllers.php';
+require_once 'newsControllers.php';
 
 // 2. Determine Action
 // Checks URL (?action=x) or Form (<input name="action" value="x">)
