@@ -57,7 +57,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
     </div>
 
     <!-- Mobile Sidebar -->
-    <div id="mobile-sidebar" class="md:hidden absolute top-0 left-0 w-full h-screen bg-[#1A212B] z-40 flex flex-col p-6 pt-28 gap-6 overflow-y-auto">
+    <div id="mobile-sidebar" class="md:hidden fixed top-0 left-0 w-full h-[100dvh] bg-[#1A212B] z-40 flex flex-col p-6 pt-28 pb-20 gap-6 overflow-y-auto">
         
         <div class="flex items-center justify-center pb-6 border-b border-gray-700/50 nav-item">
             <img src="<?= $baseUrl ?>app/public/assets/images/cs1a.png" alt="logo" class="w-24 hover:cursor-pointer hover:scale-105 transition-transform duration-300" onclick="window.location.replace('<?= $baseUrl ?>index.php')">
