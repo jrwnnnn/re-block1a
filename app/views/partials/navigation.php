@@ -50,7 +50,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <a href="<?= $baseUrl ?>app/news.php" class="text-white hover:text-gray-300 transition-colors">News</a>
         <a href="<?= $baseUrl ?>app/rules.php" class="text-white hover:text-gray-300 transition-colors">Rules</a>
         <a href="<?= $baseUrl ?>app/bluemap.php" class="text-white hover:text-gray-300 transition-colors">BlueMap</a>
-        <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-md cursor-pointer hover:bg-gray-300 transition-colors" onclick="window.location.replace('<?= $baseUrl ?>app/<?= isset($_SESSION['uuid']) ? 'profile.php?player=' . sanitize($_SESSION['uuid']) : 'login' ?>.php')">
+        <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-md cursor-pointer hover:bg-gray-300 transition-colors" onclick="window.location.replace('<?= $baseUrl ?>app/<?= isset($_SESSION['uuid']) ? 'profile.php?player=' . sanitize($_SESSION['uuid']) : 'login.php' ?>')">
             <img src="https://mc-heads.net/avatar/<?= isset($_SESSION['username']) ? sanitize($_SESSION['username']) : '0385'; ?>" alt="avatar" class="w-5 rounded aspect-square">
             <p class="truncate text-black"><?= isset($_SESSION['username']) ? sanitize($_SESSION['username']) : 'Login' ?></p>
         </div>
@@ -82,12 +82,20 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         </div>
 
         <div class="mt-auto pt-6 border-t border-gray-700/50 nav-item">
-            <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl cursor-pointer hover:bg-white/20 transition-all duration-300 group" onclick="window.location.replace('<?= $baseUrl ?>app/<?= isset($_SESSION['uuid']) ? 'profile.php?player=' . sanitize($_SESSION['uuid']) : 'login' ?>.php')">
+            <div class="flex items-center gap-3 bg-white/10 p-3 rounded-xl cursor-pointer hover:bg-white/20 transition-all duration-300 group" onclick="window.location.replace('<?= $baseUrl ?>app/<?= isset($_SESSION['uuid']) ? 'profile.php?player=' . sanitize($_SESSION['uuid']) : 'login.php' ?>')">
                 <img src="https://mc-heads.net/avatar/<?= isset($_SESSION['username']) ? sanitize($_SESSION['username']) : '0385'; ?>" alt="avatar" class="w-10 rounded-lg shadow-lg group-hover:scale-110 transition-transform">
                 <div class="flex flex-col">
                     <span class="text-gray-400 text-xs uppercase tracking-wider">Account</span>
                     <p class="truncate text-white font-bold text-lg"><?= isset($_SESSION['username']) ? sanitize($_SESSION['username']) : 'Login' ?></p>
                 </div>
+                <?php if (isset($_SESSION['uuid'])): ?>
+                <form action="<?= $baseUrl ?>app/controllers/action-router.php?action=logout" method="POST" class="ml-auto" onclick="event.stopPropagation()">
+                    <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+                    <button type="submit" class="p-2 hover:bg-white/10 rounded-lg transition-colors" title="Logout">
+                        <img src="https://cdn-icons-png.flaticon.com/128/4400/4400629.png" alt="Logout" class="w-6 h-6 invert opacity-70 hover:opacity-100 transition-opacity" />
+                    </button>
+                </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>
