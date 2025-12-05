@@ -178,14 +178,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
 </div>
+<script src="public/js/password_preview.js"></script>
 <script>
-    document.getElementById('showPassword').addEventListener('change', function () {
-        const current_password = document.getElementById('current_password');
-        const password = document.getElementById('password');
-        const confirm_password = document.getElementById('confirm_password');
-        const type = this.checked ? 'text' : 'password';
-        current_password.type = type;
-        password.type = type;
-        confirm_password.type = type;
+    document.addEventListener("DOMContentLoaded", () => {
+        const input = document.querySelector("input[name='banner_link']");
+        const preview = document.getElementById("profileBanner");
+
+        const updatePreview = () => {
+            const url = input.value.trim();
+            if (url) {
+                preview.style.backgroundImage = `url('${url}')`;
+            }
+        };
+        input.addEventListener("input", updatePreview);
+        updatePreview();
     });
 </script>

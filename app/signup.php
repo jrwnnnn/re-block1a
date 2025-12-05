@@ -113,23 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </form>
             </div>
         </div>
-        <script>
-            // Password strength meter and toggle visibility
-            const form = document.querySelector('form');
-                form.addEventListener('submit', (e) => {
-                    if (strength < 3) {
-                        e.preventDefault();
-                        alert("Password is too weak. Use at least 8 characters with uppercase, lowercase, numbers, and symbols.");
-                    }
-                });
-
-            document.getElementById('showPassword').addEventListener('change', function () {
-                const password = document.getElementById('password');
-                const confirm = document.getElementById('confirm_password');
-                const type = this.checked ? 'text' : 'password';
-                password.type = type;
-                confirm.type = type;
-            });
-        </script>
+        <script src="public/js/password_preview.js"></script>
     </body>
 </html>
