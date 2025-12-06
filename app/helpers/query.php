@@ -15,7 +15,18 @@ function query($sql, $params = [], $types = "") {
 
     if (stripos(trim($sql), "SELECT") === 0) {
         $result = $stmt->get_result();
-        $query = $result->num_rows === 1 ? $result->fetch_assoc() : $result->fetch_all(MYSQLI_ASSOC);
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        if (count($data) === 1) {
+            if (preg_match('/\bLIMIT\s+(?:(\d+)\s*,\s*)?(\d+)/i', $sql, $matches)) {
+                $limit = (int)$matches[2];
+                $query = $limit === 1 ? $data[0] : $data;
+            } else {
+                $query = $data[0];
+            }
+        } else {
+            $query = $data;
+        }
     } elseif (stripos(trim($sql), "INSERT") === 0) {
         $query = $conn->insert_id;
     } else {
