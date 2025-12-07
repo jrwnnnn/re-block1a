@@ -1,6 +1,5 @@
 <?php
-date_default_timezone_set('Asia/Manila');
-
+require_once __DIR__ . '/config/config.php';
 class newsControllers {
     public function create($article_id, $title, $subtitle, $cover, $tag, $spotlight, $author, $date_posted, $content) {
         // Function to create a unique article ID
