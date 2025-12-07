@@ -37,6 +37,7 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
                         <p class="text-2xl font-bold">Profile Settings</p>
                         <form action="controllers/action-router.php?action=updateProfile" method="POST" class="space-y-2">
                             <div>
+                                <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                                 <label for="banner_link" class="block mb-2 text-gray-300">Banner Image<span class="text-red-500"><?= isset($_SESSION['banner_error']) ? " - " . sanitize($_SESSION['banner_error']) : '' ?></span></label>
                                 <img id="bannerPreview" class="object-cover w-full h-25 mb-2 rounded-lg" src="<?= !empty($user['bannerUrl']) ? sanitize($user['bannerUrl']) : 'public/assets/images/backgrounds/s2-background.webp' ?>">
                                 <input type="text" name="banner_link" class="glob-input <?= isset($_SESSION['banner_error']) ? "!border-red-500" : '' ?>" value="<?= isset($_SESSION['rejected_banner_link']) ? sanitize($_SESSION['rejected_banner_link']) : (isset($user['bannerUrl']) ? sanitize($user['bannerUrl']) : '') ?>" autocomplete="off">
@@ -50,6 +51,7 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
                         <p class="text-2xl font-bold">Data and Privacy</p>
                         <p>We use your data to operate essential features like saving preferences and displaying your playerdata. You can stop this at any time by disabling or deleting your account.</p>
                         <form action="controllers/action-router.php?action=updatePrivacy" method="POST" class="mt-5 space-y-2">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <div class="flex items-center gap-2 text-white">
                                 <input type="checkbox" name="privateProfile" class="accent-blue-500 hover:cursor-pointer" style="width: 16px; height: 16px;" <?= $user['isPrivate'] ? 'checked' : '' ?>>
                                 <label for="privateProfile">Private Profile</label>

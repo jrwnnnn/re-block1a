@@ -14,7 +14,7 @@ $newsController = new newsControllers();
 switch ($action) {
 
     case 'updateProfile':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['csrf_token'] === ($_POST['csrf_token'] ?? '')) {
             $userController->updateProfile();
         } else {
             header('Location: ../../index.php');
@@ -23,7 +23,7 @@ switch ($action) {
         break;
     
     case 'updatePrivacy':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['csrf_token'] === ($_POST['csrf_token'] ?? '')) {
             $userController->updatePrivacy();
         } else {
             header('Location: ../../index.php');
