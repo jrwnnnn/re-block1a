@@ -25,13 +25,16 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
         <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
         <script src="public/js/dateUtils.js"></script>
     </head>
-    <body class="bg-[#2D3748]">
+    <body class="flex flex-col justify-between min-h-[100dvh] bg-[#2D3748]">
         <?php require 'views/partials/navigation.php'; ?>
-        <main class="flex flex-col min-h-[100dvh] md:px-60 px-5 py-10">
-            <a href="profile.php" class="mb-10 glob-link">Back to Profile</a>
+        <main class="flex flex-col flex-grow min-h-screen md:px-60 px-5 py-10">
+            <a href="profile.php" class="flex items-center gap-2 mb-10 glob-link w-fit">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+                </svg>
+                Back to Profile
+            </a>
             <section class="grid md:grid-cols-2 md:gap-15 gap-10">  
-                <div class="space-y-10">
-                </div>
                 <div class="space-y-10">
                     <div class="text-white space-y-2">
                         <p class="text-2xl font-bold">Profile Settings</p>
@@ -47,9 +50,11 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
                             <button type="submit" name="updateProfile" class="glob-btn mt-5 bg-blue-500 hover:bg-blue-600 hover:cursor-pointer mr-5">Save Settings</button>
                         </form>
                     </div>
+                </div>
+                <div class="space-y-10">
                     <div class="text-white space-y-2">
                         <p class="text-2xl font-bold">Data and Privacy</p>
-                        <p>We use your data to operate essential features like saving preferences and displaying your playerdata. You can stop this at any time by disabling or deleting your account.</p>
+                        <p>We use your data to operate essential features like saving preferences and displaying your playerdata. You can stop this at any time by deleting your account.</p>
                         <form action="controllers/action-router.php?action=updatePrivacy" method="POST" class="mt-5 space-y-2">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
                             <div class="flex items-center gap-2 text-white">
@@ -74,21 +79,22 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
                 </div>
             </section>
         </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const bannerInput = document.querySelector('input[name="banner_link"]');
-            const bannerPreview = document.getElementById('bannerPreview');
-            const defaultBanner = 'public/assets/images/backgrounds/s2-background.webp';
-            
-            bannerInput.addEventListener('input', function() {
-                const url = this.value.trim();
-                if (url) {
-                    bannerPreview.src = url;
-                } else {
-                    bannerPreview.src = defaultBanner;
-                }
+        <?php include 'views/partials/footer.php'; ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const bannerInput = document.querySelector('input[name="banner_link"]');
+                const bannerPreview = document.getElementById('bannerPreview');
+                const defaultBanner = 'public/assets/images/backgrounds/s2-background.webp';
+                
+                bannerInput.addEventListener('input', function() {
+                    const url = this.value.trim();
+                    if (url) {
+                        bannerPreview.src = url;
+                    } else {
+                        bannerPreview.src = defaultBanner;
+                    }
+                });
             });
-        });
-    </script>
+        </script>
     </body>
 </html>
