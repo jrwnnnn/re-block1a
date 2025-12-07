@@ -16,7 +16,7 @@ if (!$user) {
 }
 $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
 $statistics = query("SELECT * FROM player_statistics WHERE uuid = ?", [$uuid], "s");
-$badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER BY badgeId ASC", [$uuid], "s");
+$badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER BY badgeId ASC LIMIT 100", [$uuid], "s");
 $deathLog = query("SELECT * FROM death_log WHERE uuid = ? ORDER BY id DESC LIMIT 10", [$uuid], "s");
 $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
 ?> 
@@ -84,31 +84,32 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                 </section>
                 <section class="bg-[#2b3443] py-10 md:px-60 px-5 flex flex-col space-y-6">
                     <div class="flex flex-col space-y-5 md:space-y-10">
-                        <div class="flex flex-col">
-                            <hr class="flex-grow h-px border-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent">
-                            <div class="flex justify-center flex-wrap gap-5 my-7">
-                                <?php foreach ($badges as $badge): ?>
-                                    <div class="relative group flex justify-center">
-                                        <img src="public/assets/content/badges/<?= $badge['badgeId'] ?>.png" alt="<?= $badge['badgeId'] ?>" class="h-15 w-auto cursor-pointer shadow-lg">
-
-                                        <div class="absolute bottom-full mb-3 hidden group-hover:block w-max px-3 py-1.5 bg-gray-200 rounded-md shadow-xl z-50">
-                                            <p class="text-black text-sm font-medium"><?= 
-                                                $badgeName = match ($badge['badgeId']) {
-                                                    's1' => 'Season 1 Badge',
-                                                    's1-gold' => 'Season 1: Gold Badge',
-                                                    's2' => 'Season 2 Badge',
-                                                    's2-gold' => 'Season 2: Gold Badge',
-                                                    default => 'Unknown Badge',
-                                                };
-                                                $badgeName ?>
-                                            </p>
-                                            <p class="text-gray-800 text-xs"><?= isset($badge['dateRecieved']) ? "Awarded on: " . date('F j, Y', strtotime($badge['dateRecieved'])) : "" ?></p>
-                                        </div>   
-                                    </div>
-                                <?php endforeach; ?>
+                        <?php if (!empty($badges)): ?>
+                            <div class="flex flex-col">
+                                <hr class="flex-grow h-px border-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent">
+                                <div class="flex justify-center flex-wrap gap-5 my-7">
+                                    <?php foreach ($badges as $badge): ?>
+                                        <div class="relative group flex justify-center">
+                                            <img src="public/assets/content/badges/<?= $badge['badgeId'] ?>.png" alt="<?= $badge['badgeId'] ?>" class="h-15 w-auto cursor-pointer shadow-lg">
+                                            <div class="absolute bottom-full mb-3 hidden group-hover:block w-max px-3 py-1.5 bg-gray-200 rounded-md shadow-xl z-50">
+                                                <p class="text-black text-sm font-medium"><?= 
+                                                    $badgeName = match ($badge['badgeId']) {
+                                                        's1' => 'Season 1 Badge',
+                                                        's1-gold' => 'Season 1: Gold Badge',
+                                                        's2' => 'Season 2 Badge',
+                                                        's2-gold' => 'Season 2: Gold Badge',
+                                                        default => 'Unknown Badge',
+                                                    };
+                                                    $badgeName ?>
+                                                </p>
+                                                <p class="text-gray-800 text-xs"><?= isset($badge['dateRecieved']) ? "Awarded on: " . date('F j, Y', strtotime($badge['dateRecieved'])) : "" ?></p>
+                                            </div>   
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                                <hr class="flex-grow h-px border-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent">
                             </div>
-                            <hr class="flex-grow h-px border-0 bg-gradient-to-r from-transparent via-gray-600 to-transparent">
-                        </div>
+                        <?php endif; ?>
                         <div class="grid gap-10 md:grid-cols-2">
                             <div class="flex flex-col">
                                 <div class="flex items-center mb-2">
@@ -216,7 +217,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <div class="px-4 py-3 mb-2 bg-gray-700 rounded-lg">
-                                    <p class="text-gray-400 text-center"><?= ($user['hideDeathLog'] && $uuid !== ($_SESSION['uuid'] ?? '')) ? 'Death log is private.' : 'Recent deaths will show here.' ?></p>
+                                    <p class="text-gray-400 text-center"><?= ($user['hideDeathLog'] && $uuid !== ($_SESSION['uuid'] ?? '')) ? 'This user\'s death log is private.' : 'Recent deaths will show here.' ?></p>
                                 </div>
                             <?php endif; ?>
                             </div>
@@ -224,6 +225,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                     </section>
                 </section>
             </main>
+            <?php include 'views/partials/footer.php'; ?>
         <?php else: ?>
             <div class="bg-[#2b3443] flex flex-col flex-grow items-center justify-center px-5 text-center">
                 <img src="https://cdn-icons-png.flaticon.com/128/565/565547.png" alt="Private Profile Icon" class="w-20 h-20 mb-5" style="filter: invert(0.6);">
@@ -231,6 +233,5 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                 <p class="text-gray-400">The user has chosen to keep their profile private.</p>
             </div>
         <?php endif; ?>
-        <?php include 'views/partials/footer.php'; ?>
     </body>
 </html>
