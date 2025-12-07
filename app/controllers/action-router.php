@@ -13,6 +13,24 @@ $newsController = new newsControllers();
 
 switch ($action) {
 
+    case 'updateProfile':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userController->updateProfile();
+        } else {
+            header('Location: ../../index.php');
+            exit();
+        }
+        break;
+    
+    case 'updatePrivacy':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userController->updatePrivacy();
+        } else {
+            header('Location: ../../index.php');
+            exit();
+        }
+        break;
+
     case 'logout':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['csrf_token'] === ($_POST['csrf_token'] ?? '')) {
             $userController->logout();
