@@ -19,7 +19,7 @@
     <head>
         <?php
         $title = "Home - Block1A";
-        $description = "The Official Minecraft Server of BSCS-1A! Available for Minecraft Java Edition players.";
+        $description = "The Official Minecraft Server of BSCS-2A! Available for Minecraft Java Edition players.";
         include 'app/views/partials/meta.php';
         ?>
         <link rel="icon" href="app/public/assets/icons/favicon.ico" type="image/x-icon">
@@ -133,20 +133,18 @@
             </div>
         </section>
         <?php if (!isset($_SESSION['uuid'])): ?>
-            <?php
-                $carouselImages = glob('app/public/assets/content/carousel/*.webp');
-            ?>
-                    <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
-                        <p class="text-3xl font-bold text-yellow-500 md:text-4xl mb-7">The Server</p>
-                        <p class="text-white md:text-lg">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
-                        <div class="mt-5 md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
-                            <div id="carousel" class="flex duration-500 ease-in-out">
-                                <?php foreach ($carouselImages as $img): ?>
-                                    <img src="<?= $img ?>" class="flex-shrink-0 w-full">
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </section>
+            <?php $carouselImages = glob('app/public/assets/content/carousel/*.webp') ?>
+            <section class="flex flex-col bg-[#2D3748] md:px-30 px-5 py-10">
+                <p class="text-3xl font-bold text-yellow-500 md:text-4xl mb-7">The Server</p>
+                <p class="text-white md:text-lg">This server kicked off on December 10, 2024, right before Christmas break. It started as a chill place for just 7 of us, playing for fun on Aternos. Since then, things have grown — we’ve moved to a premium server for smoother gameplay and more cool stuff to do. It’s still the same cozy vibe, just better performance and more space to hang out.</p>
+                <div class="mt-5 md:relative overflow-hidden rounded-md w-full md:h-[80vh] h-full group">
+                    <div id="carousel" class="flex duration-500 ease-in-out">
+                        <?php foreach ($carouselImages as $img): ?>
+                            <img src="<?= $img ?>" class="flex-shrink-0 w-full">
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            </section>
             <section class="flex flex-col items-center px-5 py-5 bg-blue-500 md:px-30">
                 <p class="text-center text-white "> Whether you’re here to build, explore, or just vibe with friends, welcome to the crew!</p>
             </section>
