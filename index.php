@@ -3,8 +3,6 @@
     require_once __DIR__ . '/app/core/security-headers.php';
     require_once __DIR__ . '/app/core/database.php';
     require_once __DIR__ . '/app/core/session.php';
-    
-
     $spotlight = query("SELECT * FROM articles WHERE spotlight = 1 ORDER BY date_posted DESC LIMIT 1");
     $article = query("SELECT * FROM articles WHERE spotlight = 0 ORDER BY date_posted DESC LIMIT 3");
     $uniquePlayers = query("SELECT COUNT(DISTINCT uuid) AS total FROM player_data");
@@ -30,14 +28,13 @@
         <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/customParseFormat.js"></script>
         <script src="app/public/js/dateUtils.js"></script>
-            <script>document.write(localTime("<?= date("c", strtotime($timestamp)) ?>", "MMMM D, YYYY hh:mm A"));</script>
     </head>
     <body>
         <?php require 'app/views/partials/navigation.php'; ?>
-        <div class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 via-red-500 to-red-400">
+        <!-- <div id="server-state" class="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-red-600 via-red-500 to-red-400" style="display: none;">
             <img src="https://cdn-icons-png.flaticon.com/128/9291/9291673.png" class="inline w-5 mr-2 align-middle md:w-4" style="filter: invert(1);">
             <p class="text-sm font-semibold text-white"> The server is currently closed. Re-opening soon!</p>
-        </div>
+        </div> -->
         <!-- Main Splash Screen -->
         <?php if (!isset($_SESSION['uuid'])): ?>
             <section class="flex flex-col min-h-screen bg-center bg-no-repeat bg-cover" style="background-image: url('app/public/assets/images/backgrounds/s2-background.webp')">
@@ -83,7 +80,7 @@
                 <div class="px-5 pt-10 md:px-30">
                     <div class="flex gap-2 py-5 overflow-x-auto md:gap-5 md:pl-5" onwheel="if(this.scrollWidth>this.clientWidth){event.preventDefault();this.scrollLeft+=event.deltaY;}">
                         <?php foreach ($onlinePlayers as $player): ?>
-                            <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-[url(../assets/images/ui/topcard-green.jpg)] bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
+                            <div onclick="window.location.href='app/profile.php?player=<?= $player['uuid'] ?>'" class="text-black flex-shrink-0 md:pr-10 pr-10 pt-10 bg-green-600 bg-cover bg-bottom-right rounded-lg shadow-md p-3 flex flex-col max-w-35 hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-102 hover:shadow-xl hover:ring-4 hover:ring-green-400/50 group">
                                 <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= $player['skin']?>" class="mb-1 transition-transform duration-300 group-hover:scale-110">
                                 <p class="font-bold truncate"><?= $player['username'] ?></p>
                                 <p class="text-sm text-gray-700">Online</p>
