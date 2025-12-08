@@ -51,6 +51,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <img src="public/assets/images/cs1a.png" alt="cs1a logo" class="w-20">
                 </div>
                 <form id="loginForm" class="space-y-4" method="POST" action="login.php">
+                    <?php if (isset($_SESSION['success_message'])): ?>
+                        <div class="p-3 font-semibold text-center text-white bg-green-600 rounded-md">
+                            <?= $_SESSION['success_message'] ?>
+                        </div>
+                        <?php unset($_SESSION['success_message']); ?>
+                    <?php endif; ?>
                     <?php if (!empty($error_message)): ?>
                         <div class="p-3 font-semibold text-center text-white bg-red-600 rounded-md">
                             <?= $error_message ?>

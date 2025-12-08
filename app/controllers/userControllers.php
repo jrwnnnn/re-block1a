@@ -58,4 +58,36 @@ class userControllers {
         header('Location: ../settings.php');
         exit();
     }
+
+    public function resetPassword() {
+        $token = $_POST['token'] ?? '';
+        $new_password = $_POST['new_password'] ?? '';
+        $confirm_new_password = $_POST['confirm_new_password'] ?? '';
+
+        if (empty($token) || empty($new_password) || empty($confirm_new_password)) {
+             header('Location: ../forgot-password.php?token=' . urlencode($token) . '&error=Please+fill+all+fields');
+             exit();
+        }
+
+        if ($new_password !== $confirm_new_password) {
+             header('Location: ../forgot-password.php?token=' . urlencode($token) . '&error=Passwords+do+not+match');
+             exit();
+        }
+
+        $tokenMatch = query("SELECT email FROM reset_tokens WHERE token = ?", [$token], "s");
+        if (empty($tokenMatch)) {
+             header('Location: ../index.php');
+             exit();
+        }
+        
+        $email = $tokenMatch['email'];
+
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+        query("UPDATE users SET password = ? WHERE email = ?", [$hashed_password, $email], "ss");
+        query("DELETE FROM reset_tokens WHERE token = ?", [$token], "s");
+
+        $_SESSION['success_message'] = "Password reset successfully. Please login.";
+        header('Location: ../login.php');
+        exit();
+    }
 }

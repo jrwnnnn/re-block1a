@@ -14,6 +14,15 @@ $newsController = new newsControllers();
 
 switch ($action) {
 
+    case 'reset_password':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userController->resetPassword();
+        } else {
+            header('Location: ../../index.php');
+            exit();
+        }
+        break;
+
     case 'updateProfile':
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_SESSION['csrf_token'] === ($_POST['csrf_token'] ?? '')) {
             $userController->updateProfile();
