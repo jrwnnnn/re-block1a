@@ -42,7 +42,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                     <div id="profileBanner" class="absolute inset-0 bg-cover bg-center md:brightness-60" style="background-image: url('<?= $user['bannerUrl'] ?? 'public/assets/images/backgrounds/s2-background.webp' ?>');"></div>
                     <div class="md:hidden absolute inset-0 bg-gradient-to-b from-transparent to-[#2D3748] z-5"></div>
                     <div class="flex mt-10">
-                        <img src="https://starlightskins.lunareclipse.studio/render/ultimate/steve/bust?skinUrl=<?= sanitize($playerData['skin']) ?>" alt="Player Model" class="z-10 w-auto md:h-60 h-50">
+                        <img src="https://starlightskins.lunareclipse.studio/render/ultimate/0385/bust?skinUrl=<?= sanitize($playerData['skin']) ?>" alt="Player Model" class="z-10 w-auto md:h-60 h-50">
                     </div>
                     <div class="z-10 flex flex-col justify-between flex-grow md:py-5 py-2">
                         <div class="flex flex-col items-start justify-between space-x-4 md:flex-row">
