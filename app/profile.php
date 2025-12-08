@@ -195,8 +195,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                             <?php if (!empty($deathLog) && ($uuid === ($_SESSION['uuid'] ?? '') || $user['hideDeathLog'] == 0)): ?>
                                 <?php foreach ($deathLog as $death): ?>
                                     <div onclick="window.location.href='bluemap.php?x=<?= $death['x'] ?>&z=<?= $death['z']; ?>&world=<?= $death['world'] ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
-                                        <p class="font-bold text-white"><?= $death['cause'] ?></p>
-                                        <p class="text-sm text-gray-400">
+                                        <p class="font-bold text-white">
                                             <?= isset($death['x']) ? $death['x'] : 'N/A' ?>, 
                                             <?= isset($death['y']) ? $death['y'] : 'N/A' ?>, 
                                             <?= isset($death['z']) ? $death['z'] : 'N/A' ?>, 
