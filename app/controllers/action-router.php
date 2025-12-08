@@ -6,13 +6,25 @@ require_once '../core/session.php';
 require_once '../core/RBAC.php';
 require_once 'userControllers.php';
 require_once 'newsControllers.php';
+require_once 'adminControllers.php';
 
 $action = $_GET['action'] ?? $_POST['action'];
 
 $userController = new userControllers();
 $newsController = new newsControllers();
+$adminController = new adminControllers();
 
 switch ($action) {
+
+    case 'create_reset_token':
+        RBAC('admin', '../../index.php');
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $adminController->createResetToken();
+        } else {
+            header('Location: ../../index.php');
+            exit();
+        }
+        break;
 
     case 'reset_password':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
