@@ -11,13 +11,13 @@ if (isset($_SESSION['uuid'])) {
 
 $token = $_GET['token'] ?? '';
 if (empty($token)) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 
 $stmt = query("SELECT email FROM reset_tokens WHERE token = ?", [$token], "s");
 if (empty($stmt)) {
-    header('Location: index.php');
+    header('Location: ../index.php');
     exit();
 }
 
