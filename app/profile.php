@@ -195,23 +195,8 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                             <?php if (!empty($deathLog) && ($uuid === ($_SESSION['uuid'] ?? '') || $user['hideDeathLog'] == 0)): ?>
                                 <?php foreach ($deathLog as $death): ?>
                                     <div onclick="window.location.href='bluemap.php?x=<?= $death['x'] ?>&z=<?= $death['z']; ?>&world=<?= $death['world'] ?>&zoom=50'" class="px-4 py-3 mb-2 transition duration-200 bg-gray-700 rounded-lg cursor-pointer hover:bg-gray-700 hover:shadow-lg">
-                                        <p class="font-bold text-white">
-                                            <?= isset($death['x']) ? $death['x'] : 'N/A' ?>, 
-                                            <?= isset($death['y']) ? $death['y'] : 'N/A' ?>, 
-                                            <?= isset($death['z']) ? $death['z'] : 'N/A' ?>, 
-                                            <?php
-                                                $world = match ($death['world']) {
-                                                    'world' => 'Overworld',
-                                                    'world_nether' => 'Nether',
-                                                    'world_the_end' => 'The End',
-                                                    'wilds' => 'Shattered Wilds',
-                                                    'wilds_nether' => 'Wild Nether',
-                                                    default => 'Unrecorded',
-                                                };
-                                            ?>
-                                            <?= $world?>
-                                        </p>
-                                        <p class="text-sm text-gray-400"><?= date('F j, Y - h:i A', strtotime($death['timestamp'])) ?: 'N/A' ?></p>
+                                        <p class="font-bold text-white"><?= $death['x'] . ", " . $death['y'] . ", " . $death['z'] . " " . $death['world'] ?></p>
+                                        <p class="text-sm text-gray-400"><script>document.write(localTime("<?= date("c", strtotime($death['timestamp'])) ?>", "MMMM D, YYYY"));</script> - <script>document.write(localTime("<?= date("c", strtotime($death['timestamp'])) ?>", "h:mm A"));</script></p>
                                     </div>
                                 <?php endforeach; ?>
                             <?php else: ?>
