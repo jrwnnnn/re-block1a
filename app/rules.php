@@ -7,7 +7,7 @@ $page = $_GET['page'] ?? 'home';
 $rules = json_decode(file_get_contents('data/rules.json'), true); // Load rules from JSON file
 
 if (!isset($rules[$page])) {
-    header("Location: 404.php?error=notfound");
+    header("Location: 404.php?error=Page+not+found");
     exit;
 }
 

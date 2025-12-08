@@ -86,6 +86,6 @@ switch ($action) {
 
     default:
         http_response_code(404);
-        header('Location: ../404.php');
+        header('Location: ../404.php?error=The+requested+action+was+not+found');
         break;
 }

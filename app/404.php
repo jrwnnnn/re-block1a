@@ -3,20 +3,8 @@
   require_once __DIR__ . '/core/security-headers.php';
   require_once __DIR__ . '/core/session.php';
 
-  $returnError = $_GET['error'] ?? null;
-  if ($returnError == 'notfound') {
-      $title = 'Page Not Found';
-      $message = 'The page you are looking for does not exist.';
-  } else if ($returnError == 'unauthorized') {
-      $title = 'Unauthorized Access';
-      $message = 'You do not have permission to access this page.';
-  } else if ($returnError == 'player_not_found') {
-      $title = 'Player Not Found';
-      $message = 'The player you are looking for is either not yet linked or does not exist.';
-  } else {
-      $title = 'Error';
-      $message = 'An unknown error occurred.';
-  }
+  $returnError = $_GET['error'] ?? 'Unknown+error+occurred';
+  $returnError = str_ireplace('+', ' ', $returnError);
 ?>
 
 <!DOCTYPE html>
@@ -30,16 +18,14 @@
     <link href="public/css/output.css" rel="stylesheet">
     <title>Block1A - 404</title>
   </head>
-  <body>
-    <section class="flex flex-col bg-[#2D3748] bg-cover bg-center bg-no-repeat min-h-screen">
-      <?php require 'views/partials/navigation.php'; ?>
-        <div class="flex flex-col items-center justify-center flex-grow px-10 text-center text-white pb-30 md:px-30">
-          <img src="public/assets/images/ui/404.gif" alt="Steve" class="">
+  <body class="flex flex-col min-h-[100dvh] justify-between">
+    <?php require 'views/partials/navigation.php'; ?>
+    <main class="flex flex-col bg-[#2D3748] flex-grow">
+        <div class="flex flex-col items-center justify-center flex-grow px-10 text-center text-white md:px-30">
           <p class="py-5 text-4xl font-bold text-center md:text-6xl"><?= $title ?></p>
-          <p class="text-center md:text-lg"><?= $message ?></p>
+          <p class="text-center md:text-lg"><?= isset($returnError) ? $returnError . "." : "" ?></p>
           <p class="text-center md:text-lg">Return to the <a href="<?= $baseUrl ?>index.php" class="text-blue-300">home page</a>.</p>
         </div>
-    </section>
-    <?php require 'views/partials/footer.php'; ?>
+    </main>
   </body>
 </html>

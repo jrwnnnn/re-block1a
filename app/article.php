@@ -9,7 +9,7 @@ $userRole = getUserRole();
 $article = query("SELECT * FROM articles WHERE id = ?", [$_GET['id']], "s");
 
 if (!$article) {
-    header("Location: 404.php?error=notfound");
+    header("Location: 404.php?error=Article+not+found");
     exit;
 }
 
