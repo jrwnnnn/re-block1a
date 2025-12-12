@@ -11,7 +11,7 @@ $uuid = $_GET['player'] ?? $_SESSION['uuid'];
 
 $user = query("SELECT * FROM users WHERE uuid = ?", [$uuid], "s");
 if (!$user) {
-    header('Location: 404.php?error=Player+not+found');
+    header('Location: 404.php?error=Player+profile+not+found');
     exit();
 }
 $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
