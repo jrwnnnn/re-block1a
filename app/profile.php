@@ -18,11 +18,12 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
 $statistics = query("SELECT * FROM player_statistics WHERE uuid = ?", [$uuid], "s");
 $badges = query("SELECT badgeId, dateRecieved FROM badges WHERE uuid = ? ORDER BY badgeId ASC LIMIT 100", [$uuid], "s");
 $deathLog = query("SELECT * FROM death_log WHERE uuid = ? ORDER BY id DESC LIMIT 10", [$uuid], "s");
+$deathTotal = query("SELECT COUNT(*) as totalDeaths FROM death_log WHERE uuid = ?", [$uuid], "s");
 $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
 ?> 
 <!DOCTYPE html>
 <html>
-    <head>
+    <head">
         <?php
         $title = sanitize($playerData['username']) . "'s Profile - Block1A";
         include 'views/partials/meta.php';
@@ -131,7 +132,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
                                     </tr>
                                     <tr>
                                     <td class="py-1 pr-2 font-medium text-gray-300">Deaths</td>
-                                    <td class="py-1 text-right"><?= number_format($statistics['deaths'])?></td>
+                                    <td class="py-1 text-right"><?= number_format($deathTotal['totalDeaths'])?></td>
                                     </tr>
                                     <tr>
                                     <td class="py-1 pr-2 font-medium text-gray-300">Distance Traveled</td>
