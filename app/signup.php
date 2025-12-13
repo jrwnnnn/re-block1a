@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $title = "Signup - Block1A";
             $description = "Create a Block1A account.";
             require_once 'views/partials/meta.php';
+            include 'views/partials/gtag.php';
         ?>
         <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">

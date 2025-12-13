@@ -22,6 +22,7 @@ if ($action == 'edit' && $article_id) {
     <?php
         $title = "Editor - Block1A";
         include 'views/partials/meta.php';
+        include 'views/partials/gtag.php';
     ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
     <link href="public/css/output.css" rel="stylesheet">

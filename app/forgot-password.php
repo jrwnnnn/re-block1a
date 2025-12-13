@@ -31,6 +31,7 @@ $error_message = $_GET['error'] ?? '';
       $title = "Reset Password - Block1A";
       $description = "Reset your Block1A account password securely.";
       include 'views/partials/meta.php';
+      include 'views/partials/gtag.php';
     ?>
     <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="public/css/output.css" rel="stylesheet">

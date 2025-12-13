@@ -17,6 +17,7 @@ $playerData = query("SELECT * FROM player_data WHERE uuid = ?", [$uuid], "s");
         <?php
         $title = "Settings - Block1A";
         include 'views/partials/meta.php';
+        include 'views/partials/gtag.php';
         ?>
         <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">

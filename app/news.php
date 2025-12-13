@@ -15,7 +15,9 @@ $article = query("SELECT * FROM articles ORDER BY date_posted DESC");
         <?php 
         $title = "News - Block1A";
         $description = "Stay updated with the latest news, updates, and events happening in our server.";
-        require 'views/partials/meta.php'; ?>
+        require 'views/partials/meta.php';
+        include 'views/partials/gtag.php';
+        ?>
         <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="public/css/output.css" rel="stylesheet">
         <title>Block1A - News</title>

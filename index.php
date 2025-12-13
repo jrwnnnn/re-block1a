@@ -21,6 +21,7 @@
         $title = "Home - Block1A";
         $description = "The Official Minecraft Server of BSCS-2A! Available for Minecraft Java Edition players.";
         include 'app/views/partials/meta.php';
+        include 'app/views/partials/gtag.php';
         ?>
         <link rel="icon" href="app/public/assets/icons/favicon.ico" type="image/x-icon">
         <link href="app/public/css/output.css" rel="stylesheet">

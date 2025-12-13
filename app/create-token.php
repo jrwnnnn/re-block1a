@@ -13,6 +13,7 @@ require_once __DIR__ . '/core/database.php';
     <?php
       $title = "[SECURE] Token Generator - Block1A";
       include 'views/partials/meta.php';
+      include 'views/partials/gtag.php';
     ?>
     <link rel="icon" href="public/assets/icons/favicon.ico" type="image/x-icon">
     <link href="public/css/output.css" rel="stylesheet">
