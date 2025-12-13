@@ -23,7 +23,7 @@ $playpass = query("SELECT status FROM playpass WHERE uuid = ?", [$uuid], "s");
 ?> 
 <!DOCTYPE html>
 <html>
-    <head">
+    <head>
         <?php
         $title = sanitize($playerData['username']) . "'s Profile - Block1A";
         include 'views/partials/meta.php';
