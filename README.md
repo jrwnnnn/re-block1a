@@ -24,7 +24,7 @@ This project is a PHP-based website using Composer for dependency management and
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/jrwnnnn/block1a.git
+   git clone https://github.com/jrwnnnn/re-block1a.git
    cd block1a
    ````
 
@@ -76,7 +76,7 @@ This project is a PHP-based website using Composer for dependency management and
    * Visit the site at:
 
      ```
-     http://localhost/block1a/index.php
+     http://localhost/re-block1a/index.php
      ```
 ## License
 This project uses the MIT license. For details, please refer to the LICENSE file.
